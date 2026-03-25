@@ -8,3 +8,5 @@ __pycache__/
 *.ipynb_checkpoints/
 
 .venv
+dataloader.py
+census_ml_dataset.sql
