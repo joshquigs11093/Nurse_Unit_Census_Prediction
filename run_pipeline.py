@@ -97,6 +97,7 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
     census_col = config["data"]["census_col"]
     horizons = config["forecast_horizons"]
     models_dir = Path(config["output"]["models_dir"])
+    unit_names = config.get("unit_names", {})
 
     test_feat = add_cyclical_features(test)
     units = sorted(test[unit_col].unique())
@@ -110,6 +111,7 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
         base = pd.DataFrame({
             "timestamp": u[dt_col].values,
             "unit_id": uid,
+            "unit_name": unit_names.get(uid, f"Unit {uid}"),
             "actual_census": u[census_col].astype(int).values,
         })
 
@@ -178,6 +180,7 @@ def phase_export(
 
     # 3. unit_metadata.csv (with derived capacity = max observed census)
     all_data = pd.concat([train, val, test])
+    unit_names = config.get("unit_names", {})
     meta_rows = []
     capacity_by_unit = {}
     for uid, grp in all_data.groupby(unit_col):
@@ -185,6 +188,7 @@ def phase_export(
         capacity_by_unit[uid] = max_c
         meta_rows.append({
             "unit_id": uid,
+            "unit_name": unit_names.get(uid, f"Unit {uid}"),
             "capacity": max_c,
             "mean_census": round(grp[census_col].mean(), 1),
             "median_census": round(grp[census_col].median(), 1),
@@ -226,6 +230,7 @@ def phase_export(
         forecast_72hr = fp_row.get("pred_72hr") if fp_row else None
         summary_rows.append({
             "unit_id": uid,
+            "unit_name": unit_names.get(uid, f"Unit {uid}"),
             "latest_census": latest_census,
             "census_24h_ago": int(grp[census_col].iloc[-24]) if len(grp) >= 24 else None,
             "census_trend_72h": round(grp[census_col].diff().mean(), 2),

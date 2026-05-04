@@ -89,13 +89,13 @@
     }], heatLayout, { displayModeBar: false });
 
     // Per-unit bar chart for 24h horizon
-    const perUnit = [{"unit_id":705089,"RandomForest":84.56,"LightGBM":89.13,"LSTM":91.52},{"unit_id":705090,"RandomForest":43.93,"LightGBM":41.89,"LSTM":48.24},{"unit_id":705091,"RandomForest":89.72,"LightGBM":95.11,"LSTM":94.8},{"unit_id":705092,"RandomForest":92.75,"LightGBM":93.93,"LSTM":94.12},{"unit_id":21334825,"RandomForest":96.51,"LightGBM":97.33,"LSTM":92.45},{"unit_id":21336305,"RandomForest":97.24,"LightGBM":97.83,"LSTM":97.6},{"unit_id":60732673,"RandomForest":null,"LightGBM":null,"LSTM":null},{"unit_id":97635816,"RandomForest":97.64,"LightGBM":97.83,"LSTM":98.82},{"unit_id":1775257343,"RandomForest":82.25,"LightGBM":91.53,"LSTM":91.37},{"unit_id":4452986337,"RandomForest":88.27,"LightGBM":92.35,"LSTM":92.25}];
-    const unitIds = perUnit.map(p => String(p.unit_id));
-    const traceRF = { x: unitIds, y: perUnit.map(p => p.RandomForest), name: "RandomForest",
+    const perUnit = [{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":84.56,"LightGBM":89.13,"LSTM":91.52},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":43.93,"LightGBM":41.89,"LSTM":48.24},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":89.72,"LightGBM":95.11,"LSTM":94.8},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":92.75,"LightGBM":93.93,"LSTM":94.12},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.51,"LightGBM":97.33,"LSTM":92.45},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.24,"LightGBM":97.83,"LSTM":97.6},{"unit_id":60732673,"unit_name":"Observation Unit","RandomForest":null,"LightGBM":null,"LSTM":null},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.64,"LightGBM":97.83,"LSTM":98.82},{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":82.25,"LightGBM":91.53,"LSTM":91.37},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":88.27,"LightGBM":92.35,"LSTM":92.25}];
+    const unitLabels = perUnit.map(p => p.unit_name);
+    const traceRF = { x: unitLabels, y: perUnit.map(p => p.RandomForest), name: "RandomForest",
                      type: "bar", marker: { color: "#4E79A7" } };
-    const traceLGBM = { x: unitIds, y: perUnit.map(p => p.LightGBM), name: "LightGBM",
+    const traceLGBM = { x: unitLabels, y: perUnit.map(p => p.LightGBM), name: "LightGBM",
                         type: "bar", marker: { color: "#F28E2B" } };
-    const traceLSTM = { x: unitIds, y: perUnit.map(p => p.LSTM), name: "LSTM",
+    const traceLSTM = { x: unitLabels, y: perUnit.map(p => p.LSTM), name: "LSTM",
                         type: "bar", marker: { color: "#59A14F" } };
 
     const barLayout = JSON.parse(JSON.stringify(layoutBase));

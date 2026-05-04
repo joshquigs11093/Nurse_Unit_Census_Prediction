@@ -1,0 +1,56 @@
+name: Refresh forecasts (operational flow)
+
+# Daily refresh demonstrating the operational pipeline:
+#   1. Generate one hour of synthetic ADT data per active unit
+#   2. Update outputs/tableau/*.csv (forecast_predictions, executive_summary)
+#   3. Rebuild docs/*.html with the new data inlined
+#   4. Commit + push so GitHub Pages and any Tableau Public connections refresh
+#
+# Manual triggers via Actions tab also supported (workflow_dispatch).
+
+on:
+  schedule:
+    - cron: "15 12 * * *"   # daily at 12:15 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh forecast CSVs (synthetic feed)
+        run: python scripts/generate_synthetic_hour.py
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Rebuild dashboards (HTML only, no screenshots)
+        run: node docs/build_dashboards.js --no-screenshots
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/tableau/forecast_predictions.csv \
+                  outputs/tableau/executive_summary.csv \
+                  docs/dashboard1.html \
+                  docs/dashboard2.html \
+                  docs/dashboard3.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: daily forecast refresh ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi

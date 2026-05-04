@@ -1,6 +1,6 @@
 # Nurse Unit Census Prediction
 
-Hourly patient-census forecasting across hospital nurse units, with multi-horizon predictions (1–72 hours) feeding three operational dashboards.
+Hourly patient-census forecasting across hospital nurse units, with multi-horizon predictions (1–72 hours) feeding three operational dashboards. End-to-end deployed pipeline from synthetic data feed → forecast generation → published dashboards.
 
 **Live demo:** https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/
 
@@ -11,6 +11,39 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 Predicts patient headcount on medical-surgical nurse units at eight forecast horizons (1, 2, 3, 4, 12, 24, 48, 72 hours) using historical admissions, discharges, transfers, ED census, scheduled surgeries, and seasonal patterns. The pipeline trains five model types per unit (ARIMA, Prophet, LSTM, Random Forest, LightGBM) plus a weighted ensemble and exports Tableau-ready CSVs.
 
 **Primary metric:** percentage of forecasts within ±2 patients of actual census. Validation accuracy: 99.7% at 1h (Random Forest), 87.6% at 72h (LSTM).
+
+## Operational architecture
+
+The deployed system simulates the full production flow without exposing real patient-flow data. A daily GitHub Actions cron generates synthetic hourly readings calibrated to the real distributions, runs the prediction logic, and pushes refreshed CSVs and HTML — driving both GitHub Pages and any connected Tableau Public workbooks.
+
+```
+                    ┌─────────────────────────────────────────────┐
+                    │  GitHub Actions cron — daily 12:15 UTC      │
+                    │  (.github/workflows/refresh-forecasts.yml)  │
+                    └────────────────────┬────────────────────────┘
+                                         │
+                       ┌─────────────────┴─────────────────┐
+                       ▼                                   ▼
+   scripts/generate_synthetic_hour.py        docs/build_dashboards.js --no-screenshots
+   (one hour of synthetic ADT per unit,       (regenerates docs/*.html with
+    calibrated to historical means/stds)       fresh data inlined)
+                       │                                   │
+                       ▼                                   ▼
+        outputs/tableau/forecast_predictions.csv     docs/dashboard{1,2,3}.html
+        outputs/tableau/executive_summary.csv               │
+                       │                                   │
+                       └──────────────────┬────────────────┘
+                                          ▼
+                          git commit + push (bot)
+                                          │
+                       ┌──────────────────┴───────────────────┐
+                       ▼                                      ▼
+            GitHub Pages auto-rebuild              Tableau Public workbook
+            https://joshquigs11093.github.io/      connects via raw.githubusercontent.com
+            Nurse_Unit_Census_Prediction/          → daily refresh on Tableau side
+```
+
+In a production deployment, `generate_synthetic_hour.py` would be replaced by an ETL job ingesting the live hospital ADT feed; everything downstream (pipeline, exports, dashboards) is unchanged.
 
 ## Tech stack
 

@@ -14,6 +14,20 @@ data:
 
 forecast_horizons: [1, 2, 3, 4, 12, 24, 48, 72]
 
+# Friendly unit names for dashboards. Keys are the real NURSE_UNIT_CD values;
+# names are fictional to keep operational identifiers private.
+unit_names:
+  705089: "Medical-Surgical 3 North"
+  705090: "Telemetry 4 East"
+  705091: "Cardiac Stepdown"
+  705092: "Oncology 5 South"
+  21334825: "Surgical 2 West"
+  21336305: "Orthopedic 6 North"
+  60732673: "Observation Unit"
+  97635816: "Progressive Care"
+  1775257343: "Neuro Stepdown"
+  4452986337: "Medical-Surgical 4 South"
+
 target_columns:
   1: "TARGET_CENSUS_1HR"
   2: "TARGET_CENSUS_2HR"
