@@ -2,11 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Model Performance Analytics</title>
+  <title>Model Performance Analytics — Nurse Census Prediction</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
+
+<nav class="topnav">
+  <div class="brand"><a href="index.html">Nurse Census Prediction</a></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="models.html">Models</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="dashboards.html" class="active">Dashboards</a>
+    <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+<div class="page-body">
   <div class="dashboard">
     <div class="dashboard-header">
       <div>
@@ -109,5 +121,6 @@
     Plotly.newPlot("bar-units", [traceRF, traceLGBM, traceLSTM], barLayout, { displayModeBar: false })
       .then(() => { window.RENDERED = true; });
   </script>
+</div>
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboards — Nurse Census Prediction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="brand"><a href="index.html">Nurse Census Prediction</a></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="models.html">Models</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="dashboards.html" class="active">Dashboards</a>
+    <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+<div class="page-body">
+  <div class="page-intro">
+    <h1>Dashboards</h1>
+    <p>
+      Three audience-specific views over the deployed forecasting pipeline. Click any card
+      to open the full-screen interactive dashboard.
+    </p>
+  </div>
+
+  <div class="gallery">
+    <a class="gallery-card" href="dashboard1.html">
+      <img src="previews/dashboard1.png" alt="Operational Census Forecast preview">
+      <div class="meta">
+        <h3>Operational Census Forecast</h3>
+        <div class="audience">House Supervisors</div>
+        <p>Current census, multi-horizon forecast cards (1h–72h), 7-day actual vs predicted trend, capacity alert indicators.</p>
+      </div>
+    </a>
+    <a class="gallery-card" href="dashboard2.html">
+      <img src="previews/dashboard2.png" alt="Model Performance Analytics preview">
+      <div class="meta">
+        <h3>Model Performance Analytics</h3>
+        <div class="audience">Process Improvement</div>
+        <p>Best-per-horizon callouts, full 6-model × 8-horizon accuracy heatmap, per-unit accuracy breakdown.</p>
+      </div>
+    </a>
+    <a class="gallery-card" href="dashboard3.html">
+      <img src="previews/dashboard3.png" alt="Executive Census Summary preview">
+      <div class="meta">
+        <h3>Executive Census Summary</h3>
+        <div class="audience">Leadership</div>
+        <p>House-wide KPIs, utilization-by-unit ranking with 90% alert threshold, best-model recommendations, per-unit detail table.</p>
+      </div>
+    </a>
+  </div>
+
+  <p style="font-size:12px;color:var(--muted);margin-top:24px;">
+    Underlying data: <code>outputs/tableau/forecast_predictions.csv</code>, <code>executive_summary.csv</code>,
+    <code>model_performance.csv</code>, <code>unit_metadata.csv</code>, <code>best_model_per_horizon.csv</code>.
+    All refreshed daily via the GitHub Actions cron.
+  </p>
+</div>
+</body>
+</html>

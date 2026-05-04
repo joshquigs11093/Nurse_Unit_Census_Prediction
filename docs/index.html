@@ -2,24 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nurse Census Forecast Dashboards</title>
+  <title>Nurse Unit Census Prediction</title>
+  <meta name="description" content="Multi-horizon hospital nurse-unit census forecasting — five model types, eight forecast horizons, deployed end-to-end pipeline with three operational dashboards.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Nurse Unit Census Prediction — Dashboards</h1>
-        <div class="subtitle">Three audience-specific views over the M3 forecasting pipeline outputs</div>
+
+<nav class="topnav">
+  <div class="brand"><a href="index.html">Nurse Census Prediction</a></div>
+  <div class="links">
+    <a href="index.html" class="active">Home</a>
+    <a href="models.html">Models</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="dashboards.html">Dashboards</a>
+    <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+<div class="page-body">
+  <section class="hero">
+    <h1>Nurse Unit Census Prediction</h1>
+    <p class="tagline">
+      Multi-horizon census forecasting for hospital nurse units. Five model types
+      trained per unit on 21 months of hourly admit/discharge/transfer data,
+      delivering 1-, 4-, 24-, and 72-hour predictions to three operational dashboards.
+    </p>
+    <div class="metric-callout">
+      <div class="num">99.7%</div>
+      <div class="label">±2 patient accuracy at 1-hour horizon · validation set</div>
+    </div>
+    <div class="cta-row">
+      <a class="cta" href="dashboards.html">View dashboards →</a>
+      <a class="cta secondary" href="models.html">Model cards</a>
+      <a class="cta secondary" href="methodology.html">Methodology</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num">10</div>
+        <div class="label">Active nurse units</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">8</div>
+        <div class="label">Forecast horizons (1h–72h)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">5+1</div>
+        <div class="label">Model types + ensemble</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">154</div>
+        <div class="label">Total bed capacity (max observed)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">137</div>
+        <div class="label">Latest house-wide census</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">87.6%</div>
+        <div class="label">±2 accuracy at 72-hour horizon</div>
       </div>
     </div>
-    <div class="dashboard-body">
-      <ul style="font-size: 14px; line-height: 1.8;">
-        <li><a href="dashboard1.html">Dashboard 1 — Operational Census Forecast (House Supervisors)</a></li>
-        <li><a href="dashboard2.html">Dashboard 2 — Model Performance Analytics (Process Improvement)</a></li>
-        <li><a href="dashboard3.html">Dashboard 3 — Executive Census Summary (Leadership)</a></li>
-      </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Operational architecture</div>
+    <div class="flow-diagram">
+      <div class="flow-row">
+        <div class="flow-step accent">GitHub Actions cron<span class="step-sub">daily 12:15 UTC</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Synthetic ADT generator<span class="step-sub">scripts/generate_synthetic_hour.py</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Forecast pipeline<span class="step-sub">RF · LightGBM · LSTM · ARIMA · Prophet · Ensemble</span></div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-step muted">CSV exports<span class="step-sub">outputs/tableau/</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step muted">Dashboard rebuild<span class="step-sub">scripts/build_dashboards.js</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Git commit + push<span class="step-sub">github-actions[bot]</span></div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-step muted">GitHub Pages<span class="step-sub">static dashboards (this site)</span></div>
+        <div class="flow-arrow">↘</div>
+        <div class="flow-step muted">Tableau Public<span class="step-sub">refreshes from raw.githubusercontent.com</span></div>
+      </div>
     </div>
-  </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+      In production, the synthetic ADT step is replaced by an ETL job pulling the live data warehouse;
+      everything downstream is unchanged.
+    </p>
+  </section>
+
+  <section class="section featured-preview">
+    <h3>Featured: Executive Census Summary</h3>
+    <a href="dashboard3.html"><img src="previews/dashboard3.png" alt="Executive Census Summary preview"></a>
+    <div class="caption">
+      <span>House-wide capacity utilization, 72-hour forecasts per unit, capacity alerts.</span>
+      <a href="dashboard3.html">View live →</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Quick links</div>
+    <div class="gallery">
+      <a class="gallery-card" href="models.html">
+        <div class="meta">
+          <h3>Model cards</h3>
+          <div class="audience">Six models</div>
+          <p>Per-model architecture, hyperparameters, training data, validation accuracy across all eight horizons, strengths and limitations.</p>
+        </div>
+      </a>
+      <a class="gallery-card" href="methodology.html">
+        <div class="meta">
+          <h3>Methodology</h3>
+          <div class="audience">Pipeline · features · evaluation</div>
+          <p>Data preprocessing, leakage-safe feature filtering, per-unit per-horizon training strategy, evaluation metrics and split.</p>
+        </div>
+      </a>
+      <a class="gallery-card" href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">
+        <div class="meta">
+          <h3>Source code</h3>
+          <div class="audience">GitHub · MIT licensed</div>
+          <p>Full repository: pipeline source, tests (34 cases), GitHub Actions workflow, configuration, and this static site.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:32px;">
+    Last regenerated: 2026-05-04 16:47 UTC · Daily refresh via GitHub Actions
+  </p>
+</div>
 </body>
 </html>

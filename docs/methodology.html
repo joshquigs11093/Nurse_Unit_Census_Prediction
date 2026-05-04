@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Methodology — Nurse Census Prediction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="brand"><a href="index.html">Nurse Census Prediction</a></div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="models.html">Models</a>
+    <a href="methodology.html" class="active">Methodology</a>
+    <a href="dashboards.html">Dashboards</a>
+    <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+<div class="page-body">
+  <div class="page-intro">
+    <h1>Methodology</h1>
+    <p>
+      Pipeline design notes covering data ingestion, leakage-safe feature engineering,
+      per-unit per-horizon model training, evaluation, and deployment.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Data</div>
+    <p style="font-size:13px;line-height:1.6;">
+      The training data is 21 months (Mar 2024 – Dec 2025) of de-identified hourly census
+      and ADT (admit / discharge / transfer) aggregates across 9 active nurse units, plus
+      contextual features (ED census, scheduled surgeries, holiday flags). 139,507 hourly
+      observations after cleaning. Lag features (1–72 hour previous census, rolling 4/8/24h
+      flow rates, 7-day rolling stats) are pre-computed in SQL and consumed directly by the
+      pipeline. Real production deployment would replace the static CSV input with an ETL job
+      pulling the live data warehouse.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Train / validation / test split</div>
+    <table class="perf-table" style="margin-top:12px;">
+      <thead><tr><th>Split</th><th>Date range</th><th>Rows</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>Train</td><td>2024-03-25 – 2025-06-30</td><td>99,772</td><td>71.5%</td></tr>
+        <tr><td>Validation</td><td>2025-07-01 – 2025-09-30</td><td>19,872</td><td>14.2%</td></tr>
+        <tr><td>Test</td><td>2025-10-01 – 2025-12-30</td><td>19,863</td><td>14.2%</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+      Strictly chronological — no shuffling. Train spans full seasonal cycles; validation
+      captures the late-summer trough; test holds out the year-end peak.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. Leakage-safe feature filtering</div>
+    <p style="font-size:13px;line-height:1.6;">
+      For a forecast at horizon H, only features that would be known H hours in advance can
+      be used. The pipeline enforces this automatically: lag features with lag &lt; H are
+      excluded from the feature set when training the H-hour model. For H = 72, that excludes
+      every census lag shorter than 72 hours and every short rolling delta — leaving only
+      temporal/calendar features, the 72-hour and 168-hour lags, and 7-day rolling stats.
+    </p>
+    <p style="font-size:13px;line-height:1.6;margin-top:8px;">
+      Twelve dedicated tests verify this property: for each of 8 horizons, no shorter-lag
+      feature appears in the corresponding feature set; for every horizon, no <code>TARGET_*</code>
+      column is in features.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. Per-unit, per-horizon training</div>
+    <p style="font-size:13px;line-height:1.6;">
+      Nurse units differ markedly in capacity, ADT volatility, and patient mix, so each unit
+      gets its own model rather than a single cross-unit model with unit-as-feature. Tabular
+      and recurrent models additionally train per horizon (one model per (unit, horizon) pair).
+      ARIMA and Prophet train once per unit and forecast at all horizons by slicing — both are
+      univariate so the fitted parameters are horizon-invariant, yielding an 8× training
+      speedup. Training across units is parallelized with joblib.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. Evaluation</div>
+    <p style="font-size:13px;line-height:1.6;">
+      Primary metric: <strong>percentage of forecasts within ±2 patients of the actual census</strong>
+      (operationally meaningful for staffing decisions). Secondary metrics: MAE, RMSE, MAPE.
+      Residual diagnostics include Shapiro-Wilk normality test (sampled if n &gt; 5000) and
+      Ljung-Box autocorrelation. Evaluation is per (model, unit, horizon); aggregated tables
+      report cross-unit means.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. Operational deployment</div>
+    <p style="font-size:13px;line-height:1.6;">
+      A scheduled GitHub Actions workflow runs daily at 12:15 UTC. Each run regenerates a
+      synthetic hourly window calibrated against the real distributions in
+      <code>unit_metadata.csv</code>, runs the export pipeline, rebuilds the static dashboards,
+      and commits the result. GitHub Pages auto-rebuilds and any connected Tableau Public
+      workbook refreshes daily. Production deployment swaps the synthetic generator for
+      a live-data ETL job and leaves the rest of the pipeline unchanged.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7. Reproducibility</div>
+    <p style="font-size:13px;line-height:1.6;">
+      Random seeds set centrally (numpy, random, PyTorch). Dependencies pinned in
+      <code>requirements.txt</code>. All hyperparameters in <code>config/config.yaml</code> —
+      no magic constants in code. 34 pytest cases cover data integrity, leakage prevention,
+      chronological splits, metric correctness, model train/predict, ensemble weights, and
+      feature validation.
+    </p>
+  </div>
+</div>
+</body>
+</html>

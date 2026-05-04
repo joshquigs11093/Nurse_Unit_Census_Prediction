@@ -10,15 +10,193 @@
   --card-bg: #FFFFFF;
   --text: #2A2A2A;
   --muted: #707070;
+  --border: #E0E0E0;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
-  padding: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Top navigation ── */
+.topnav {
+  background: var(--tableau-blue);
+  color: white;
+  padding: 12px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 13px;
 }
+.topnav .brand { font-weight: 600; font-size: 15px; letter-spacing: 0.2px; }
+.topnav .brand a { color: white; text-decoration: none; }
+.topnav .links a {
+  color: white; text-decoration: none; margin-left: 24px;
+  font-size: 13px; opacity: 0.78; padding-bottom: 4px;
+  border-bottom: 2px solid transparent; transition: opacity 0.15s, border 0.15s;
+}
+.topnav .links a:hover { opacity: 1; }
+.topnav .links a.active { opacity: 1; border-bottom-color: white; }
+
+.page-body { padding: 18px; max-width: 1360px; margin: 0 auto; }
+.section { margin-bottom: 28px; }
+
+/* ── Hero (landing page) ── */
+.hero {
+  background: linear-gradient(135deg, var(--tableau-blue) 0%, var(--tableau-light-blue) 100%);
+  color: white;
+  padding: 52px 40px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.hero h1 { font-size: 32px; font-weight: 600; margin-bottom: 12px; }
+.hero .tagline { font-size: 16px; opacity: 0.9; max-width: 760px; line-height: 1.55; }
+.hero .metric-callout {
+  margin-top: 24px; padding: 16px 20px;
+  background: rgba(255,255,255,0.12); border-radius: 4px;
+  display: inline-block;
+}
+.hero .metric-callout .num { font-size: 36px; font-weight: 600; }
+.hero .metric-callout .label { font-size: 13px; opacity: 0.85; }
+.hero .cta-row { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+.hero .cta {
+  padding: 9px 18px; background: white; color: var(--tableau-blue);
+  text-decoration: none; border-radius: 3px; font-weight: 600; font-size: 13px;
+}
+.hero .cta.secondary {
+  background: transparent; color: white; border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* ── At-a-glance KPI grid ── */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 24px;
+}
+.stat-card {
+  background: white; border: 1px solid var(--border);
+  border-left: 4px solid var(--tableau-light-blue);
+  padding: 16px 18px; border-radius: 2px;
+}
+.stat-card .num { font-size: 28px; font-weight: 600; line-height: 1.1; }
+.stat-card .label {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.4px; margin-top: 6px;
+}
+
+/* ── Architecture flow diagram ── */
+.flow-diagram {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 28px 24px; margin: 16px 0;
+}
+.flow-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin: 8px 0; flex-wrap: wrap;
+}
+.flow-step {
+  background: var(--tableau-blue); color: white;
+  padding: 10px 16px; border-radius: 3px;
+  font-size: 12px; font-weight: 500; text-align: center;
+  min-width: 130px;
+}
+.flow-step.muted { background: white; color: var(--text); border: 1px solid var(--border); }
+.flow-step.accent { background: var(--tableau-orange); }
+.flow-step .step-sub {
+  display: block; font-size: 10px; opacity: 0.75; margin-top: 2px; font-weight: 400;
+}
+.flow-arrow { color: var(--muted); font-size: 16px; }
+
+/* ── Featured dashboard preview on landing ── */
+.featured-preview {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 20px; margin-bottom: 24px;
+}
+.featured-preview h3 { font-size: 16px; margin-bottom: 12px; color: var(--tableau-blue); }
+.featured-preview img {
+  width: 100%; height: auto; border: 1px solid var(--border); border-radius: 2px;
+}
+.featured-preview .caption {
+  font-size: 12px; color: var(--muted); margin-top: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+/* ── Model cards (models.html) ── */
+.model-card {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 24px 28px; margin-bottom: 18px;
+  border-left: 4px solid var(--tableau-light-blue);
+}
+.model-card.winner { border-left-color: var(--tableau-green); }
+.model-card .header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.model-card .header h2 { font-size: 18px; font-weight: 600; color: var(--tableau-blue); }
+.model-card .header .family {
+  font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px;
+}
+.model-card .description { font-size: 13px; line-height: 1.55; margin-bottom: 14px; }
+.model-card .grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px;
+}
+.model-card .grid h4 {
+  font-size: 11px; color: var(--tableau-blue); text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 6px;
+}
+.model-card .grid ul { list-style: none; padding-left: 0; font-size: 12px; }
+.model-card .grid li { padding: 3px 0; }
+.model-card .grid li::before { content: "• "; color: var(--muted); }
+.model-card .perf-table {
+  width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;
+}
+.model-card .perf-table th {
+  background: #F8F8F8; padding: 6px 10px; font-weight: 600; text-align: center;
+  border-bottom: 2px solid var(--tableau-blue);
+}
+.model-card .perf-table td {
+  padding: 6px 10px; text-align: center;
+  border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums;
+}
+.model-card .perf-table td.best { background: #E8F4F8; font-weight: 600; }
+
+/* ── Dashboards gallery ── */
+.gallery {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 18px;
+}
+.gallery-card {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  text-decoration: none; color: inherit; display: block;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.gallery-card:hover {
+  transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.gallery-card img {
+  width: 100%; height: 220px; object-fit: cover; object-position: top;
+  border-bottom: 1px solid var(--border);
+}
+.gallery-card .meta { padding: 14px 18px; }
+.gallery-card .meta h3 { font-size: 15px; color: var(--tableau-blue); margin-bottom: 4px; }
+.gallery-card .meta .audience {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.3px; margin-bottom: 8px;
+}
+.gallery-card .meta p { font-size: 12px; line-height: 1.5; }
+
+/* ── Page intro ── */
+.page-intro {
+  margin-bottom: 22px;
+}
+.page-intro h1 {
+  font-size: 26px; font-weight: 600; color: var(--tableau-blue);
+  margin-bottom: 6px;
+}
+.page-intro p { font-size: 14px; color: var(--text); max-width: 880px; }
+
+/* ── Existing dashboard styles (legacy, embedded inside page) ── */
 .dashboard {
   max-width: 1360px;
   margin: 0 auto;
