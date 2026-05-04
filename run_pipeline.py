@@ -141,6 +141,45 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
     return out
 
 
+def _build_forecast_timeline(fp: pd.DataFrame, horizons: list[int]) -> pd.DataFrame:
+    """Long-format timeline. One row per actual census reading + one row per
+    forecast point at its forward timestamp. Column schema:
+      timestamp, unit_id, unit_name, value, series, horizon_h, capacity
+    """
+    rows = []
+    # Actuals
+    for _, r in fp.iterrows():
+        rows.append({
+            "timestamp": r["timestamp"],
+            "unit_id": r["unit_id"],
+            "unit_name": r["unit_name"],
+            "value": int(r["actual_census"]),
+            "series": "Actual",
+            "horizon_h": 0,
+            "capacity": int(r["capacity"]),
+        })
+    # Forecasts: only the latest row per unit holds predictions
+    fp_sorted = fp.sort_values("timestamp")
+    latest_by_unit = fp_sorted.groupby("unit_id").tail(1)
+    for _, r in latest_by_unit.iterrows():
+        anchor_ts = pd.to_datetime(r["timestamp"])
+        for h in horizons:
+            v = r.get(f"pred_{h}hr")
+            if v is None or pd.isna(v):
+                continue
+            forecast_ts = anchor_ts + pd.Timedelta(hours=h)
+            rows.append({
+                "timestamp": forecast_ts.strftime("%Y-%m-%d %H:%M:%S"),
+                "unit_id": r["unit_id"],
+                "unit_name": r["unit_name"],
+                "value": round(float(v), 1),
+                "series": "Forecast",
+                "horizon_h": h,
+                "capacity": int(r["capacity"]),
+            })
+    return pd.DataFrame(rows)
+
+
 def phase_export(
     train: pd.DataFrame,
     val: pd.DataFrame,
@@ -209,6 +248,15 @@ def phase_export(
                     len(fp), fp["unit_id"].nunique())
     else:
         logger.warning("forecast_predictions.csv is empty — no models loaded")
+
+    # 4b. forecast_timeline.csv (long; purpose-built for time-series charts)
+    if not fp.empty:
+        timeline = _build_forecast_timeline(fp, config["forecast_horizons"])
+        timeline.to_csv(tableau_dir / "forecast_timeline.csv", index=False)
+        logger.info("Exported forecast_timeline.csv (%d rows: %d actuals + %d forecasts)",
+                    len(timeline),
+                    int((timeline["series"] == "Actual").sum()),
+                    int((timeline["series"] == "Forecast").sum()))
 
     # 5. executive_summary.csv (current + 72h forecast + capacity utilization)
     latest_72 = test.sort_values(dt_col).groupby(unit_col).tail(72)

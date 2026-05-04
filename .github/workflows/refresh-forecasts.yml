@@ -47,6 +47,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs/tableau/forecast_predictions.csv \
+                  outputs/tableau/forecast_timeline.csv \
                   outputs/tableau/executive_summary.csv \
                   docs/dashboard1.html \
                   docs/dashboard2.html \

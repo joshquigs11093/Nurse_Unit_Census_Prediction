@@ -132,6 +132,51 @@ def write_forecast_predictions(all_rows: list[dict], path: Path) -> None:
         w.writerows(all_rows)
 
 
+def write_forecast_timeline(all_rows: list[dict], now: datetime, path: Path) -> None:
+    """Long-format timeline: one row per (timestamp, unit) for actuals + one row
+    per (forecast_at, unit) for each forecast horizon. Same schema as the
+    real-data export so a Tableau workbook can switch between sources."""
+    fieldnames = ["timestamp", "unit_id", "unit_name", "value",
+                  "series", "horizon_h", "capacity"]
+    out_rows = []
+    now_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
+    for r in all_rows:
+        out_rows.append({
+            "timestamp": r["timestamp"],
+            "unit_id": r["unit_id"],
+            "unit_name": r["unit_name"],
+            "value": float(r["actual_census"]),
+            "series": "Actual",
+            "horizon_h": 0,
+            "capacity": int(r["capacity"]),
+        })
+
+    for r in all_rows:
+        if r["timestamp"] != now_str:
+            continue
+        anchor = now
+        for h in HORIZONS:
+            v = r.get(f"pred_{h}hr")
+            if v == "" or v is None:
+                continue
+            forecast_ts = anchor + timedelta(hours=h)
+            out_rows.append({
+                "timestamp": forecast_ts.strftime("%Y-%m-%d %H:%M:%S"),
+                "unit_id": r["unit_id"],
+                "unit_name": r["unit_name"],
+                "value": float(v),
+                "series": "Forecast",
+                "horizon_h": h,
+                "capacity": int(r["capacity"]),
+            })
+
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        w.writeheader()
+        w.writerows(out_rows)
+
+
 def write_executive_summary(all_rows: list[dict], units: list[dict],
                              now: datetime, path: Path) -> None:
     rows_by_unit = {}
@@ -182,12 +227,15 @@ def main() -> None:
 
     fp_path = TABLEAU_DIR / "forecast_predictions.csv"
     es_path = TABLEAU_DIR / "executive_summary.csv"
+    tl_path = TABLEAU_DIR / "forecast_timeline.csv"
 
     write_forecast_predictions(all_rows, fp_path)
     write_executive_summary(all_rows, units, now, es_path)
+    write_forecast_timeline(all_rows, now, tl_path)
 
     print(f"Refreshed {fp_path.name} ({len(all_rows)} rows)")
     print(f"Refreshed {es_path.name} ({len(units)} units)")
+    print(f"Refreshed {tl_path.name}")
     print(f"Operational refresh complete at {now.isoformat()}Z")
 
 
