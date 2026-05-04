@@ -1,0 +1,151 @@
+data:
+  raw_path: "data/raw/postsql.csv"
+  processed_dir: "data/processed"
+  datetime_col: "LOCATION_DATE_TIME"
+  unit_col: "NURSE_UNIT_CD"
+  census_col: "CENSUS"
+  drop_columns: ["Unnamed: 0"]
+
+  # Chronological train/val/test split
+  # ~21 months of data: 70% train, 15% val, 15% test
+  train_end: "2025-06-30"
+  val_end: "2025-09-30"
+  # test: 2025-10-01 to 2025-12-30
+
+forecast_horizons: [1, 2, 3, 4, 12, 24, 48, 72]
+
+target_columns:
+  1: "TARGET_CENSUS_1HR"
+  2: "TARGET_CENSUS_2HR"
+  3: "TARGET_CENSUS_3HR"
+  4: "TARGET_CENSUS_4HR"
+  12: "TARGET_CENSUS_12HR"
+  24: "TARGET_CENSUS_24HR"
+  48: "TARGET_CENSUS_48HR"
+  72: "TARGET_CENSUS_72HR"
+
+features:
+  temporal:
+    - HOUR_OF_DAY
+    - DAY_OF_WEEK
+    - MONTH_OF_YEAR
+    - WEEK_OF_YEAR
+    - QUARTER_OF_YEAR
+    - IS_WEEKEND
+    - IS_HOLIDAY
+    - IS_DAY_BEFORE_HOLIDAY
+    - IS_DAY_AFTER_HOLIDAY
+  census_lags:
+    - CENSUS
+    - ED_CENSUS
+    - CENSUS_PREV_1HR
+    - CENSUS_PREV_2HR
+    - CENSUS_PREV_3HR
+    - CENSUS_PREV_4HR
+    - CENSUS_PREV_12HR
+    - CENSUS_SAME_HOUR_YESTERDAY
+    - CENSUS_PREV_48HR
+    - CENSUS_PREV_72HR
+    - CENSUS_SAME_HOUR_LAST_WEEK
+    - CENSUS_DELTA_1HR
+    - CENSUS_DELTA_4HR
+    - CENSUS_DELTA_12HR
+    - CENSUS_DELTA_24HR
+    - CENSUS_ROLLING_7DAY_AVG
+    - CENSUS_ROLLING_7DAY_MAX
+    - CENSUS_ROLLING_7DAY_MIN
+    - CENSUS_VS_7DAY_AVG
+    - IS_CENSUS_SPIKE
+    - DAYS_SINCE_LAST_SPIKE
+  adt_flow:
+    - TOTAL_ADMITS
+    - TOTAL_TRANSFERS_IN
+    - TOTAL_DISCHARGES
+    - TOTAL_TRANSFERS_OUT
+    - NET_FLOW
+    - ADMITS_ROLLING_4HR
+    - DISCHARGES_ROLLING_4HR
+    - TRANSFERS_IN_ROLLING_4HR
+    - TRANSFERS_OUT_ROLLING_4HR
+    - ADMITS_ROLLING_8HR
+    - DISCHARGES_ROLLING_8HR
+    - ADMITS_ROLLING_24HR
+    - DISCHARGES_ROLLING_24HR
+    - NET_FLOW_ROLLING_8HR
+  ed_features:
+    - ED_CENSUS_ROLLING_24HR_AVG
+    - ED_CENSUS_ROLLING_24HR_SUM
+    - ED_CENSUS_DELTA_1HR
+    - ED_CENSUS_DELTA_4HR
+  operational:
+    - TOTAL_DC_ORDERS
+    - PATIENTS_WITH_DC_ORDER
+    - PENDING_DC_PRESSURE
+    - SCHEDULED_SURGERIES
+    - SURGERIES_NEXT_4HR_SCHEDULED
+    - SURGERIES_NEXT_8HR_SCHEDULED
+    - SURGERIES_NEXT_12HR_SCHEDULED
+
+models:
+  arima:
+    enabled: true
+    max_p: 5
+    max_d: 2
+    max_q: 5
+    seasonal_period: 24
+    use_auto: true
+
+  prophet:
+    enabled: true
+    yearly_seasonality: true
+    weekly_seasonality: true
+    daily_seasonality: true
+    changepoint_prior_scale: 0.05
+
+  lstm:
+    enabled: true
+    sequence_length: 168
+    hidden_units: 64
+    num_layers: 2
+    dropout: 0.2
+    epochs: 50
+    batch_size: 64
+    learning_rate: 0.001
+    early_stopping_patience: 10
+
+  random_forest:
+    enabled: true
+    n_estimators: 200
+    max_depth: 20
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+
+  lightgbm:
+    enabled: true
+    n_estimators: 500
+    max_depth: 8
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 20
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    early_stopping_rounds: 50
+
+  ensemble:
+    enabled: true
+    method: "weighted_average"
+
+evaluation:
+  primary_metric: "within_2_patients_pct"
+  metrics: ["mae", "rmse", "mape", "within_2_patients_pct"]
+  target_accuracy: 2
+
+random_seed: 42
+
+output:
+  figures_dir: "outputs/figures"
+  reports_dir: "outputs/reports"
+  tableau_dir: "outputs/tableau"
+  models_dir: "models"

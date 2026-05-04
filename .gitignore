@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+.env.local
+
+# Data — user-supplied; never tracked
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Build artifacts
+/models/
+/outputs/figures/*
+/outputs/reports/
+!/outputs/figures/dashboards/
+
+# Notebooks (development; not part of deployed application)
+/notebooks/
+
+# Documentation tooling (not part of application)
+docs/*.md
+docs/*.js
+docs/requirements/
+docs/dashboards/
+docs/node_modules/
+docs/package*.json
+docs/data/
+!docs/index.html
+!docs/dashboard*.html
+!docs/style.css
+
+# Cache
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

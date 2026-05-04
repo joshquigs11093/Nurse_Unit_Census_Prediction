@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Operational Census Forecast</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <h1>Operational Census Forecast</h1>
+        <div class="subtitle">House Supervisor View</div>
+      </div>
+      <div class="meta">
+        <div><strong>Unit 705089</strong></div>
+        <div>As of 2025-12-30 23:00:00</div>
+      </div>
+    </div>
+    <div class="dashboard-body">
+      <div class="section-title">Current Status</div>
+      <div class="kpi-row" style="grid-template-columns: 1fr 1fr 2fr;">
+        <div class="kpi-card">
+          <div class="label">Current Census</div>
+          <div class="value">16</div>
+          <div class="sublabel">patients</div>
+        </div>
+        <div class="kpi-card">
+          <div class="label">Bed Capacity</div>
+          <div class="value">17</div>
+          <div class="sublabel">max observed</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="label">Utilization</div>
+          <div class="value">94.1%</div>
+          <div class="gauge" style="margin-top: 8px;">
+            <div class="fill alert" style="width: 94.1%"></div>
+            <div class="gauge-label">94%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Forecast Cards (Multi-Horizon)</div>
+      <div class="kpi-row tight">
+      <div class="kpi-card ">
+        <div class="label">1h Forecast</div>
+        <div class="value">12.4</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">2h Forecast</div>
+        <div class="value">12.2</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">3h Forecast</div>
+        <div class="value">14.1</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">4h Forecast</div>
+        <div class="value">14.7</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">12h Forecast</div>
+        <div class="value">15.4</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">24h Forecast</div>
+        <div class="value">14.5</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">48h Forecast</div>
+        <div class="value">14.8</div>
+        <div class="sublabel">patients</div>
+      </div>
+      <div class="kpi-card ">
+        <div class="label">72h Forecast</div>
+        <div class="value">14.9</div>
+        <div class="sublabel">patients</div>
+      </div></div>
+
+      <div class="section-title">Census Trend — Last 7 Days + 72h Forecast</div>
+      <div id="ts-chart" style="height: 320px;"></div>
+    </div>
+    <div class="footer-note">
+      Data: forecast_predictions.csv, unit_metadata.csv · Forecasts via best tabular model per horizon (RF for 1h, LightGBM for 2-72h)
+    </div>
+  </div>
+
+  <script>
+    const actualX = ["2025-12-24 00:00:00","2025-12-24 01:00:00","2025-12-24 02:00:00","2025-12-24 03:00:00","2025-12-24 04:00:00","2025-12-24 05:00:00","2025-12-24 06:00:00","2025-12-24 07:00:00","2025-12-24 08:00:00","2025-12-24 09:00:00","2025-12-24 10:00:00","2025-12-24 11:00:00","2025-12-24 12:00:00","2025-12-24 13:00:00","2025-12-24 14:00:00","2025-12-24 15:00:00","2025-12-24 16:00:00","2025-12-24 17:00:00","2025-12-24 18:00:00","2025-12-24 19:00:00","2025-12-24 20:00:00","2025-12-24 21:00:00","2025-12-24 22:00:00","2025-12-24 23:00:00","2025-12-25 00:00:00","2025-12-25 01:00:00","2025-12-25 02:00:00","2025-12-25 03:00:00","2025-12-25 04:00:00","2025-12-25 05:00:00","2025-12-25 06:00:00","2025-12-25 07:00:00","2025-12-25 08:00:00","2025-12-25 09:00:00","2025-12-25 10:00:00","2025-12-25 11:00:00","2025-12-25 12:00:00","2025-12-25 13:00:00","2025-12-25 14:00:00","2025-12-25 15:00:00","2025-12-25 16:00:00","2025-12-25 17:00:00","2025-12-25 18:00:00","2025-12-25 19:00:00","2025-12-25 20:00:00","2025-12-25 21:00:00","2025-12-25 22:00:00","2025-12-25 23:00:00","2025-12-26 00:00:00","2025-12-26 01:00:00","2025-12-26 02:00:00","2025-12-26 03:00:00","2025-12-26 04:00:00","2025-12-26 05:00:00","2025-12-26 06:00:00","2025-12-26 07:00:00","2025-12-26 08:00:00","2025-12-26 09:00:00","2025-12-26 10:00:00","2025-12-26 11:00:00","2025-12-26 12:00:00","2025-12-26 13:00:00","2025-12-26 14:00:00","2025-12-26 15:00:00","2025-12-26 16:00:00","2025-12-26 17:00:00","2025-12-26 18:00:00","2025-12-26 19:00:00","2025-12-26 20:00:00","2025-12-26 21:00:00","2025-12-26 22:00:00","2025-12-26 23:00:00","2025-12-27 00:00:00","2025-12-27 01:00:00","2025-12-27 02:00:00","2025-12-27 03:00:00","2025-12-27 04:00:00","2025-12-27 05:00:00","2025-12-27 06:00:00","2025-12-27 07:00:00","2025-12-27 08:00:00","2025-12-27 09:00:00","2025-12-27 10:00:00","2025-12-27 11:00:00","2025-12-27 12:00:00","2025-12-27 13:00:00","2025-12-27 14:00:00","2025-12-27 15:00:00","2025-12-27 16:00:00","2025-12-27 17:00:00","2025-12-27 18:00:00","2025-12-27 19:00:00","2025-12-27 20:00:00","2025-12-27 21:00:00","2025-12-27 22:00:00","2025-12-27 23:00:00","2025-12-28 00:00:00","2025-12-28 01:00:00","2025-12-28 02:00:00","2025-12-28 03:00:00","2025-12-28 04:00:00","2025-12-28 05:00:00","2025-12-28 06:00:00","2025-12-28 07:00:00","2025-12-28 08:00:00","2025-12-28 09:00:00","2025-12-28 10:00:00","2025-12-28 11:00:00","2025-12-28 12:00:00","2025-12-28 13:00:00","2025-12-28 14:00:00","2025-12-28 15:00:00","2025-12-28 16:00:00","2025-12-28 17:00:00","2025-12-28 18:00:00","2025-12-28 19:00:00","2025-12-28 20:00:00","2025-12-28 21:00:00","2025-12-28 22:00:00","2025-12-28 23:00:00","2025-12-29 00:00:00","2025-12-29 01:00:00","2025-12-29 02:00:00","2025-12-29 03:00:00","2025-12-29 04:00:00","2025-12-29 05:00:00","2025-12-29 06:00:00","2025-12-29 07:00:00","2025-12-29 08:00:00","2025-12-29 09:00:00","2025-12-29 10:00:00","2025-12-29 11:00:00","2025-12-29 12:00:00","2025-12-29 13:00:00","2025-12-29 14:00:00","2025-12-29 15:00:00","2025-12-29 16:00:00","2025-12-29 17:00:00","2025-12-29 18:00:00","2025-12-29 19:00:00","2025-12-29 20:00:00","2025-12-29 21:00:00","2025-12-29 22:00:00","2025-12-29 23:00:00","2025-12-30 00:00:00","2025-12-30 01:00:00","2025-12-30 02:00:00","2025-12-30 03:00:00","2025-12-30 04:00:00","2025-12-30 05:00:00","2025-12-30 06:00:00","2025-12-30 07:00:00","2025-12-30 08:00:00","2025-12-30 09:00:00","2025-12-30 10:00:00","2025-12-30 11:00:00","2025-12-30 12:00:00","2025-12-30 13:00:00","2025-12-30 14:00:00","2025-12-30 15:00:00","2025-12-30 16:00:00","2025-12-30 17:00:00","2025-12-30 18:00:00","2025-12-30 19:00:00","2025-12-30 20:00:00","2025-12-30 21:00:00","2025-12-30 22:00:00","2025-12-30 23:00:00"];
+    const actualY = [14,15,15,15,16,16,16,17,17,17,17,16,14,13,15,13,11,11,12,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,14,14,14,14,14,15,15,15,16,16,16,16,15,15,15,15,15,15,15,15,16,16,17,17,17,17,17,16,15,15,14,14,15,15,16,16,16,16,17,17,17,17,17,17,17,17,17,17,17,17,17,16,16,15,14,14,13,13,14,16,16,17,17,17,17,17,17,17,17,17,16,15,15,14,15,15,16,16,15,15,15,15,15,15,15,15,15,16,16,16,16,17,17,17,17,17,16,16,16,14,14,14,13,11,12,11,13,15,16,15,15,15,15,15,15,17,17,17,17,17,17,15,15,14,16,15,16,15,15,14,15,15,15,16];
+    const fcX = ["2025-12-30 23:00:00","2025-12-31 07:00","2025-12-31 08:00","2025-12-31 09:00","2025-12-31 10:00","2025-12-31 18:00","2026-01-01 06:00","2026-01-02 06:00","2026-01-03 06:00"];
+    const fcY = [16,12.4,12.2,14.1,14.7,15.4,14.5,14.8,14.9];
+    const capacity = 17;
+    const layout = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
+    layout.shapes = [{
+      type: "line", xref: "paper", x0: 0, x1: 1,
+      yref: "y", y0: capacity, y1: capacity,
+      line: { color: "#E15759", width: 1.5, dash: "dash" }
+    }];
+    layout.annotations = [{
+      xref: "paper", x: 1, yref: "y", y: capacity, xanchor: "right", yanchor: "bottom",
+      text: "Capacity " + capacity, showarrow: false,
+      font: { color: "#E15759", size: 11 }
+    }];
+    layout.yaxis.title = { text: "Census", font: { size: 11 } };
+    layout.xaxis.title = { text: "Time", font: { size: 11 } };
+    layout.legend = { orientation: "h", y: 1.12, x: 0 };
+
+    Plotly.newPlot("ts-chart", [
+      {
+        x: actualX, y: actualY, name: "Actual census",
+        type: "scatter", mode: "lines",
+        line: { color: "#1F4E79", width: 2 }
+      },
+      {
+        x: fcX, y: fcY, name: "Forecast",
+        type: "scatter", mode: "lines+markers",
+        line: { color: "#F28E2B", width: 2, dash: "dot" },
+        marker: { size: 7, color: "#F28E2B" }
+      }
+    ], layout, { displayModeBar: false, responsive: true })
+    .then(() => { window.RENDERED = true; });
+  </script>
+</body>
+</html>

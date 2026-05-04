@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Executive Census Summary</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <h1>Executive Census Summary</h1>
+        <div class="subtitle">Leadership View</div>
+      </div>
+      <div class="meta">
+        <div>9 active nurse units</div>
+        <div>Census prediction · 1–72h horizons</div>
+      </div>
+    </div>
+    <div class="dashboard-body">
+      <div class="section-title">House-Wide KPIs</div>
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="label">Total Current Census</div>
+          <div class="value">139</div>
+          <div class="sublabel">across 9 units</div>
+        </div>
+        <div class="kpi-card">
+          <div class="label">Total Bed Capacity</div>
+          <div class="value">154</div>
+          <div class="sublabel">max observed historical</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="label">Average Utilization</div>
+          <div class="value">91.7%</div>
+          <div class="sublabel">across all units</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="label">Units Over 90%</div>
+          <div class="value">7</div>
+          <div class="sublabel">capacity alerts</div>
+        </div>
+      </div>
+
+      <div class="split-row">
+        <div>
+          <div class="section-title">Utilization by Unit (Sorted)</div>
+          <div id="util-bar" style="height: 360px;"></div>
+        </div>
+        <div>
+          <div class="section-title">Best Model Recommendations</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Horizon</th>
+                <th>Model</th>
+                <th style="text-align:right;">±2 Acc</th>
+              </tr>
+            </thead>
+            <tbody>
+    <tr>
+      <td><strong>1h</strong></td>
+      <td>RandomForest</td>
+      <td class="num">99.7%</td>
+    </tr>
+    <tr>
+      <td><strong>2h</strong></td>
+      <td>LightGBM</td>
+      <td class="num">97.8%</td>
+    </tr>
+    <tr>
+      <td><strong>3h</strong></td>
+      <td>LightGBM</td>
+      <td class="num">95.8%</td>
+    </tr>
+    <tr>
+      <td><strong>4h</strong></td>
+      <td>LightGBM</td>
+      <td class="num">94.5%</td>
+    </tr>
+    <tr>
+      <td><strong>12h</strong></td>
+      <td>LSTM</td>
+      <td class="num">90.5%</td>
+    </tr>
+    <tr>
+      <td><strong>24h</strong></td>
+      <td>LSTM</td>
+      <td class="num">89.0%</td>
+    </tr>
+    <tr>
+      <td><strong>48h</strong></td>
+      <td>LSTM</td>
+      <td class="num">87.5%</td>
+    </tr>
+    <tr>
+      <td><strong>72h</strong></td>
+      <td>LSTM</td>
+      <td class="num">87.6%</td>
+    </tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top: 18px;">Per-Unit Detail</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th style="text-align:right;">Current</th>
+            <th style="text-align:right;">Capacity</th>
+            <th style="text-align:right;">72h Forecast</th>
+            <th>Utilization</th>
+            <th>Alert</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr class="alert">
+        <td><strong>705091</strong></td>
+        <td class="num">20</td>
+        <td class="num">20</td>
+        <td class="num">18.7</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 100%"></div>
+            <div class="gauge-label">100%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>21334825</strong></td>
+        <td class="num">13</td>
+        <td class="num">13</td>
+        <td class="num">11.9</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 100%"></div>
+            <div class="gauge-label">100%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>1775257343</strong></td>
+        <td class="num">19</td>
+        <td class="num">20</td>
+        <td class="num">18.1</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 95%"></div>
+            <div class="gauge-label">95%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>705089</strong></td>
+        <td class="num">16</td>
+        <td class="num">17</td>
+        <td class="num">14.9</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 94.1%"></div>
+            <div class="gauge-label">94%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>4452986337</strong></td>
+        <td class="num">13</td>
+        <td class="num">14</td>
+        <td class="num">12.0</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 92.9%"></div>
+            <div class="gauge-label">93%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>21336305</strong></td>
+        <td class="num">12</td>
+        <td class="num">13</td>
+        <td class="num">12.1</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 92.3%"></div>
+            <div class="gauge-label">92%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="alert">
+        <td><strong>97635816</strong></td>
+        <td class="num">10</td>
+        <td class="num">11</td>
+        <td class="num">10.3</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill alert" style="width: 90.9%"></div>
+            <div class="gauge-label">91%</div>
+          </div>
+        </td>
+        <td><span class="badge red">>90%</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>705092</strong></td>
+        <td class="num">10</td>
+        <td class="num">12</td>
+        <td class="num">10.3</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill warn" style="width: 83.3%"></div>
+            <div class="gauge-label">83%</div>
+          </div>
+        </td>
+        <td><span class="badge green">OK</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>705090</strong></td>
+        <td class="num">26</td>
+        <td class="num">34</td>
+        <td class="num">27.0</td>
+        <td>
+          <div class="gauge" style="height: 22px;">
+            <div class="fill warn" style="width: 76.5%"></div>
+            <div class="gauge-label">77%</div>
+          </div>
+        </td>
+        <td><span class="badge green">OK</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+    <div class="footer-note">
+      Data: executive_summary.csv · unit_metadata.csv · best_model_per_horizon.csv
+    </div>
+  </div>
+
+  <script>
+    const exec = [{"unit_id":705091,"latest_census":20,"census_24h_ago":18,"census_trend_72h":0,"max_census_72h":20,"min_census_72h":15,"capacity":20,"utilization_pct":100,"forecast_72hr":18.7,"alert_over_90pct":"True"},{"unit_id":21334825,"latest_census":13,"census_24h_ago":12,"census_trend_72h":0,"max_census_72h":13,"min_census_72h":10,"capacity":13,"utilization_pct":100,"forecast_72hr":11.9,"alert_over_90pct":"True"},{"unit_id":1775257343,"latest_census":19,"census_24h_ago":20,"census_trend_72h":0.01,"max_census_72h":20,"min_census_72h":16,"capacity":20,"utilization_pct":95,"forecast_72hr":18.1,"alert_over_90pct":"True"},{"unit_id":705089,"latest_census":16,"census_24h_ago":15,"census_trend_72h":-0.01,"max_census_72h":17,"min_census_72h":11,"capacity":17,"utilization_pct":94.1,"forecast_72hr":14.9,"alert_over_90pct":"True"},{"unit_id":4452986337,"latest_census":13,"census_24h_ago":14,"census_trend_72h":0,"max_census_72h":14,"min_census_72h":8,"capacity":14,"utilization_pct":92.9,"forecast_72hr":12,"alert_over_90pct":"True"},{"unit_id":21336305,"latest_census":12,"census_24h_ago":13,"census_trend_72h":0,"max_census_72h":13,"min_census_72h":10,"capacity":13,"utilization_pct":92.3,"forecast_72hr":12.1,"alert_over_90pct":"True"},{"unit_id":97635816,"latest_census":10,"census_24h_ago":11,"census_trend_72h":-0.01,"max_census_72h":11,"min_census_72h":8,"capacity":11,"utilization_pct":90.9,"forecast_72hr":10.3,"alert_over_90pct":"True"},{"unit_id":705092,"latest_census":10,"census_24h_ago":12,"census_trend_72h":0,"max_census_72h":12,"min_census_72h":7,"capacity":12,"utilization_pct":83.3,"forecast_72hr":10.3,"alert_over_90pct":"False"},{"unit_id":705090,"latest_census":26,"census_24h_ago":30,"census_trend_72h":-0.01,"max_census_72h":34,"min_census_72h":22,"capacity":34,"utilization_pct":76.5,"forecast_72hr":27,"alert_over_90pct":"False"}];
+    const layoutBase = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
+    const utilLayout = JSON.parse(JSON.stringify(layoutBase));
+    utilLayout.margin = { t: 20, r: 20, b: 70, l: 50 };
+    utilLayout.xaxis = { ...utilLayout.xaxis, type: "category",
+                         title: { text: "Nurse unit", font: { size: 11 } } };
+    utilLayout.yaxis.title = { text: "Utilization (%)", font: { size: 11 } };
+    utilLayout.yaxis.range = [0, 110];
+    utilLayout.shapes = [{
+      type: "line", xref: "paper", x0: 0, x1: 1,
+      yref: "y", y0: 90, y1: 90,
+      line: { color: "#E15759", width: 1.5, dash: "dash" }
+    }];
+    utilLayout.annotations = [{
+      xref: "paper", x: 1, yref: "y", y: 90, xanchor: "right", yanchor: "bottom",
+      text: "Alert threshold 90%", showarrow: false,
+      font: { color: "#E15759", size: 11 }
+    }];
+
+    const colors = exec.map(r => {
+      if (r.utilization_pct >= 90) return "#E15759";
+      if (r.utilization_pct >= 75) return "#F28E2B";
+      return "#4E79A7";
+    });
+
+    Plotly.newPlot("util-bar", [{
+      x: exec.map(r => String(r.unit_id)),
+      y: exec.map(r => r.utilization_pct),
+      type: "bar",
+      marker: { color: colors },
+      text: exec.map(r => r.utilization_pct.toFixed(0) + "%"),
+      textposition: "outside",
+      textfont: { size: 11 },
+      hoverinfo: "skip"
+    }], utilLayout, { displayModeBar: false })
+    .then(() => { window.RENDERED = true; });
+  </script>
+</body>
+</html>

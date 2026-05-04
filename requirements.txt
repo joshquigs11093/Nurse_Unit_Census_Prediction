@@ -1,0 +1,36 @@
+# Python dependencies
+
+# Core data processing
+pandas>=2.0
+numpy>=1.24
+
+# Machine learning
+scikit-learn>=1.3
+lightgbm>=4.0
+torch>=2.0
+
+# Time series & statistical models
+statsmodels>=0.14
+prophet>=1.1
+
+# Visualization
+matplotlib>=3.7
+seaborn>=0.12
+
+# Development environment
+jupyter
+ipykernel
+
+# Data connectivity (original SQL pull)
+pyodbc
+
+# Configuration & serialization
+pyyaml
+joblib
+
+# Excel/report export
+openpyxl
+pyarrow
+
+# Testing
+pytest

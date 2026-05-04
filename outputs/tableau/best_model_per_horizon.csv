@@ -1,0 +1,9 @@
+horizon,model,within_2_patients_pct,mae
+1,RandomForest,99.7,0.27
+2,LightGBM,97.79,0.5
+3,LightGBM,95.75,0.63
+4,LightGBM,94.46,0.72
+12,LSTM,90.52,0.95
+24,LSTM,89.02,0.97
+48,LSTM,87.46,1.03
+72,LSTM,87.58,1.2
