@@ -2,7 +2,14 @@
 
 Hourly patient-census forecasting across hospital nurse units, with multi-horizon predictions (1–72 hours) feeding three operational dashboards. End-to-end deployed pipeline from synthetic data feed → forecast generation → published dashboards.
 
-**Live demo:** https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/
+**Live site:** https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/
+
+| Page | URL fragment |
+|---|---|
+| Landing — project overview, KPIs, architecture | `/` |
+| Model cards — six models with hyperparameters, accuracy tables, strengths/limits | `/models.html` |
+| Methodology — pipeline, splits, leakage filtering, evaluation, deployment | `/methodology.html` |
+| Dashboards gallery + three full-screen dashboards | `/dashboards.html` |
 
 ![Executive Dashboard](outputs/figures/dashboards/dashboard3.png)
 
@@ -77,6 +84,20 @@ src/
 run_pipeline.py                    # entry point: clean | train | export | all
 config/config.yaml                 # all hyperparameters and split dates
 tests/test_pipeline.py             # 34 pytest cases
+
+scripts/
+├── generate_synthetic_hour.py     # synthetic hourly ADT feed for the deployed demo
+└── build_dashboards.js            # generates the static site (HTML + CSS + screenshots)
+
+.github/workflows/
+└── refresh-forecasts.yml          # daily cron: synthesize → predict → publish
+
+docs/                              # GitHub Pages site source
+├── index.html                     # landing
+├── models.html                    # model cards (six)
+├── methodology.html               # pipeline walkthrough
+├── dashboards.html                # gallery
+└── dashboard{1,2,3}.html          # full-screen Plotly dashboards
 ```
 
 ### Key design decisions
@@ -116,13 +137,17 @@ Phases can be run individually: `--phase clean`, `--phase train`, `--phase expor
 | `outputs/tableau/executive_summary.csv` | Per-unit current census, capacity, utilization %, 72h forecast, alert flag |
 | `models/{unit_id}/...` | Trained per-unit artifacts (joblib, .pt, .json) |
 
-## Dashboards
+## Site map
 
-The live site has three views:
+The deployed site has four top-level pages plus the three full-screen dashboards:
 
-1. **Operational Census Forecast** — house-supervisor view: current census, multi-horizon forecast cards, 7-day actual vs. predicted trend, capacity alerts.
-2. **Model Performance Analytics** — process-improvement view: model × horizon accuracy heatmap, per-unit accuracy breakdown.
-3. **Executive Census Summary** — leadership view: house-wide KPIs, utilization-by-unit ranking, best-model recommendations, per-unit detail with capacity gauges.
+1. **Landing** (`/`) — hero, KPI cards, operational architecture diagram, featured dashboard preview, quick-link cards.
+2. **Model cards** (`/models.html`) — Mitchell-style cards for all six models (RF, LightGBM, LSTM, ARIMA, Prophet, Ensemble) with architecture, hyperparameters, strengths, limitations, and per-horizon validation accuracy tables. Comparison heatmap at the top.
+3. **Methodology** (`/methodology.html`) — data, train/val/test split, leakage-safe filtering, per-unit-per-horizon training rationale, evaluation metrics, deployment workflow, reproducibility.
+4. **Dashboards gallery** (`/dashboards.html`) — preview cards linking to:
+   - **Operational Census Forecast** — house-supervisor view: current census, multi-horizon forecast cards, 7-day actual vs. predicted trend, capacity alerts.
+   - **Model Performance Analytics** — process-improvement view: model × horizon accuracy heatmap, per-unit accuracy breakdown.
+   - **Executive Census Summary** — leadership view: house-wide KPIs, utilization-by-unit ranking, best-model recommendations, per-unit detail with capacity gauges.
 
 ## Privacy
 
