@@ -19,7 +19,7 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 | Model Performance Analytics | https://public.tableau.com/shared/DWG6QTPDZ |
 | Executive Census Summary | https://public.tableau.com/shared/M8QMRYP65 |
 
-![Executive Dashboard](outputs/figures/dashboards/dashboard3.png)
+[![Executive Dashboard — Tableau Public](https://public.tableau.com/static/images/M8/M8QMRYP65/1.png)](https://public.tableau.com/shared/M8QMRYP65)
 
 ## What it does
 

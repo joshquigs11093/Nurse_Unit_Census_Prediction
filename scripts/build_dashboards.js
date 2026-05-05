@@ -92,6 +92,8 @@ body {
 .topnav .links a.active { opacity: 1; border-bottom-color: white; }
 
 .page-body { padding: 18px; max-width: 1360px; margin: 0 auto; }
+.page-body.wide { max-width: 1500px; }
+.page-body.wide .dashboard { max-width: 1480px; }
 .section { margin-bottom: 28px; }
 
 /* ── Hero (landing page) ── */
@@ -391,6 +393,14 @@ const TABLEAU_VIZZES = {
   },
 };
 
+// Tableau Public auto-generates thumbnail images for every published workbook.
+// They update whenever you re-publish, so they always reflect the current viz.
+function tableauThumbnail(viz) {
+  const code = viz.path.split("/").pop();
+  const prefix = code.slice(0, 2);
+  return `https://public.tableau.com/static/images/${prefix}/${code}/1.png`;
+}
+
 function tableauEmbed(viz) {
   const code = viz.path.split("/").pop();
   const prefix = code.slice(0, 2);
@@ -425,12 +435,12 @@ function tableauEmbed(viz) {
     (function() {
       var divElement = document.getElementById("${viz.vizId}");
       var vizElement = divElement.getElementsByTagName("object")[0];
-      if (divElement.offsetWidth > 800) {
+      if (divElement.offsetWidth >= 1400) {
         vizElement.style.width = "1400px"; vizElement.style.height = "950px";
-      } else if (divElement.offsetWidth > 500) {
-        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else if (divElement.offsetWidth > 800) {
+        vizElement.style.width = "100%"; vizElement.style.height = "900px";
       } else {
-        vizElement.style.width = "100%"; vizElement.style.height = "2000px";
+        vizElement.style.width = "100%"; vizElement.style.height = "1800px";
       }
       var scriptElement = document.createElement("script");
       scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
@@ -467,7 +477,7 @@ function buildDashboardEmbed(viz) {
 </head>
 <body>
 ${navBar("dashboards")}
-<div class="page-body">
+<div class="page-body wide">
   <div class="dashboard">
     <div class="dashboard-header">
       <div>
@@ -1034,7 +1044,7 @@ ${navBar("home")}
 
   <section class="section featured-preview">
     <h3>Featured: Executive Census Summary</h3>
-    <a href="dashboard3.html"><img src="previews/dashboard3.png" alt="Executive Census Summary preview"></a>
+    <a href="dashboard3.html"><img src="${tableauThumbnail(TABLEAU_VIZZES[3])}" alt="Executive Census Summary preview"></a>
     <div class="caption">
       <span>House-wide capacity utilization, 72-hour forecasts per unit, capacity alerts.</span>
       <a href="dashboard3.html">View live →</a>
@@ -1500,7 +1510,7 @@ ${navBar("dashboards")}
 
   <div class="gallery">
     <a class="gallery-card" href="dashboard1.html">
-      <img src="previews/dashboard1.png" alt="Operational Census Forecast preview">
+      <img src="${tableauThumbnail(TABLEAU_VIZZES[1])}" alt="Operational Census Forecast preview">
       <div class="meta">
         <h3>Operational Census Forecast</h3>
         <div class="audience">House Supervisors</div>
@@ -1508,7 +1518,7 @@ ${navBar("dashboards")}
       </div>
     </a>
     <a class="gallery-card" href="dashboard2.html">
-      <img src="previews/dashboard2.png" alt="Model Performance Analytics preview">
+      <img src="${tableauThumbnail(TABLEAU_VIZZES[2])}" alt="Model Performance Analytics preview">
       <div class="meta">
         <h3>Model Performance Analytics</h3>
         <div class="audience">Process Improvement</div>
@@ -1516,7 +1526,7 @@ ${navBar("dashboards")}
       </div>
     </a>
     <a class="gallery-card" href="dashboard3.html">
-      <img src="previews/dashboard3.png" alt="Executive Census Summary preview">
+      <img src="${tableauThumbnail(TABLEAU_VIZZES[3])}" alt="Executive Census Summary preview">
       <div class="meta">
         <h3>Executive Census Summary</h3>
         <div class="audience">Leadership</div>
@@ -1535,15 +1545,8 @@ ${navBar("dashboards")}
 </html>`;
 }
 
-// ── Copy preview PNGs into docs/previews/ so GitHub Pages can serve them ──
-const previewDir = path.join(OUT_HTML_DIR, "previews");
-fs.mkdirSync(previewDir, { recursive: true });
-for (const i of [1, 2, 3]) {
-  const src = path.join(OUT_PNG_DIR, `dashboard${i}.png`);
-  if (fs.existsSync(src)) {
-    fs.copyFileSync(src, path.join(previewDir, `dashboard${i}.png`));
-  }
-}
+// Preview thumbnails are now served directly from Tableau Public's CDN
+// (https://public.tableau.com/static/images/...), so no local copy step needed.
 
 // ── Write HTML and CSS ──
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);

@@ -42,6 +42,8 @@ body {
 .topnav .links a.active { opacity: 1; border-bottom-color: white; }
 
 .page-body { padding: 18px; max-width: 1360px; margin: 0 auto; }
+.page-body.wide { max-width: 1500px; }
+.page-body.wide .dashboard { max-width: 1480px; }
 .section { margin-bottom: 28px; }
 
 /* ── Hero (landing page) ── */
