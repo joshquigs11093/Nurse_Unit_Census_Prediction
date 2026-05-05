@@ -1,5 +1,7 @@
 # Nurse Unit Census Prediction
 
+[![Tests](https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction/actions/workflows/tests.yml/badge.svg)](https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction/actions/workflows/tests.yml)
+
 Hourly patient-census forecasting across hospital nurse units, with multi-horizon predictions (1–72 hours) feeding three operational dashboards. End-to-end deployed pipeline from synthetic data feed → forecast generation → published dashboards.
 
 **Live site:** https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/
@@ -9,6 +11,7 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 | Landing — project overview, KPIs, architecture | `/` |
 | Model cards — six models with hyperparameters, accuracy tables, strengths/limits | `/models.html` |
 | Methodology — pipeline, splits, leakage filtering, evaluation, deployment | `/methodology.html` |
+| Tests — full pytest catalog with status pills, summary cards, CI badge | `/tests.html` |
 | Dashboards gallery + three full-screen dashboards | `/dashboards.html` |
 
 **Live Tableau Public dashboards** (embedded in the dashboard pages above; refresh daily from the same CSV exports via Google Sheets):
@@ -69,7 +72,7 @@ In a production deployment, `generate_synthetic_hour.py` would be replaced by an
 | Pipeline orchestration | joblib (parallel per-unit training), PyYAML config |
 | Evaluation | custom MAE / RMSE / MAPE / ±2-accuracy metrics, Ljung-Box residual diagnostics |
 | Dashboards | Plotly.js + custom CSS, deployed via GitHub Pages |
-| Testing | pytest (34 cases covering data leakage, splits, metrics, models) |
+| Testing | pytest (34 cases covering data leakage, splits, metrics, models); data-free subset (23 cases) runs in GitHub Actions on every push |
 
 ## Architecture
 
@@ -91,21 +94,26 @@ src/
 
 run_pipeline.py                    # entry point: clean | train | export | all
 config/config.yaml                 # all hyperparameters and split dates
-tests/test_pipeline.py             # 34 pytest cases
+pytest.ini                         # registers the requires_data marker
+tests/test_pipeline.py             # 34 pytest cases (11 marked requires_data)
 
 scripts/
 ├── generate_synthetic_hour.py     # synthetic hourly ADT feed for the deployed demo
 └── build_dashboards.js            # generates the static site (HTML + CSS + screenshots)
 
 .github/workflows/
-└── refresh-forecasts.yml          # daily cron: synthesize → predict → publish
+├── refresh-forecasts.yml          # daily cron: synthesize → predict → publish
+└── tests.yml                      # runs the data-free subset on every push/PR
 
 docs/                              # GitHub Pages site source
 ├── index.html                     # landing
 ├── models.html                    # model cards (six)
 ├── methodology.html               # pipeline walkthrough
+├── tests.html                     # test catalog with status pills + CI badge
 ├── dashboards.html                # gallery
 └── dashboard{1,2,3}.html          # full-screen Plotly dashboards
+
+outputs/test_results.json          # full-suite pytest JSON (regenerated locally)
 ```
 
 ### Key design decisions
@@ -129,8 +137,11 @@ pip install -r requirements.txt
 # Place your hourly ADT export at data/raw/postsql.csv, then:
 python run_pipeline.py --phase all
 
-# Run tests
+# Run the full test suite (needs data/raw/postsql.csv)
 python -m pytest tests/test_pipeline.py -v
+
+# Run only the data-free subset (matches what CI runs on every push)
+python -m pytest tests/test_pipeline.py -m "not requires_data" -v
 ```
 
 Phases can be run individually: `--phase clean`, `--phase train`, `--phase export`.
