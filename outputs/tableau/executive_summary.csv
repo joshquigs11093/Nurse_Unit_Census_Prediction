@@ -1,10 +1,10 @@
 unit_id,unit_name,latest_census,capacity,utilization_pct,forecast_72hr,alert_over_90pct
-705089,Medical-Surgical 3 North,14,17,82.4,13.3,False
-705090,Telemetry 4 East,24,34,70.6,23.2,False
-705091,Cardiac Stepdown,16,20,80.0,16.3,False
-705092,Oncology 5 South,9,12,75.0,9.4,False
-21334825,Surgical 2 West,10,13,76.9,9.9,False
-21336305,Orthopedic 6 North,11,13,84.6,10.5,False
-97635816,Progressive Care,9,11,81.8,8.7,False
-1775257343,Neuro Stepdown,15,20,75.0,16.0,False
-4452986337,Medical-Surgical 4 South,11,14,78.6,10.4,False
+705089,Medical-Surgical 3 North,16,17,94.1,15.5,True
+705090,Telemetry 4 East,29,34,85.3,27.7,False
+705091,Cardiac Stepdown,19,20,95.0,18.9,True
+705092,Oncology 5 South,10,12,83.3,10.8,False
+21334825,Surgical 2 West,12,13,92.3,12.1,True
+21336305,Orthopedic 6 North,12,13,92.3,12.2,True
+97635816,Progressive Care,11,11,100.0,10.2,True
+1775257343,Neuro Stepdown,18,20,90.0,17.4,True
+4452986337,Medical-Surgical 4 South,14,14,100.0,13.2,True

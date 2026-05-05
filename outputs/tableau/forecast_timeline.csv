@@ -1,390 +1,376 @@
 timestamp,unit_id,unit_name,value,series,horizon_h,capacity
-2026-04-28 00:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-28 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-28 02:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-28 03:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-28 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-28 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-28 06:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-28 07:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-28 08:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
-2026-04-28 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-28 10:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
-2026-04-28 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-28 12:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-28 13:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
-2026-04-28 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-28 14:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-28 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-28 16:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-28 17:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-28 17:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-28 18:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-28 19:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-28 19:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-28 20:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-04-28 21:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-28 22:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-28 23:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-04-29 00:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-29 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-28 22:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-04-28 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-29 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-29 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-04-29 02:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-29 03:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-29 03:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-29 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-29 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-29 06:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-29 06:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-29 07:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-29 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-29 09:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
+2026-04-29 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-29 10:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-29 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-29 12:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-29 12:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-29 13:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-29 14:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-04-29 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-29 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-29 16:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-29 17:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-29 18:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-29 19:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-29 20:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-29 19:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-29 20:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-29 21:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-29 22:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-29 22:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-04-29 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-30 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-30 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-30 02:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-30 00:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-30 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-04-30 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-04-30 03:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-30 04:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-30 05:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-30 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-30 06:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-30 07:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-30 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-04-30 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-30 09:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-30 10:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-30 11:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
-2026-04-30 12:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
+2026-04-30 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-30 10:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
+2026-04-30 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-30 12:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-30 13:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-04-30 14:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-04-30 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-04-30 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-30 16:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-30 17:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-04-30 18:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-04-30 16:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-30 17:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-04-30 18:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-30 19:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-04-30 20:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-04-30 21:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-04-30 21:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-04-30 22:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-04-30 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-01 00:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-01 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-01 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-01 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-01 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-01 03:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-01 03:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-01 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-01 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-01 06:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-01 07:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-01 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-01 06:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-01 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-01 08:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-01 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-01 10:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
+2026-05-01 10:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-01 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-01 12:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-01 13:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-01 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-01 15:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-01 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-01 16:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-01 17:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-01 18:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-01 17:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-01 18:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-01 19:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-01 20:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-01 20:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-05-01 21:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-01 22:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-01 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 00:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-05-02 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-02 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 03:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 04:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-02 05:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-02 05:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 06:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-02 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-02 08:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-02 09:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-02 07:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-02 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-02 09:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-02 10:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-02 11:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-02 12:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-02 13:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-02 14:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-02 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-02 13:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-02 14:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-02 15:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-02 16:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 17:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-02 18:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-02 18:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-02 19:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-05-02 20:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-05-02 21:00:00,705089,Medical-Surgical 3 North,11.0,Actual,0,17
-2026-05-02 22:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-05-02 23:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-05-03 00:00:00,705089,Medical-Surgical 3 North,11.0,Actual,0,17
-2026-05-03 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-03 02:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-02 21:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-02 22:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-02 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-03 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-03 01:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-03 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-03 03:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-03 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-03 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-03 06:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-03 04:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-03 05:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-03 06:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-03 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-03 08:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-03 09:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-03 10:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-03 09:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-03 10:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-03 11:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-03 12:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-03 13:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-03 12:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-03 13:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-03 14:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-03 15:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-03 16:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-03 17:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-03 18:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-03 19:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-03 18:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-03 19:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-03 20:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-05-03 21:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-05-03 22:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
-2026-05-03 23:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-03 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-04 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-04 01:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-04 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-04 03:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
 2026-05-04 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-04 05:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-04 05:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-04 06:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-04 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-04 07:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-04 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-04 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-04 10:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-04 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-04 12:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-04 10:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-04 11:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-04 12:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
 2026-05-04 13:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
-2026-05-04 14:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-04 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
 2026-05-04 15:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
 2026-05-04 16:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-04 17:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
-2026-05-04 18:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-04 19:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-04 20:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-05-04 21:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
+2026-05-04 17:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-04 18:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-04 19:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-04 20:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-04 21:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
 2026-05-04 22:00:00,705089,Medical-Surgical 3 North,12.0,Actual,0,17
 2026-05-04 23:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
-2026-05-05 00:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
-2026-04-28 00:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-28 01:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-28 02:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-28 03:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-28 04:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-28 05:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 06:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 07:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 08:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 09:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-04-28 10:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-28 11:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-04-28 12:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 13:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-28 14:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 15:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-28 16:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-05 00:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-05 01:00:00,705089,Medical-Surgical 3 North,14.0,Actual,0,17
+2026-05-05 02:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-05 03:00:00,705089,Medical-Surgical 3 North,13.0,Actual,0,17
+2026-05-05 04:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-05 05:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 06:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-05 07:00:00,705089,Medical-Surgical 3 North,15.0,Actual,0,17
+2026-05-05 08:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 09:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 10:00:00,705089,Medical-Surgical 3 North,17.0,Actual,0,17
+2026-05-05 11:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 12:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 13:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-05-05 14:00:00,705089,Medical-Surgical 3 North,16.0,Actual,0,17
+2026-04-28 14:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-04-28 15:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-04-28 16:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-28 17:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-28 18:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-28 19:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-28 20:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-28 21:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-28 22:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-28 23:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-29 00:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-29 01:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-28 18:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-28 19:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-28 20:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-28 21:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-04-28 22:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-28 23:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-04-29 00:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 01:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
 2026-04-29 02:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-04-29 03:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-29 04:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-29 05:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-29 06:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-04-29 04:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 05:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 06:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
 2026-04-29 07:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
 2026-04-29 08:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-29 09:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-29 09:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
 2026-04-29 10:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-29 11:00:00,705090,Telemetry 4 East,31.0,Actual,0,34
+2026-04-29 11:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
 2026-04-29 12:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-29 13:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-29 14:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-04-29 15:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-29 16:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-29 17:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-29 18:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-29 19:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-29 20:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-29 21:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-29 22:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-29 23:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-30 00:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-30 01:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-04-29 13:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-29 14:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-04-29 15:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 16:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-29 17:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 18:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-04-29 19:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-04-29 20:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-29 21:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-04-29 22:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-04-29 23:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-04-30 00:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-04-30 01:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-04-30 02:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-04-30 03:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-30 04:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-04-30 03:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-04-30 04:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-30 05:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-30 06:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-30 07:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-04-30 08:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-30 07:00:00,705090,Telemetry 4 East,31.0,Actual,0,34
+2026-04-30 08:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-30 09:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-04-30 10:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-30 11:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-30 12:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-30 13:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-04-30 14:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-30 10:00:00,705090,Telemetry 4 East,31.0,Actual,0,34
+2026-04-30 11:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-04-30 12:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-30 13:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-04-30 14:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-30 15:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-04-30 16:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-04-30 17:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-04-30 17:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-04-30 18:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-30 19:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-04-30 20:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
-2026-04-30 21:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-04-30 22:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-30 23:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-04-30 19:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-04-30 20:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-04-30 21:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-04-30 22:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-04-30 23:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-01 00:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-01 01:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-01 01:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-05-01 02:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-01 03:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-01 04:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-01 05:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-05-01 06:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-01 03:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-01 04:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-01 05:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-01 06:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-05-01 07:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-01 08:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-01 09:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-01 08:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-01 09:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
 2026-05-01 10:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-01 11:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-01 12:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-01 13:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-05-01 14:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-01 15:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-01 16:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-01 17:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-01 18:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-01 11:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-01 12:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-01 13:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-01 14:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-01 15:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-01 16:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-01 17:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-01 18:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-05-01 19:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-01 20:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-01 21:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-01 22:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-01 23:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-02 00:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
-2026-05-02 01:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-02 02:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
-2026-05-02 03:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-01 20:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-01 21:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-01 22:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-01 23:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-02 00:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-02 01:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-02 02:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-02 03:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
 2026-05-02 04:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-02 05:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-02 06:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-02 07:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-02 05:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-02 06:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-02 07:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-05-02 08:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-05-02 09:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-02 10:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-02 11:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-02 12:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-02 10:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-02 11:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-02 12:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-05-02 13:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-02 14:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-02 15:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-02 16:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-02 14:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-02 15:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-02 16:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-05-02 17:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-02 18:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-02 19:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-02 18:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-02 19:00:00,705090,Telemetry 4 East,20.0,Actual,0,34
 2026-05-02 20:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-02 21:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
-2026-05-02 22:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
-2026-05-02 23:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-02 22:00:00,705090,Telemetry 4 East,20.0,Actual,0,34
+2026-05-02 23:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
 2026-05-03 00:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-03 01:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
-2026-05-03 02:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
-2026-05-03 03:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-03 02:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-03 03:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
 2026-05-03 04:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-03 05:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-03 06:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-03 07:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-03 05:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-03 06:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-03 07:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-05-03 08:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-05-03 09:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-03 10:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-03 11:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-03 12:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-03 13:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-03 14:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-03 10:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-03 11:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-03 12:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-03 13:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-03 14:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-03 15:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-03 16:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-03 17:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-03 18:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
-2026-05-03 19:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-03 20:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
+2026-05-03 16:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-03 17:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-03 18:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-03 19:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-03 20:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
 2026-05-03 21:00:00,705090,Telemetry 4 East,21.0,Actual,0,34
-2026-05-03 22:00:00,705090,Telemetry 4 East,20.0,Actual,0,34
-2026-05-03 23:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
-2026-05-04 00:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
+2026-05-03 22:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-03 23:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
+2026-05-04 00:00:00,705090,Telemetry 4 East,22.0,Actual,0,34
 2026-05-04 01:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-04 02:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
-2026-05-04 03:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-04 04:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-04 05:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-04 06:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-04 07:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-04 08:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-04 02:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-04 03:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-04 04:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-04 05:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-04 06:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-04 07:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
+2026-05-04 08:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-05-04 09:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-05-04 10:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
-2026-05-04 11:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-05-04 12:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
-2026-05-04 13:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-04 10:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
+2026-05-04 11:00:00,705090,Telemetry 4 East,31.0,Actual,0,34
+2026-05-04 12:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-04 13:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
 2026-05-04 14:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-05-04 15:00:00,705090,Telemetry 4 East,26.0,Actual,0,34
+2026-05-04 15:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
 2026-05-04 16:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
-2026-05-04 17:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
-2026-05-04 18:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
-2026-05-04 19:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-04 17:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-04 18:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-04 19:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-04 20:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-04 21:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-04 21:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-04 22:00:00,705090,Telemetry 4 East,23.0,Actual,0,34
 2026-05-04 23:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-05-05 00:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
-2026-04-28 00:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-04-28 01:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-28 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-28 03:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-28 04:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-28 05:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 08:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-28 09:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 10:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-28 11:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-28 12:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 14:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-28 15:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-05 00:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-05 01:00:00,705090,Telemetry 4 East,24.0,Actual,0,34
+2026-05-05 02:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-05 03:00:00,705090,Telemetry 4 East,27.0,Actual,0,34
+2026-05-05 04:00:00,705090,Telemetry 4 East,25.0,Actual,0,34
+2026-05-05 05:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-05 06:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-05 07:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-05 08:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-05 09:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-05 10:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-05 11:00:00,705090,Telemetry 4 East,30.0,Actual,0,34
+2026-05-05 12:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-05-05 13:00:00,705090,Telemetry 4 East,28.0,Actual,0,34
+2026-05-05 14:00:00,705090,Telemetry 4 East,29.0,Actual,0,34
+2026-04-28 14:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-04-28 15:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-28 16:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-28 17:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-28 18:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-28 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-04-28 17:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-04-28 18:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-04-28 19:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-28 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-04-28 21:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-04-28 21:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-04-28 22:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-28 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-04-29 00:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-04-29 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-29 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-29 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-29 03:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-29 04:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-29 05:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-29 06:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-29 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-29 08:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-29 05:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-29 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-29 07:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
+2026-04-29 08:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-29 09:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-29 10:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-29 10:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-29 11:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-29 12:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-29 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-29 14:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-04-29 15:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-29 16:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-29 17:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-04-29 17:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-29 18:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-29 19:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-29 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-29 21:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-29 22:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-04-29 23:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-04-29 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-30 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-30 01:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-30 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
@@ -394,27 +380,27 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-04-30 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-30 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-30 08:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-04-30 09:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-30 09:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-30 10:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-04-30 11:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-04-30 11:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-04-30 12:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-30 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-30 14:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-30 15:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-04-30 16:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-04-30 17:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-04-30 17:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-04-30 18:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-04-30 19:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-04-30 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-30 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-30 21:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-04-30 22:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-04-30 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-04-30 23:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-01 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-01 01:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-01 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-01 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-01 03:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-01 04:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-01 05:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-01 05:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-01 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-05-01 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-05-01 08:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
@@ -423,28 +409,28 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-01 11:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-05-01 12:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-05-01 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-01 14:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-01 15:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-01 14:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-01 15:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-01 16:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-01 17:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-01 18:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-01 19:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-01 20:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-01 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-01 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-01 21:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-01 22:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-01 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-02 00:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-02 01:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-02 02:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-02 03:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-02 04:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-02 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-02 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-02 02:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-02 03:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-02 04:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-05-02 05:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-02 06:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-02 06:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-02 07:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-02 08:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-02 09:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-02 10:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-02 11:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-02 09:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-02 10:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-02 11:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-05-02 12:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-02 13:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-02 14:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
@@ -452,18 +438,18 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-02 16:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-02 17:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-02 18:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-02 19:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-02 20:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-02 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-02 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-02 21:00:00,705091,Cardiac Stepdown,14.0,Actual,0,20
-2026-05-02 22:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-02 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-02 22:00:00,705091,Cardiac Stepdown,14.0,Actual,0,20
+2026-05-02 23:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-05-03 00:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-03 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-03 02:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-03 03:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-03 01:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-03 02:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-03 03:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-03 04:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-03 05:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-03 06:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-03 06:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-03 07:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-03 08:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-03 09:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
@@ -472,142 +458,142 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-03 12:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-03 13:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-03 14:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-03 15:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-03 16:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-03 15:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-03 16:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-03 17:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-03 18:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-03 19:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
+2026-05-03 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-03 20:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-03 21:00:00,705091,Cardiac Stepdown,14.0,Actual,0,20
+2026-05-03 21:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-05-03 22:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-05-03 23:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
-2026-05-04 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-04 01:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-04 02:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-04 00:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-04 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-04 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-04 03:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-04 04:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-04 05:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-04 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-04 06:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-04 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-04 08:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-04 09:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
-2026-05-04 10:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-04 08:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
+2026-05-04 09:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-04 10:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-05-04 11:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
 2026-05-04 12:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
-2026-05-04 13:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-04 14:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-04 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-04 14:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
 2026-05-04 15:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-05-04 16:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
-2026-05-04 17:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-04 18:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
-2026-05-04 19:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-04 17:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-04 18:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-04 19:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
 2026-05-04 20:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-04 21:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-04 21:00:00,705091,Cardiac Stepdown,15.0,Actual,0,20
 2026-05-04 22:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-05-04 23:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-04 23:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
 2026-05-05 00:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
-2026-04-28 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-28 01:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 02:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-28 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 04:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 06:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 08:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 01:00:00,705091,Cardiac Stepdown,16.0,Actual,0,20
+2026-05-05 02:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-05 03:00:00,705091,Cardiac Stepdown,17.0,Actual,0,20
+2026-05-05 04:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-05 05:00:00,705091,Cardiac Stepdown,18.0,Actual,0,20
+2026-05-05 06:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-05 07:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-05 08:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
+2026-05-05 09:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-05 10:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
+2026-05-05 11:00:00,705091,Cardiac Stepdown,20.0,Actual,0,20
+2026-05-05 12:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-05 13:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
+2026-05-05 14:00:00,705091,Cardiac Stepdown,19.0,Actual,0,20
 2026-04-28 14:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-28 15:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-28 15:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-28 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-28 17:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 18:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-28 19:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-28 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-28 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-28 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-28 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-28 22:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-28 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-04-28 23:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-29 01:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-29 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-29 02:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 04:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 05:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-29 06:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-29 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-29 06:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-29 07:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-29 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-29 11:00:00,705092,Oncology 5 South,12.0,Actual,0,12
 2026-04-29 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 14:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 15:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-29 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 17:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-29 18:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-29 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-29 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-29 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-04-29 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-29 19:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-29 20:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-04-29 21:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-29 22:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-29 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-30 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-30 01:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-30 02:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-04-30 00:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-30 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-04-30 02:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-30 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-30 04:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-30 05:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-30 05:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-30 06:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-30 07:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-30 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-30 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-30 08:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-30 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-30 10:00:00,705092,Oncology 5 South,12.0,Actual,0,12
-2026-04-30 11:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-30 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-30 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-30 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-30 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-30 14:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-04-30 15:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-04-30 16:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-04-30 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-30 17:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-30 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-04-30 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-30 20:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-04-30 19:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-04-30 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-30 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-04-30 22:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-30 23:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-01 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-04-30 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-01 00:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 01:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-01 02:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-01 02:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-01 04:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-01 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-01 06:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-01 07:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-01 04:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-01 05:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-01 06:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-01 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-01 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-01 09:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-01 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-01 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-01 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-01 11:00:00,705092,Oncology 5 South,12.0,Actual,0,12
 2026-05-01 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-01 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-01 14:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-01 14:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-01 15:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 17:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-01 19:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-01 20:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-01 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-01 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-01 22:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-01 22:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-01 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-02 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-02 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-02 01:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-02 02:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-02 03:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-02 04:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-02 05:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-02 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 06:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 07:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 08:00:00,705092,Oncology 5 South,10.0,Actual,0,12
@@ -618,377 +604,377 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-02 13:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 14:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 15:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-02 16:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-02 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-02 17:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-02 18:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-02 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-02 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-02 19:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-02 20:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-02 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-02 22:00:00,705092,Oncology 5 South,8.0,Actual,0,12
-2026-05-02 23:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-05-02 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-03 00:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-03 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 02:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-03 02:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-03 03:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-03 04:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 06:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 07:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-03 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-03 08:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 09:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-03 11:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 12:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 13:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-03 14:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-03 15:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 16:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 17:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 18:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-03 15:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-03 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-03 17:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-05-03 18:00:00,705092,Oncology 5 South,8.0,Actual,0,12
 2026-05-03 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-03 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-03 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 22:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-03 23:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-05-03 22:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-05-03 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-04 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-04 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-04 01:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 02:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 04:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-04 06:00:00,705092,Oncology 5 South,12.0,Actual,0,12
-2026-05-04 07:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-04 06:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-04 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-04 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-04 09:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-04 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-04 10:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-04 11:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-04 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-04 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
-2026-05-04 13:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-04 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-04 14:00:00,705092,Oncology 5 South,11.0,Actual,0,12
 2026-05-04 15:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 16:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-05-04 17:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-04 18:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-04 19:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-04 18:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-04 19:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-04 20:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-04 21:00:00,705092,Oncology 5 South,10.0,Actual,0,12
-2026-05-04 22:00:00,705092,Oncology 5 South,8.0,Actual,0,12
+2026-05-04 21:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-04 22:00:00,705092,Oncology 5 South,9.0,Actual,0,12
 2026-05-04 23:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-05-05 00:00:00,705092,Oncology 5 South,9.0,Actual,0,12
-2026-04-28 00:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-28 01:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-28 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-28 03:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-28 04:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 05:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-28 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 07:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-28 08:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 09:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-28 11:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-28 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 00:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-05 01:00:00,705092,Oncology 5 South,9.0,Actual,0,12
+2026-05-05 02:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-05 03:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-05 04:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 05:00:00,705092,Oncology 5 South,10.0,Actual,0,12
+2026-05-05 06:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 07:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 08:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 09:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 10:00:00,705092,Oncology 5 South,12.0,Actual,0,12
+2026-05-05 11:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 12:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 13:00:00,705092,Oncology 5 South,11.0,Actual,0,12
+2026-05-05 14:00:00,705092,Oncology 5 South,10.0,Actual,0,12
 2026-04-28 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-28 15:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 16:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-28 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-28 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-28 18:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-28 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-28 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-28 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-28 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-04-28 19:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-04-28 20:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-04-28 21:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-28 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-28 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-29 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-29 01:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 03:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-29 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-04-29 04:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 05:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 07:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-29 08:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-29 08:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 09:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
 2026-04-29 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-29 11:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-29 11:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 12:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-29 13:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-29 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-29 15:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-29 16:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-29 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-29 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-29 20:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-29 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-29 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-29 23:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-04-29 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-30 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-30 01:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-30 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-30 03:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-30 02:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-30 03:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-04-30 04:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-30 05:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-30 06:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-30 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-30 07:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-30 08:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-30 08:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-30 09:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-30 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-30 11:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-30 10:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-30 11:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-30 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-30 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-30 14:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-04-30 15:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-30 13:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-04-30 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-30 15:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-30 16:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-04-30 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-30 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-30 19:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-04-30 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-30 17:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-04-30 18:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-30 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-30 20:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-30 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-30 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-04-30 22:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-04-30 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-01 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-01 00:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-01 01:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-01 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-01 03:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-01 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-01 04:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-01 05:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-01 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-01 07:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-01 08:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-05-01 09:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-05-01 10:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-01 09:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-01 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
 2026-05-01 11:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
 2026-05-01 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-01 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-01 13:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
 2026-05-01 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-01 15:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-01 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-01 15:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-01 16:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-01 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-01 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-01 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-01 19:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-01 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-01 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-01 22:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-01 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-01 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-02 00:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
 2026-05-02 01:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-02 02:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-02 03:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-02 04:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-02 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 05:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-02 06:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-02 07:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-02 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-02 07:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 08:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-02 09:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-02 10:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-02 10:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 11:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-02 13:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-02 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-02 14:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 15:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-02 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-02 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-02 18:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-02 16:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-02 17:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-02 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-02 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-02 20:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
+2026-05-02 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-02 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-02 22:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
-2026-05-02 23:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
+2026-05-02 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 01:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 02:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 03:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-03 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-03 04:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 05:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 06:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 07:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 08:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-03 09:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-03 10:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-03 11:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-03 12:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-03 10:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-03 11:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-03 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-03 13:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 14:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 15:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-03 17:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-03 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-03 18:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 19:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 20:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
-2026-05-03 21:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
+2026-05-03 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-03 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-03 23:00:00,21334825,Surgical 2 West,9.0,Actual,0,13
-2026-05-04 00:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-04 01:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-03 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-04 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-04 01:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-04 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-04 03:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-04 04:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-04 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-04 05:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 07:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 08:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-05-04 09:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-04 09:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
-2026-05-04 11:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-04 11:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
 2026-05-04 12:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-04 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
-2026-05-04 14:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-04 13:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-04 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 15:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-05-04 16:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-04 17:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-04 17:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-04 18:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-04 19:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
-2026-05-04 20:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-04 20:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-04 21:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
 2026-05-04 22:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-05-04 23:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
+2026-05-04 23:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
 2026-05-05 00:00:00,21334825,Surgical 2 West,10.0,Actual,0,13
-2026-04-28 00:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-28 01:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-28 02:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-28 03:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-28 04:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-28 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-28 06:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 07:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-28 13:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 01:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-05 02:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-05 03:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-05 04:00:00,21334825,Surgical 2 West,11.0,Actual,0,13
+2026-05-05 05:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 06:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 07:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 08:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-05 09:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-05 10:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-05 11:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 12:00:00,21334825,Surgical 2 West,13.0,Actual,0,13
+2026-05-05 13:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
+2026-05-05 14:00:00,21334825,Surgical 2 West,12.0,Actual,0,13
 2026-04-28 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-28 15:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-28 16:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-28 17:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-28 15:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-28 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-28 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-28 18:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-28 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-28 20:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-28 21:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-28 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-28 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-29 00:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-28 23:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-29 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-04-29 01:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 02:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-29 04:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-29 05:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-29 06:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-29 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-29 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-04-29 04:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-29 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-29 06:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-04-29 07:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-04-29 08:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-29 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-04-29 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-04-29 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-29 12:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-29 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-04-29 13:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-29 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-29 15:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-29 16:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-29 17:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-29 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-29 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 18:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 20:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-04-29 21:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-29 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-29 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-30 00:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-29 23:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-30 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-04-30 01:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-30 02:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-30 02:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-04-30 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-30 04:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-30 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 06:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-30 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-04-30 09:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-04-30 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-04-30 11:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-04-30 13:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 15:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-04-30 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-30 16:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-04-30 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-30 18:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-04-30 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-30 20:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-04-30 21:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-30 22:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-30 23:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-30 20:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-04-30 21:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-04-30 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-04-30 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-01 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-01 01:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-01 02:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-01 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-01 03:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-01 04:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-01 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-01 06:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-01 07:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-05-01 08:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-01 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-01 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-01 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-01 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-05-01 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-01 11:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-01 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-01 13:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-01 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-01 15:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-01 16:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-01 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-01 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-01 18:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-01 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-01 18:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-01 19:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-01 20:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-01 21:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-01 22:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-01 21:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-01 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-01 23:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-02 00:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
+2026-05-02 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-02 01:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-02 02:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-02 03:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-02 04:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 05:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 06:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-02 07:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-02 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-02 08:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-02 09:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-02 09:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 10:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-02 11:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 12:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-02 13:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-02 13:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 14:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 15:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 16:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-02 17:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-02 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-02 18:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-02 19:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-02 20:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
+2026-05-02 19:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
+2026-05-02 20:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-02 21:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-02 22:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
-2026-05-02 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-02 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-02 23:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
 2026-05-03 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 01:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 02:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-03 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 03:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 04:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-03 05:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-03 06:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-03 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-03 08:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-03 09:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 06:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 07:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 08:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 09:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-03 10:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-03 11:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 11:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-03 12:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-03 13:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-03 14:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-03 15:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-03 16:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-03 17:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-03 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-03 18:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-03 19:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-03 20:00:00,21336305,Orthopedic 6 North,9.0,Actual,0,13
+2026-05-03 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-03 20:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 21:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 22:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-03 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
-2026-05-04 00:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-04 00:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 01:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 02:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
@@ -996,61 +982,61 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-04 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-04 06:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-04 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-04 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-04 08:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-04 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-05-04 10:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-04 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-04 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
-2026-05-04 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-04 12:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-04 13:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
 2026-05-04 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
 2026-05-04 15:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-04 16:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
-2026-05-04 17:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-04 18:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-04 16:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-04 17:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-04 18:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 19:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-05-04 20:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
+2026-05-04 20:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 21:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 22:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
 2026-05-04 23:00:00,21336305,Orthopedic 6 North,10.0,Actual,0,13
 2026-05-05 00:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
-2026-04-28 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 04:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 07:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 08:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-28 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-28 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-28 12:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-28 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 14:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 01:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-05 02:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 03:00:00,21336305,Orthopedic 6 North,11.0,Actual,0,13
+2026-05-05 04:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 05:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 06:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 07:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 08:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 09:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 10:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 11:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 12:00:00,21336305,Orthopedic 6 North,13.0,Actual,0,13
+2026-05-05 13:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-05-05 14:00:00,21336305,Orthopedic 6 North,12.0,Actual,0,13
+2026-04-28 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-28 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-28 16:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-28 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 18:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-28 19:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-04-28 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-04-28 19:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-04-28 20:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 21:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-04-28 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-28 22:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 23:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-29 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-04-28 23:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-04-29 00:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-04-29 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-29 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-29 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-29 04:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-29 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-29 06:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-29 07:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-04-29 07:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-29 08:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-29 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-29 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-29 11:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-04-29 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-29 12:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-29 13:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-04-29 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-29 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-29 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-29 16:00:00,97635816,Progressive Care,10.0,Actual,0,11
@@ -1059,25 +1045,25 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-04-29 19:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-29 20:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-29 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-29 22:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-04-29 22:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-04-29 23:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-30 01:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-04-30 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 04:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-30 07:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-04-30 07:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 08:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-30 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-30 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-30 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-04-30 12:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-04-30 13:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-04-30 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 15:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-04-30 16:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-04-30 16:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-04-30 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 19:00:00,97635816,Progressive Care,9.0,Actual,0,11
@@ -1085,10 +1071,10 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-04-30 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 22:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-04-30 23:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-01 00:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-01 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-01 03:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-01 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 04:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-01 05:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-01 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
@@ -1096,26 +1082,26 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-01 08:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-01 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-01 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-05-01 11:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-01 12:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-01 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-01 12:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-01 13:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-01 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-01 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-01 16:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-01 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-01 15:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-01 16:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-01 17:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-01 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 19:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 20:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 22:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-01 23:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-02 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-02 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-02 00:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-02 01:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-02 02:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-02 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-02 04:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-02 03:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-02 04:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-02 05:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-02 06:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-02 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-02 07:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-02 08:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-02 09:00:00,97635816,Progressive Care,10.0,Actual,0,11
@@ -1123,22 +1109,22 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-02 11:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-02 12:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-02 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-02 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-02 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-02 14:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-02 15:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-02 16:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-02 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-02 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-02 18:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-02 19:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-02 20:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-02 21:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-02 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-02 22:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-02 23:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-03 00:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-03 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-03 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-03 01:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-03 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-03 03:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-03 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 04:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-03 05:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-03 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-03 06:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 07:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-03 08:00:00,97635816,Progressive Care,10.0,Actual,0,11
@@ -1146,449 +1132,463 @@ timestamp,unit_id,unit_name,value,series,horizon_h,capacity
 2026-05-03 10:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-03 11:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-03 12:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-03 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-03 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-03 13:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-03 14:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-03 16:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-03 18:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-03 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 19:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-03 20:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-03 21:00:00,97635816,Progressive Care,8.0,Actual,0,11
+2026-05-03 20:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-03 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-03 22:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-03 23:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-04 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-04 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-04 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-04 03:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-04 02:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-04 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-04 04:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-04 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-04 06:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-04 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-04 07:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-04 08:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-05-04 09:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-04 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-04 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-05-04 11:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-04 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
 2026-05-04 12:00:00,97635816,Progressive Care,11.0,Actual,0,11
-2026-05-04 13:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-04 13:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-04 14:00:00,97635816,Progressive Care,10.0,Actual,0,11
-2026-05-04 15:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-04 15:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-04 16:00:00,97635816,Progressive Care,10.0,Actual,0,11
 2026-05-04 17:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-04 18:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-05-04 19:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-04 19:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-04 20:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-04 21:00:00,97635816,Progressive Care,9.0,Actual,0,11
 2026-05-04 22:00:00,97635816,Progressive Care,8.0,Actual,0,11
-2026-05-04 23:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-04 23:00:00,97635816,Progressive Care,8.0,Actual,0,11
 2026-05-05 00:00:00,97635816,Progressive Care,9.0,Actual,0,11
-2026-04-28 00:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-28 01:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-28 02:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-28 03:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-28 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-28 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 07:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 08:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 10:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 12:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 14:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 15:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-28 16:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-28 17:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-28 18:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-28 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-28 20:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-28 21:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-28 22:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-28 23:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-29 00:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-29 01:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-05 01:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-05 02:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-05 03:00:00,97635816,Progressive Care,9.0,Actual,0,11
+2026-05-05 04:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-05 05:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-05 06:00:00,97635816,Progressive Care,10.0,Actual,0,11
+2026-05-05 07:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 08:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 09:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 10:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 11:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 12:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 13:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-05-05 14:00:00,97635816,Progressive Care,11.0,Actual,0,11
+2026-04-28 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-04-28 15:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-28 16:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-04-28 17:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-28 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-28 19:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-28 20:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-04-28 21:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-28 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-28 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-29 00:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-29 01:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-04-29 02:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-29 03:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-29 03:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-04-29 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-04-29 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-29 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 07:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 08:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 09:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
+2026-04-29 07:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-04-29 08:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-04-29 09:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-29 10:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-29 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-04-29 11:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-29 12:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-29 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 14:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-29 13:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-04-29 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-29 15:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 16:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-29 17:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-29 16:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-29 17:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-04-29 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-29 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-29 20:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-29 21:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-29 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-29 23:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-04-30 00:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-29 19:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-29 20:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-29 21:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-29 22:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-29 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-04-30 00:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-04-30 01:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-04-30 02:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-04-30 03:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-30 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-30 04:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-04-30 06:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-30 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 07:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-30 08:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
-2026-04-30 09:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-04-30 08:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-04-30 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
 2026-04-30 10:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
 2026-04-30 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-04-30 12:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-04-30 12:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
 2026-04-30 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 15:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 16:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-30 17:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-04-30 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-04-30 19:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-30 20:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-30 21:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-30 18:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-04-30 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-30 20:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-04-30 21:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-04-30 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-04-30 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-01 00:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-01 01:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-01 02:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-01 00:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-01 01:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-01 02:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-01 03:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-01 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-01 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-01 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-01 07:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-05-01 08:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-01 05:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-01 06:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-01 07:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-01 08:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
 2026-05-01 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-05-01 10:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
-2026-05-01 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-05-01 12:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
-2026-05-01 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-01 14:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-01 10:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-01 11:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-01 12:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-01 13:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-01 14:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-01 15:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-01 16:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-01 16:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-01 17:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-01 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-01 18:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-01 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-01 20:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-01 20:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-01 21:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-01 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-01 22:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-01 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-02 00:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-05-02 01:00:00,1775257343,Neuro Stepdown,13.0,Actual,0,20
-2026-05-02 02:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-02 00:00:00,1775257343,Neuro Stepdown,13.0,Actual,0,20
+2026-05-02 01:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-02 02:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
 2026-05-02 03:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-02 04:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-02 05:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-02 06:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-02 04:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-02 05:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-02 06:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-02 07:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-02 08:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-02 09:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-02 10:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-02 10:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
 2026-05-02 11:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-02 12:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-02 12:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-05-02 13:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-02 14:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-02 15:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-02 16:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-02 17:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-02 18:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-02 15:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-02 16:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-02 17:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-02 18:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
 2026-05-02 19:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
 2026-05-02 20:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
 2026-05-02 21:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-05-02 22:00:00,1775257343,Neuro Stepdown,13.0,Actual,0,20
+2026-05-02 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-02 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-03 00:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
 2026-05-03 01:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-05-03 02:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-03 02:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-03 03:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 04:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-03 04:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-03 05:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-03 06:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 07:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-03 07:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-03 08:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-03 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-03 09:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-03 10:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-05-03 11:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-03 12:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-03 14:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-03 15:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 16:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-03 17:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-03 19:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-05-03 20:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-03 12:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-03 13:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-03 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-03 15:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-03 16:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-03 17:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-03 18:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-03 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-03 20:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-03 21:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-03 22:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
-2026-05-03 23:00:00,1775257343,Neuro Stepdown,14.0,Actual,0,20
+2026-05-03 22:00:00,1775257343,Neuro Stepdown,13.0,Actual,0,20
+2026-05-03 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-04 00:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-04 01:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-04 02:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-04 03:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-04 04:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-04 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-04 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-04 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-04 06:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
 2026-05-04 07:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-04 08:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
+2026-05-04 08:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
 2026-05-04 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-05-04 10:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-04 10:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-05-04 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
-2026-05-04 12:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-04 13:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-04 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
-2026-05-04 15:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-04 16:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-04 12:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
+2026-05-04 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-04 14:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-04 15:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-04 16:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
 2026-05-04 17:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
-2026-05-04 18:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-04 19:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-04 18:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-04 19:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
 2026-05-04 20:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-04 21:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
-2026-05-04 22:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-05-04 23:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-04 21:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
+2026-05-04 22:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-04 23:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
 2026-05-05 00:00:00,1775257343,Neuro Stepdown,15.0,Actual,0,20
-2026-04-28 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 03:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-28 04:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-28 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-28 06:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 11:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
-2026-04-28 12:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
-2026-04-28 13:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 01:00:00,1775257343,Neuro Stepdown,16.0,Actual,0,20
+2026-05-05 02:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-05 03:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-05 04:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-05 05:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-05 06:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-05 07:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-05 08:00:00,1775257343,Neuro Stepdown,20.0,Actual,0,20
+2026-05-05 09:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-05 10:00:00,1775257343,Neuro Stepdown,17.0,Actual,0,20
+2026-05-05 11:00:00,1775257343,Neuro Stepdown,19.0,Actual,0,20
+2026-05-05 12:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-05 13:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
+2026-05-05 14:00:00,1775257343,Neuro Stepdown,18.0,Actual,0,20
 2026-04-28 14:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-28 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-28 15:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-28 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-04-28 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-28 18:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-28 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 20:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 21:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-28 20:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-28 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-28 22:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-28 23:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-29 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-28 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-29 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-29 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-29 02:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-04-29 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-29 04:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-29 05:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-04-29 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-04-29 03:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-29 04:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-04-29 05:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-29 06:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-29 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 10:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-29 11:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 12:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-04-29 08:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-29 09:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-04-29 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-04-29 11:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-04-29 12:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-04-29 13:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 14:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-29 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-29 14:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-29 15:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-29 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-29 17:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-29 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-29 18:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-29 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-29 20:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-04-29 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-29 22:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-04-29 23:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-30 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-30 01:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-29 22:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-04-29 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-30 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-30 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-30 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-30 03:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-30 04:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-30 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-30 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-04-30 04:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-04-30 05:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-30 06:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-30 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-04-30 07:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-04-30 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-30 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-04-30 09:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
 2026-04-30 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-04-30 11:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-04-30 11:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-30 12:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-30 13:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-30 14:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-04-30 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-30 16:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-04-30 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-04-30 17:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-04-30 18:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-30 18:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-30 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-30 20:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-04-30 21:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-04-30 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-30 22:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-04-30 23:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-01 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-01 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-01 02:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-01 01:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-01 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-01 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-01 04:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-01 05:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-01 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-01 06:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 07:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
-2026-05-01 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 09:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
-2026-05-01 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 11:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 12:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-01 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-01 08:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-05-01 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-01 10:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-01 11:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-01 12:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-05-01 13:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 14:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-01 14:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-01 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-01 16:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-01 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-01 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-01 17:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-01 18:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-01 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-01 20:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-01 20:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-01 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-01 22:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-01 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-01 22:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-01 23:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-02 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 01:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 02:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-02 04:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-02 05:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-02 06:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-02 07:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-02 06:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-02 07:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-02 08:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-02 09:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-02 10:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-02 10:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-02 11:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-02 12:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-02 13:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-02 13:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-02 14:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-02 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-02 16:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-02 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-02 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-02 17:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 18:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-02 20:00:00,4452986337,Medical-Surgical 4 South,9.0,Actual,0,14
+2026-05-02 20:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 21:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 22:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-02 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-03 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-03 01:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-03 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 03:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-03 02:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-03 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-03 04:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 05:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 06:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 07:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-03 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-03 09:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-03 10:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 11:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-03 12:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-03 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-03 06:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-03 07:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 08:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-03 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-03 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-03 11:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-03 12:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-03 13:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-03 14:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-03 15:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-03 16:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-03 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 17:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-03 18:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-03 19:00:00,4452986337,Medical-Surgical 4 South,9.0,Actual,0,14
-2026-05-03 20:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-03 21:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-03 22:00:00,4452986337,Medical-Surgical 4 South,9.0,Actual,0,14
+2026-05-03 19:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-03 20:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-03 22:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
 2026-05-03 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-04 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-04 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 01:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-04 02:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-04 03:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 04:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 03:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 04:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 05:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
 2026-05-04 06:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 07:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 08:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 09:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-04 11:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 12:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 13:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
-2026-05-04 14:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-04 15:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
-2026-05-04 16:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 17:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-04 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-04 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-04 10:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-05-04 11:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-04 12:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-04 13:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 14:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 15:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 16:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 17:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
 2026-05-04 18:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
 2026-05-04 19:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-04 20:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-04 21:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
-2026-05-04 22:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
-2026-05-04 23:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-05 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
-2026-05-05 01:00:00,705089,Medical-Surgical 3 North,12.2,Forecast,1,17
-2026-05-05 02:00:00,705089,Medical-Surgical 3 North,12.0,Forecast,2,17
-2026-05-05 03:00:00,705089,Medical-Surgical 3 North,13.1,Forecast,3,17
-2026-05-05 04:00:00,705089,Medical-Surgical 3 North,13.6,Forecast,4,17
-2026-05-05 12:00:00,705089,Medical-Surgical 3 North,15.0,Forecast,12,17
-2026-05-06 00:00:00,705089,Medical-Surgical 3 North,13.1,Forecast,24,17
-2026-05-07 00:00:00,705089,Medical-Surgical 3 North,12.9,Forecast,48,17
-2026-05-08 00:00:00,705089,Medical-Surgical 3 North,13.3,Forecast,72,17
-2026-05-05 01:00:00,705090,Telemetry 4 East,20.3,Forecast,1,34
-2026-05-05 02:00:00,705090,Telemetry 4 East,21.2,Forecast,2,34
-2026-05-05 03:00:00,705090,Telemetry 4 East,22.0,Forecast,3,34
-2026-05-05 04:00:00,705090,Telemetry 4 East,22.6,Forecast,4,34
-2026-05-05 12:00:00,705090,Telemetry 4 East,26.5,Forecast,12,34
-2026-05-06 00:00:00,705090,Telemetry 4 East,21.4,Forecast,24,34
-2026-05-07 00:00:00,705090,Telemetry 4 East,23.8,Forecast,48,34
-2026-05-08 00:00:00,705090,Telemetry 4 East,23.2,Forecast,72,34
-2026-05-05 01:00:00,705091,Cardiac Stepdown,14.0,Forecast,1,20
-2026-05-05 02:00:00,705091,Cardiac Stepdown,14.3,Forecast,2,20
-2026-05-05 03:00:00,705091,Cardiac Stepdown,15.0,Forecast,3,20
-2026-05-05 04:00:00,705091,Cardiac Stepdown,15.6,Forecast,4,20
-2026-05-05 12:00:00,705091,Cardiac Stepdown,17.3,Forecast,12,20
-2026-05-06 00:00:00,705091,Cardiac Stepdown,15.3,Forecast,24,20
-2026-05-07 00:00:00,705091,Cardiac Stepdown,15.7,Forecast,48,20
-2026-05-08 00:00:00,705091,Cardiac Stepdown,16.3,Forecast,72,20
-2026-05-05 01:00:00,705092,Oncology 5 South,7.8,Forecast,1,12
-2026-05-05 02:00:00,705092,Oncology 5 South,8.3,Forecast,2,12
-2026-05-05 03:00:00,705092,Oncology 5 South,8.8,Forecast,3,12
-2026-05-05 04:00:00,705092,Oncology 5 South,8.8,Forecast,4,12
-2026-05-05 12:00:00,705092,Oncology 5 South,9.6,Forecast,12,12
-2026-05-06 00:00:00,705092,Oncology 5 South,8.7,Forecast,24,12
-2026-05-07 00:00:00,705092,Oncology 5 South,8.9,Forecast,48,12
-2026-05-08 00:00:00,705092,Oncology 5 South,9.4,Forecast,72,12
-2026-05-05 01:00:00,21334825,Surgical 2 West,8.7,Forecast,1,13
-2026-05-05 02:00:00,21334825,Surgical 2 West,9.1,Forecast,2,13
-2026-05-05 03:00:00,21334825,Surgical 2 West,9.3,Forecast,3,13
-2026-05-05 04:00:00,21334825,Surgical 2 West,9.1,Forecast,4,13
-2026-05-05 12:00:00,21334825,Surgical 2 West,11.4,Forecast,12,13
-2026-05-06 00:00:00,21334825,Surgical 2 West,9.7,Forecast,24,13
-2026-05-07 00:00:00,21334825,Surgical 2 West,10.0,Forecast,48,13
-2026-05-08 00:00:00,21334825,Surgical 2 West,9.9,Forecast,72,13
-2026-05-05 01:00:00,21336305,Orthopedic 6 North,9.5,Forecast,1,13
-2026-05-05 02:00:00,21336305,Orthopedic 6 North,9.9,Forecast,2,13
-2026-05-05 03:00:00,21336305,Orthopedic 6 North,10.4,Forecast,3,13
-2026-05-05 04:00:00,21336305,Orthopedic 6 North,10.5,Forecast,4,13
-2026-05-05 12:00:00,21336305,Orthopedic 6 North,12.1,Forecast,12,13
-2026-05-06 00:00:00,21336305,Orthopedic 6 North,10.3,Forecast,24,13
-2026-05-07 00:00:00,21336305,Orthopedic 6 North,10.6,Forecast,48,13
-2026-05-08 00:00:00,21336305,Orthopedic 6 North,10.5,Forecast,72,13
-2026-05-05 01:00:00,97635816,Progressive Care,7.5,Forecast,1,11
-2026-05-05 02:00:00,97635816,Progressive Care,7.9,Forecast,2,11
-2026-05-05 03:00:00,97635816,Progressive Care,8.2,Forecast,3,11
-2026-05-05 04:00:00,97635816,Progressive Care,9.0,Forecast,4,11
-2026-05-05 12:00:00,97635816,Progressive Care,9.9,Forecast,12,11
-2026-05-06 00:00:00,97635816,Progressive Care,8.3,Forecast,24,11
-2026-05-07 00:00:00,97635816,Progressive Care,9.1,Forecast,48,11
-2026-05-08 00:00:00,97635816,Progressive Care,8.7,Forecast,72,11
-2026-05-05 01:00:00,1775257343,Neuro Stepdown,13.1,Forecast,1,20
-2026-05-05 02:00:00,1775257343,Neuro Stepdown,13.5,Forecast,2,20
-2026-05-05 03:00:00,1775257343,Neuro Stepdown,13.7,Forecast,3,20
-2026-05-05 04:00:00,1775257343,Neuro Stepdown,14.8,Forecast,4,20
-2026-05-05 12:00:00,1775257343,Neuro Stepdown,16.8,Forecast,12,20
-2026-05-06 00:00:00,1775257343,Neuro Stepdown,14.4,Forecast,24,20
-2026-05-07 00:00:00,1775257343,Neuro Stepdown,15.5,Forecast,48,20
-2026-05-08 00:00:00,1775257343,Neuro Stepdown,16.0,Forecast,72,20
-2026-05-05 01:00:00,4452986337,Medical-Surgical 4 South,9.4,Forecast,1,14
-2026-05-05 02:00:00,4452986337,Medical-Surgical 4 South,9.6,Forecast,2,14
-2026-05-05 03:00:00,4452986337,Medical-Surgical 4 South,10.6,Forecast,3,14
-2026-05-05 04:00:00,4452986337,Medical-Surgical 4 South,10.5,Forecast,4,14
-2026-05-05 12:00:00,4452986337,Medical-Surgical 4 South,12.3,Forecast,12,14
-2026-05-06 00:00:00,4452986337,Medical-Surgical 4 South,10.7,Forecast,24,14
-2026-05-07 00:00:00,4452986337,Medical-Surgical 4 South,11.0,Forecast,48,14
-2026-05-08 00:00:00,4452986337,Medical-Surgical 4 South,10.4,Forecast,72,14
+2026-05-04 20:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-04 21:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-04 22:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-04 23:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-05 00:00:00,4452986337,Medical-Surgical 4 South,10.0,Actual,0,14
+2026-05-05 01:00:00,4452986337,Medical-Surgical 4 South,11.0,Actual,0,14
+2026-05-05 02:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-05 03:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-05 04:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 05:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-05 06:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-05 07:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 08:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 09:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 10:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 11:00:00,4452986337,Medical-Surgical 4 South,12.0,Actual,0,14
+2026-05-05 12:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 13:00:00,4452986337,Medical-Surgical 4 South,13.0,Actual,0,14
+2026-05-05 14:00:00,4452986337,Medical-Surgical 4 South,14.0,Actual,0,14
+2026-05-05 15:00:00,705089,Medical-Surgical 3 North,15.4,Forecast,1,17
+2026-05-05 16:00:00,705089,Medical-Surgical 3 North,15.6,Forecast,2,17
+2026-05-05 17:00:00,705089,Medical-Surgical 3 North,14.6,Forecast,3,17
+2026-05-05 18:00:00,705089,Medical-Surgical 3 North,14.5,Forecast,4,17
+2026-05-06 02:00:00,705089,Medical-Surgical 3 North,14.1,Forecast,12,17
+2026-05-06 14:00:00,705089,Medical-Surgical 3 North,15.5,Forecast,24,17
+2026-05-07 14:00:00,705089,Medical-Surgical 3 North,15.3,Forecast,48,17
+2026-05-08 14:00:00,705089,Medical-Surgical 3 North,15.5,Forecast,72,17
+2026-05-05 15:00:00,705090,Telemetry 4 East,29.4,Forecast,1,34
+2026-05-05 16:00:00,705090,Telemetry 4 East,27.4,Forecast,2,34
+2026-05-05 17:00:00,705090,Telemetry 4 East,26.7,Forecast,3,34
+2026-05-05 18:00:00,705090,Telemetry 4 East,25.5,Forecast,4,34
+2026-05-06 02:00:00,705090,Telemetry 4 East,25.6,Forecast,12,34
+2026-05-06 14:00:00,705090,Telemetry 4 East,28.7,Forecast,24,34
+2026-05-07 14:00:00,705090,Telemetry 4 East,26.9,Forecast,48,34
+2026-05-08 14:00:00,705090,Telemetry 4 East,27.7,Forecast,72,34
+2026-05-05 15:00:00,705091,Cardiac Stepdown,18.6,Forecast,1,20
+2026-05-05 16:00:00,705091,Cardiac Stepdown,18.3,Forecast,2,20
+2026-05-05 17:00:00,705091,Cardiac Stepdown,17.5,Forecast,3,20
+2026-05-05 18:00:00,705091,Cardiac Stepdown,17.3,Forecast,4,20
+2026-05-06 02:00:00,705091,Cardiac Stepdown,17.1,Forecast,12,20
+2026-05-06 14:00:00,705091,Cardiac Stepdown,18.4,Forecast,24,20
+2026-05-07 14:00:00,705091,Cardiac Stepdown,18.6,Forecast,48,20
+2026-05-08 14:00:00,705091,Cardiac Stepdown,18.9,Forecast,72,20
+2026-05-05 15:00:00,705092,Oncology 5 South,9.9,Forecast,1,12
+2026-05-05 16:00:00,705092,Oncology 5 South,9.6,Forecast,2,12
+2026-05-05 17:00:00,705092,Oncology 5 South,8.7,Forecast,3,12
+2026-05-05 18:00:00,705092,Oncology 5 South,9.3,Forecast,4,12
+2026-05-06 02:00:00,705092,Oncology 5 South,8.8,Forecast,12,12
+2026-05-06 14:00:00,705092,Oncology 5 South,10.9,Forecast,24,12
+2026-05-07 14:00:00,705092,Oncology 5 South,10.7,Forecast,48,12
+2026-05-08 14:00:00,705092,Oncology 5 South,10.8,Forecast,72,12
+2026-05-05 15:00:00,21334825,Surgical 2 West,12.0,Forecast,1,13
+2026-05-05 16:00:00,21334825,Surgical 2 West,11.2,Forecast,2,13
+2026-05-05 17:00:00,21334825,Surgical 2 West,11.2,Forecast,3,13
+2026-05-05 18:00:00,21334825,Surgical 2 West,11.0,Forecast,4,13
+2026-05-06 02:00:00,21334825,Surgical 2 West,11.0,Forecast,12,13
+2026-05-06 14:00:00,21334825,Surgical 2 West,12.0,Forecast,24,13
+2026-05-07 14:00:00,21334825,Surgical 2 West,12.0,Forecast,48,13
+2026-05-08 14:00:00,21334825,Surgical 2 West,12.1,Forecast,72,13
+2026-05-05 15:00:00,21336305,Orthopedic 6 North,12.1,Forecast,1,13
+2026-05-05 16:00:00,21336305,Orthopedic 6 North,11.3,Forecast,2,13
+2026-05-05 17:00:00,21336305,Orthopedic 6 North,11.3,Forecast,3,13
+2026-05-05 18:00:00,21336305,Orthopedic 6 North,10.8,Forecast,4,13
+2026-05-06 02:00:00,21336305,Orthopedic 6 North,11.0,Forecast,12,13
+2026-05-06 14:00:00,21336305,Orthopedic 6 North,12.0,Forecast,24,13
+2026-05-07 14:00:00,21336305,Orthopedic 6 North,11.9,Forecast,48,13
+2026-05-08 14:00:00,21336305,Orthopedic 6 North,12.2,Forecast,72,13
+2026-05-05 15:00:00,97635816,Progressive Care,11.0,Forecast,1,11
+2026-05-05 16:00:00,97635816,Progressive Care,10.6,Forecast,2,11
+2026-05-05 17:00:00,97635816,Progressive Care,10.3,Forecast,3,11
+2026-05-05 18:00:00,97635816,Progressive Care,9.7,Forecast,4,11
+2026-05-06 02:00:00,97635816,Progressive Care,9.8,Forecast,12,11
+2026-05-06 14:00:00,97635816,Progressive Care,10.8,Forecast,24,11
+2026-05-07 14:00:00,97635816,Progressive Care,10.5,Forecast,48,11
+2026-05-08 14:00:00,97635816,Progressive Care,10.2,Forecast,72,11
+2026-05-05 15:00:00,1775257343,Neuro Stepdown,17.4,Forecast,1,20
+2026-05-05 16:00:00,1775257343,Neuro Stepdown,17.5,Forecast,2,20
+2026-05-05 17:00:00,1775257343,Neuro Stepdown,16.8,Forecast,3,20
+2026-05-05 18:00:00,1775257343,Neuro Stepdown,16.4,Forecast,4,20
+2026-05-06 02:00:00,1775257343,Neuro Stepdown,15.9,Forecast,12,20
+2026-05-06 14:00:00,1775257343,Neuro Stepdown,18.4,Forecast,24,20
+2026-05-07 14:00:00,1775257343,Neuro Stepdown,18.1,Forecast,48,20
+2026-05-08 14:00:00,1775257343,Neuro Stepdown,17.4,Forecast,72,20
+2026-05-05 15:00:00,4452986337,Medical-Surgical 4 South,13.1,Forecast,1,14
+2026-05-05 16:00:00,4452986337,Medical-Surgical 4 South,13.6,Forecast,2,14
+2026-05-05 17:00:00,4452986337,Medical-Surgical 4 South,12.7,Forecast,3,14
+2026-05-05 18:00:00,4452986337,Medical-Surgical 4 South,12.4,Forecast,4,14
+2026-05-06 02:00:00,4452986337,Medical-Surgical 4 South,12.1,Forecast,12,14
+2026-05-06 14:00:00,4452986337,Medical-Surgical 4 South,13.1,Forecast,24,14
+2026-05-07 14:00:00,4452986337,Medical-Surgical 4 South,12.7,Forecast,48,14
+2026-05-08 14:00:00,4452986337,Medical-Surgical 4 South,13.2,Forecast,72,14
