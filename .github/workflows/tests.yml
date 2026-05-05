@@ -1,0 +1,60 @@
+name: Tests
+
+# Runs the data-free subset of the pytest suite (23 of 34 cases) on every
+# push and pull request. Tests marked `requires_data` are skipped because
+# data/raw/postsql.csv is gitignored (38 MB, hospital data). The full suite
+# runs locally with that file present.
+#
+# This workflow is what powers the green badge on docs/tests.html.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "config/**"
+      - "requirements.txt"
+      - "pytest.ini"
+      - ".github/workflows/tests.yml"
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run data-free test subset
+        run: |
+          python -m pytest tests/test_pipeline.py \
+            -m "not requires_data" \
+            -v \
+            --json-report \
+            --json-report-file=test_results_ci.json \
+            --json-report-omit=collectors,log,streams,warnings
+
+      - name: Upload test results artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-ci
+          path: test_results_ci.json
+          retention-days: 30

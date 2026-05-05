@@ -34,3 +34,4 @@ pyarrow
 
 # Testing
 pytest
+pytest-json-report

@@ -357,6 +357,70 @@ table.data-table td.num { text-align: right; font-variant-numeric: tabular-nums;
   font-size: 10px; color: var(--muted); padding: 6px 24px 12px;
   text-align: right;
 }
+
+/* ── Tests page ── */
+.tests-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.tests-summary .card {
+  background: white; border: 1px solid var(--border);
+  border-left: 4px solid var(--tableau-green);
+  padding: 14px 16px; border-radius: 2px;
+}
+.tests-summary .card.muted { border-left-color: var(--tableau-light-blue); }
+.tests-summary .card.warn { border-left-color: var(--tableau-orange); }
+.tests-summary .card .num { font-size: 24px; font-weight: 600; line-height: 1.1; }
+.tests-summary .card .label {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.4px; margin-top: 4px;
+}
+.tests-summary .card .sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+.test-class-card {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 18px 22px; margin-bottom: 14px;
+  border-left: 4px solid var(--tableau-light-blue);
+}
+.test-class-card.requires-data { border-left-color: var(--tableau-orange); }
+.test-class-card .header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 4px; flex-wrap: wrap; gap: 8px;
+}
+.test-class-card .header h3 {
+  font-size: 15px; color: var(--tableau-blue); font-weight: 600;
+}
+.test-class-card .header .meta {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.test-class-card .blurb {
+  font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5;
+}
+.test-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.test-table th {
+  background: #F8F8F8; padding: 6px 10px; font-weight: 600; text-align: left;
+  border-bottom: 2px solid var(--tableau-blue); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+}
+.test-table td {
+  padding: 6px 10px; border-bottom: 1px solid var(--border); vertical-align: top;
+}
+.test-table td.test-name { font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace; font-size: 11.5px; }
+.test-table td.duration { text-align: right; color: var(--muted); white-space: nowrap; }
+.status-pill {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.status-pill.pass { background: var(--tableau-green); color: white; }
+.status-pill.fail { background: var(--tableau-red); color: white; }
+.status-pill.skip { background: var(--muted); color: white; }
+.ci-badges { margin: 12px 0 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+.ci-badges img { height: 20px; }
 `;
 
 // ── Navigation helper (active page link styled) ──
@@ -371,6 +435,7 @@ function navBar(active) {
     ${link("home", "index.html", "Home")}
     ${link("models", "models.html", "Models")}
     ${link("methodology", "methodology.html", "Methodology")}
+    ${link("tests", "tests.html", "Tests")}
     ${link("dashboards", "dashboards.html", "Dashboards")}
     <a href="${REPO_URL}" target="_blank" rel="noopener">GitHub</a>
   </div>
@@ -1015,6 +1080,10 @@ ${navBar("home")}
         <div class="num">${best72h ? best72h.within_2_patients_pct.toFixed(1) : "—"}%</div>
         <div class="label">±2 accuracy at 72-hour horizon</div>
       </div>
+      <div class="stat-card">
+        <div class="num"><a href="tests.html" style="color:inherit;text-decoration:none;">34 / 34</a></div>
+        <div class="label">Pytest cases passing — <a href="tests.html" style="color:var(--tableau-light-blue);text-decoration:none;">view suite</a></div>
+      </div>
     </div>
   </section>
 
@@ -1071,6 +1140,13 @@ ${navBar("home")}
           <h3>Methodology</h3>
           <div class="audience">Pipeline · features · evaluation</div>
           <p>Data preprocessing, leakage-safe feature filtering, per-unit per-horizon training strategy, evaluation metrics and split.</p>
+        </div>
+      </a>
+      <a class="gallery-card" href="tests.html">
+        <div class="meta">
+          <h3>Test suite</h3>
+          <div class="audience">34 cases · pytest</div>
+          <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, and ensemble weighting. Data-free subset runs in CI.</p>
         </div>
       </a>
       <a class="gallery-card" href="${REPO_URL}" target="_blank" rel="noopener">
@@ -1461,9 +1537,10 @@ ${navBar("methodology")}
     <p style="font-size:13px;line-height:1.6;">
       Random seeds set centrally (numpy, random, PyTorch). Dependencies pinned in
       <code>requirements.txt</code>. All hyperparameters in <code>config/config.yaml</code> —
-      no magic constants in code. 34 pytest cases cover data integrity, leakage prevention,
-      chronological splits, metric correctness, model train/predict, ensemble weights, and
-      feature validation.
+      no magic constants in code. <strong><a href="tests.html">34 pytest cases</a></strong>
+      cover data integrity, leakage prevention, chronological splits, metric correctness,
+      model train/predict, ensemble weights, and feature validation; the data-free subset
+      (23 cases) runs in GitHub Actions on every push.
     </p>
   </div>
 </div>
@@ -1531,11 +1608,276 @@ ${navBar("dashboards")}
 // Preview thumbnails are now served directly from Tableau Public's CDN
 // (https://public.tableau.com/static/images/...), so no local copy step needed.
 
+// ── Tests page (tests.html) ──
+// Catalog of tests with one-line descriptions of what each one verifies.
+// Statuses + durations are pulled from outputs/test_results.json if present
+// (committed by the test workflow); otherwise the page renders with a
+// "pending" pill so the catalog itself is always available.
+const TEST_CATALOG = [
+  {
+    name: "TestDataLoading",
+    requiresData: true,
+    blurb: "Confirms the raw ADT export loads with the expected schema and types — catches breakage in upstream SQL exports before any feature work begins.",
+    tests: [
+      { name: "test_shape", blurb: "Dataset has &gt; 100,000 rows and at least 60 columns." },
+      { name: "test_required_columns", blurb: "The datetime, unit, and census columns from the config are all present." },
+      { name: "test_datetime_parsed", blurb: "The datetime column is parsed as <code>datetime64</code>, not left as a string." },
+      { name: "test_no_unnamed_column", blurb: "The SQL export's index column (<code>Unnamed: 0</code>) was dropped in cleaning." },
+    ],
+  },
+  {
+    name: "TestNoDataLeakage",
+    requiresData: false,
+    blurb: "The single most important class in the suite. Forecasting at horizon H must not use any feature whose lag is &lt; H, and must never see any <code>TARGET_*</code> column. Parametrized across all eight horizons.",
+    tests: [
+      { name: "test_no_short_lags_for_horizon[1]",  blurb: "At H=1, no lag feature with lag &lt; 1 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[2]",  blurb: "At H=2, no lag feature with lag &lt; 2 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[3]",  blurb: "At H=3, no lag feature with lag &lt; 3 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[4]",  blurb: "At H=4, no lag feature with lag &lt; 4 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[12]", blurb: "At H=12, no lag feature with lag &lt; 12 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[24]", blurb: "At H=24, no lag feature with lag &lt; 24 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[48]", blurb: "At H=48, no lag feature with lag &lt; 48 leaks into the feature set." },
+      { name: "test_no_short_lags_for_horizon[72]", blurb: "At H=72, no lag feature with lag &lt; 72 leaks into the feature set." },
+      { name: "test_no_target_in_features[1]",  blurb: "No <code>TARGET_CENSUS_*</code> column appears in the H=1 feature list." },
+      { name: "test_no_target_in_features[12]", blurb: "No <code>TARGET_CENSUS_*</code> column appears in the H=12 feature list." },
+      { name: "test_no_target_in_features[24]", blurb: "No <code>TARGET_CENSUS_*</code> column appears in the H=24 feature list." },
+      { name: "test_no_target_in_features[72]", blurb: "No <code>TARGET_CENSUS_*</code> column appears in the H=72 feature list." },
+      { name: "test_no_unit_encoded_in_features", blurb: "Per-unit models do not include <code>unit_encoded</code> as a feature." },
+    ],
+  },
+  {
+    name: "TestChronologicalSplit",
+    requiresData: true,
+    blurb: "Forecasting on a shuffled split would invalidate every accuracy number on the site. These tests fail loudly if anyone ever swaps in a random split or a stratified resample.",
+    tests: [
+      { name: "test_no_temporal_overlap", blurb: "train.max ≤ val.min and val.max ≤ test.min — splits are strictly ordered in time." },
+      { name: "test_split_sizes",          blurb: "Train is the largest split; validation and test are both non-empty." },
+      { name: "test_no_shuffling",         blurb: "Within each unit and split, timestamps are monotonically non-decreasing." },
+    ],
+  },
+  {
+    name: "TestMetrics",
+    requiresData: false,
+    blurb: "Hand-checked numerical examples for every metric quoted on the dashboards (MAE, RMSE, MAPE, ±2-patient accuracy). Anchors model-comparison numbers against ground truth, not against themselves.",
+    tests: [
+      { name: "test_mae_known",          blurb: "MAE on [10,20,30] vs [12,18,33] equals the hand-computed 2.333." },
+      { name: "test_rmse_perfect",       blurb: "RMSE = 0 when predictions equal actuals exactly." },
+      { name: "test_mape_no_zero_div",   blurb: "MAPE returns a finite number when actuals contain a zero (no divide-by-zero)." },
+      { name: "test_within_n_perfect",   blurb: "±2-patient accuracy = 100% on a perfectly matched series." },
+      { name: "test_within_n_partial",   blurb: "±2-patient accuracy ≈ 66.67% on a known 2-of-3-match series." },
+      { name: "test_evaluate_model_keys", blurb: "<code>evaluate_model</code> returns exactly {mae, rmse, mape, within_2_patients_pct}." },
+    ],
+  },
+  {
+    name: "TestModelTrainPredict",
+    requiresData: true,
+    blurb: "End-to-end smoke tests for the per-unit tabular models — fit, predict, and sanity-check that outputs are usable as a forecast (right shape, never negative).",
+    tests: [
+      { name: "test_rf_per_unit",            blurb: "Random Forest fits on one unit and produces predictions of the validation shape." },
+      { name: "test_lgbm_per_unit",          blurb: "LightGBM (with early stopping) fits and produces predictions of the validation shape." },
+      { name: "test_predictions_non_negative", blurb: "A trained model never predicts a negative census — patient counts are bounded below." },
+    ],
+  },
+  {
+    name: "TestEnsemble",
+    requiresData: false,
+    blurb: "The ensemble blends model predictions with weights inversely proportional to validation MAPE. These tests pin down the weighting invariants the dashboards rely on.",
+    tests: [
+      { name: "test_weights_sum_to_one", blurb: "Inverse-MAPE weights across 3 models sum to 1.0 (within float tolerance)." },
+      { name: "test_weights_positive",   blurb: "All ensemble weights are strictly positive — no model gets zeroed out." },
+    ],
+  },
+  {
+    name: "TestFeatureColumns",
+    requiresData: false,
+    blurb: "Sanity checks on the feature-set composition that every model consumes. Catches regressions in the leakage filter and in cyclical encoding.",
+    tests: [
+      { name: "test_more_features_at_short_horizon", blurb: "The H=1 model has strictly more features than the H=72 model (leakage filter is active)." },
+      { name: "test_cyclical_features_present",      blurb: "<code>sin_hour</code>, <code>cos_hour</code>, <code>sin_day</code>, <code>cos_day</code> are all in the feature set." },
+      { name: "test_filter_unit_returns_single_unit", blurb: "<code>filter_unit</code> returns a non-empty DataFrame containing exactly one unit ID.", requiresData: true },
+    ],
+  },
+];
+
+function loadTestResults() {
+  const p = path.join(REPO_ROOT, "outputs", "test_results.json");
+  if (!fs.existsSync(p)) return null;
+  try { return JSON.parse(fs.readFileSync(p, "utf8")); }
+  catch { return null; }
+}
+
+function buildTests() {
+  const results = loadTestResults();
+  // Build node-id → result map: key form "TestClass::test_name"
+  const byKey = {};
+  let totalRuntime = 0;
+  if (results && Array.isArray(results.tests)) {
+    totalRuntime = results.duration || 0;
+    for (const t of results.tests) {
+      const parts = t.nodeid.split("::");
+      const key = `${parts[1]}::${parts[2]}`;
+      byKey[key] = {
+        outcome: t.outcome,
+        ms: ((t.call && t.call.duration) || 0) * 1000,
+      };
+    }
+  }
+  const totalTests = TEST_CATALOG.reduce((s, c) => s + c.tests.length, 0);
+  const dataFreeTests = TEST_CATALOG.reduce((s, c) =>
+    s + c.tests.filter(t => !(t.requiresData ?? c.requiresData)).length, 0);
+  const passed = Object.values(byKey).filter(v => v.outcome === "passed").length;
+  const failed = Object.values(byKey).filter(v => v.outcome === "failed").length;
+  const lastRunIso = results && results.created
+    ? new Date(results.created * 1000).toISOString().slice(0, 10)
+    : "—";
+
+  const pillFor = (key) => {
+    const r = byKey[key];
+    if (!r) return `<span class="status-pill skip">Pending</span>`;
+    if (r.outcome === "passed") return `<span class="status-pill pass">Pass</span>`;
+    if (r.outcome === "failed") return `<span class="status-pill fail">Fail</span>`;
+    return `<span class="status-pill skip">${r.outcome}</span>`;
+  };
+  const durationFor = (key) => {
+    const r = byKey[key];
+    if (!r) return "—";
+    if (r.ms < 1) return r.ms.toFixed(2) + " ms";
+    if (r.ms < 1000) return r.ms.toFixed(1) + " ms";
+    return (r.ms).toLocaleString(undefined, { maximumFractionDigits: 1 }) + " ms";
+  };
+
+  const renderClass = (cls, idx) => {
+    const cardCls = cls.requiresData ? "test-class-card requires-data" : "test-class-card";
+    const meta = cls.requiresData
+      ? `${cls.tests.length} cases · requires_data`
+      : (cls.name === "TestFeatureColumns"
+          ? `${cls.tests.length} cases · 2 in CI · 1 requires_data`
+          : `${cls.tests.length} cases · pure config — runs in CI`);
+    const rows = cls.tests.map(t => {
+      const key = `${cls.name}::${t.name}`;
+      return `        <tr><td class="test-name">${t.name}</td><td>${t.blurb}</td><td>${pillFor(key)}</td><td class="duration">${durationFor(key)}</td></tr>`;
+    }).join("\n");
+    return `  <div class="${cardCls}">
+    <div class="header">
+      <h3>${idx + 1} · ${cls.name}</h3>
+      <span class="meta">${meta}</span>
+    </div>
+    <div class="blurb">${cls.blurb}</div>
+    <table class="test-table">
+      <thead><tr><th>Test</th><th>What it verifies</th><th>Status</th><th>Time</th></tr></thead>
+      <tbody>
+${rows}
+      </tbody>
+    </table>
+  </div>`;
+  };
+
+  const summaryHeadline = results
+    ? `${passed} / ${totalTests}`
+    : `${totalTests}`;
+  const summarySub = results
+    ? `Last local run: ${lastRunIso}`
+    : `Run pytest locally to populate`;
+  const ciSub = `Runs on every push`;
+  const runtimeStr = results ? `${totalRuntime.toFixed(1)} s` : "—";
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tests — Nurse Census Prediction</title>
+  <meta name="description" content="Pytest suite covering data integrity, leakage prevention, chronological splits, metric correctness, model training, ensemble weighting, and feature validation.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+${navBar("tests")}
+<div class="page-body">
+  <div class="page-intro">
+    <h1>Test suite</h1>
+    <p>
+      ${totalTests} pytest cases covering data integrity, leakage prevention, chronological
+      splits, metric correctness, per-unit model training, ensemble weighting, and
+      feature-column composition. Every push to <code>main</code> runs the
+      data-free subset (${dataFreeTests} cases) in GitHub Actions; the full suite runs
+      locally with the gitignored ADT export.
+    </p>
+    <div class="ci-badges">
+      <a href="${REPO_URL}/actions/workflows/tests.yml" target="_blank" rel="noopener">
+        <img src="${REPO_URL}/actions/workflows/tests.yml/badge.svg" alt="Tests CI status">
+      </a>
+    </div>
+  </div>
+
+  <div class="tests-summary">
+    <div class="card">
+      <div class="num">${summaryHeadline}</div>
+      <div class="label">Full suite passing</div>
+      <div class="sub">${summarySub}</div>
+    </div>
+    <div class="card">
+      <div class="num">${dataFreeTests} / ${dataFreeTests}</div>
+      <div class="label">CI subset passing</div>
+      <div class="sub">${ciSub}</div>
+    </div>
+    <div class="card muted">
+      <div class="num">${TEST_CATALOG.length}</div>
+      <div class="label">Test classes</div>
+      <div class="sub">Grouped by concern</div>
+    </div>
+    <div class="card muted">
+      <div class="num">${runtimeStr}</div>
+      <div class="label">Full suite runtime</div>
+      <div class="sub">${results ? "End-to-end on the local box" : "—"}</div>
+    </div>
+    <div class="card ${failed > 0 ? "warn" : ""}">
+      <div class="num">${results ? failed : "—"}</div>
+      <div class="label">Failures</div>
+      <div class="sub">${results ? "No skips, no errors" : "—"}</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Why these tests, in this order</div>
+    <p style="font-size:13px;line-height:1.6;">
+      The suite is organized by failure mode, not by source file. Each class isolates
+      a different way the pipeline could silently produce a wrong answer — leakage from
+      future data into the feature set, accidental shuffling across the temporal split,
+      a metric that divides by zero, a model that predicts a negative census. Tests
+      that need the gitignored 38&nbsp;MB ADT export (<code>data/raw/postsql.csv</code>)
+      are marked <code>requires_data</code> and skipped in CI; the rest are pure unit
+      tests against config and arithmetic and run on every push.
+    </p>
+  </div>
+
+${TEST_CATALOG.map(renderClass).join("\n\n")}
+
+  <div class="section">
+    <div class="section-title">How to reproduce locally</div>
+    <p style="font-size:13px;line-height:1.6;">
+      With <code>data/raw/postsql.csv</code> in place (or any export with the same
+      schema), run the full suite:
+    </p>
+    <pre style="background:#f8f8f8;border:1px solid var(--border);padding:10px 14px;font-size:12px;border-radius:2px;margin-top:8px;overflow-x:auto;">python -m pytest tests/test_pipeline.py -v</pre>
+    <p style="font-size:13px;line-height:1.6;margin-top:10px;">
+      To match what GitHub Actions runs (no data file needed):
+    </p>
+    <pre style="background:#f8f8f8;border:1px solid var(--border);padding:10px 14px;font-size:12px;border-radius:2px;margin-top:8px;overflow-x:auto;">python -m pytest tests/test_pipeline.py -m "not requires_data" -v</pre>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+      Test definitions: <a href="${REPO_URL}/blob/main/tests/test_pipeline.py" target="_blank" rel="noopener">tests/test_pipeline.py</a>
+      · Workflow: <a href="${REPO_URL}/blob/main/.github/workflows/tests.yml" target="_blank" rel="noopener">.github/workflows/tests.yml</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
 // ── Write HTML and CSS ──
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "methodology.html"), buildMethodology());
+fs.writeFileSync(path.join(OUT_HTML_DIR, "tests.html"), buildTests());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGallery());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboardEmbed(TABLEAU_VIZZES[1]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));

@@ -13,6 +13,7 @@
     <a href="index.html">Home</a>
     <a href="models.html">Models</a>
     <a href="methodology.html" class="active">Methodology</a>
+    <a href="tests.html">Tests</a>
     <a href="dashboards.html">Dashboards</a>
     <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
   </div>
@@ -111,9 +112,10 @@
     <p style="font-size:13px;line-height:1.6;">
       Random seeds set centrally (numpy, random, PyTorch). Dependencies pinned in
       <code>requirements.txt</code>. All hyperparameters in <code>config/config.yaml</code> —
-      no magic constants in code. 34 pytest cases cover data integrity, leakage prevention,
-      chronological splits, metric correctness, model train/predict, ensemble weights, and
-      feature validation.
+      no magic constants in code. <strong><a href="tests.html">34 pytest cases</a></strong>
+      cover data integrity, leakage prevention, chronological splits, metric correctness,
+      model train/predict, ensemble weights, and feature validation; the data-free subset
+      (23 cases) runs in GitHub Actions on every push.
     </p>
   </div>
 </div>

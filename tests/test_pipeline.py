@@ -56,6 +56,7 @@ def single_unit_val(splits, config):
 
 # ---------- Test 1: Data loading ----------
 
+@pytest.mark.requires_data
 class TestDataLoading:
     def test_shape(self, raw_data):
         assert raw_data.shape[0] > 100_000
@@ -101,6 +102,7 @@ class TestNoDataLeakage:
 
 # ---------- Test 3: Chronological split ----------
 
+@pytest.mark.requires_data
 class TestChronologicalSplit:
     def test_no_temporal_overlap(self, splits, config):
         train, val, test = splits
@@ -148,6 +150,7 @@ class TestMetrics:
 
 # ---------- Test 5: Per-unit model train/predict ----------
 
+@pytest.mark.requires_data
 class TestModelTrainPredict:
     def test_rf_per_unit(self, single_unit_train, single_unit_val, config):
         from src.models import RandomForestModel
@@ -208,6 +211,7 @@ class TestFeatureColumns:
         for feat in ["sin_hour", "cos_hour", "sin_day", "cos_day"]:
             assert feat in cols
 
+    @pytest.mark.requires_data
     def test_filter_unit_returns_single_unit(self, clean_df, config):
         uid = sorted(clean_df[config["data"]["unit_col"]].unique())[0]
         filtered = filter_unit(clean_df, uid, config)

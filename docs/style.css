@@ -307,3 +307,67 @@ table.data-table td.num { text-align: right; font-variant-numeric: tabular-nums;
   font-size: 10px; color: var(--muted); padding: 6px 24px 12px;
   text-align: right;
 }
+
+/* ── Tests page ── */
+.tests-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.tests-summary .card {
+  background: white; border: 1px solid var(--border);
+  border-left: 4px solid var(--tableau-green);
+  padding: 14px 16px; border-radius: 2px;
+}
+.tests-summary .card.muted { border-left-color: var(--tableau-light-blue); }
+.tests-summary .card.warn { border-left-color: var(--tableau-orange); }
+.tests-summary .card .num { font-size: 24px; font-weight: 600; line-height: 1.1; }
+.tests-summary .card .label {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.4px; margin-top: 4px;
+}
+.tests-summary .card .sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+.test-class-card {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 18px 22px; margin-bottom: 14px;
+  border-left: 4px solid var(--tableau-light-blue);
+}
+.test-class-card.requires-data { border-left-color: var(--tableau-orange); }
+.test-class-card .header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 4px; flex-wrap: wrap; gap: 8px;
+}
+.test-class-card .header h3 {
+  font-size: 15px; color: var(--tableau-blue); font-weight: 600;
+}
+.test-class-card .header .meta {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.test-class-card .blurb {
+  font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5;
+}
+.test-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.test-table th {
+  background: #F8F8F8; padding: 6px 10px; font-weight: 600; text-align: left;
+  border-bottom: 2px solid var(--tableau-blue); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+}
+.test-table td {
+  padding: 6px 10px; border-bottom: 1px solid var(--border); vertical-align: top;
+}
+.test-table td.test-name { font-family: 'SFMono-Regular', Consolas, 'Courier New', monospace; font-size: 11.5px; }
+.test-table td.duration { text-align: right; color: var(--muted); white-space: nowrap; }
+.status-pill {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.status-pill.pass { background: var(--tableau-green); color: white; }
+.status-pill.fail { background: var(--tableau-red); color: white; }
+.status-pill.skip { background: var(--muted); color: white; }
+.ci-badges { margin: 12px 0 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+.ci-badges img { height: 20px; }
