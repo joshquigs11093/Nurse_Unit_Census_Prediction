@@ -1294,7 +1294,6 @@ function buildModels() {
   <meta charset="UTF-8">
   <title>Model cards — Nurse Census Prediction</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
 ${navBar("models")}
@@ -1310,8 +1309,14 @@ ${navBar("models")}
   </div>
 
   <div class="section">
-    <div class="section-title">Comparison heatmap — ±2 patient accuracy</div>
-    <div id="model-heatmap" style="height: 320px; background: white; border: 1px solid var(--border); border-radius: 2px; padding: 12px;"></div>
+    <div class="section-title">Live model performance — Tableau Public</div>
+    <a href="dashboard2.html" class="featured-preview" style="display: block; text-decoration: none; color: inherit;">
+      <img src="${tableauThumbnail(TABLEAU_VIZZES[2])}" alt="Live Tableau Model Performance dashboard" style="display: block; margin: 0 auto;">
+      <div class="caption">
+        <span>Heatmap, per-unit breakdown, best-model callouts — interactive in the live dashboard.</span>
+        <a href="dashboard2.html">Open dashboard →</a>
+      </div>
+    </a>
   </div>
 
   <div class="section">
@@ -1342,33 +1347,6 @@ ${navBar("models")}
     </ul>
   </div>
 </div>
-
-<script>
-  const horizons = ${JSON.stringify(horizons)};
-  const models = ${JSON.stringify(MODEL_CARDS.map(m => m.key))};
-  const matrix = ${JSON.stringify(MODEL_CARDS.map(m => horizons.map(h => {
-    const r = data.perfAgg.find(r => r.model === m.key && r.horizon === h);
-    return r ? r.within_2_patients_pct : null;
-  })))};
-  const layout = {
-    font: { family: "Segoe UI, Helvetica Neue, Arial, sans-serif", size: 11, color: "#2A2A2A" },
-    paper_bgcolor: "#FFFFFF", plot_bgcolor: "#FFFFFF",
-    margin: { t: 20, r: 20, b: 50, l: 140 },
-    xaxis: { type: "category", tickmode: "array",
-             tickvals: horizons.map(h => h + "h"), ticktext: horizons.map(h => h + "h"),
-             title: { text: "Forecast horizon (hours)", font: { size: 11 } } },
-    yaxis: { type: "category", automargin: true },
-  };
-  Plotly.newPlot("model-heatmap", [{
-    type: "heatmap", x: horizons.map(h => h + "h"), y: models, z: matrix,
-    colorscale: [[0,"#FBE4E2"],[0.5,"#F4D03F"],[0.85,"#76B7B2"],[1,"#1F4E79"]],
-    zmin: 50, zmax: 100,
-    colorbar: { title: { text: "± 2 acc %", font: { size: 11 } }, thickness: 12, len: 0.8 },
-    text: matrix.map(row => row.map(v => v !== null ? v.toFixed(1) + "%" : "")),
-    texttemplate: "%{text}", textfont: { size: 11, color: "white" },
-    hoverinfo: "skip",
-  }], layout, { displayModeBar: false });
-</script>
 </body>
 </html>`;
 }

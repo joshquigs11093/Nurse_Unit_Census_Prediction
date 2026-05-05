@@ -46,12 +46,20 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Commit all refreshed CSV exports + every regenerated HTML page
+          # so daily KPI numbers, model cards' accuracy tables, and the
+          # landing-page stats all stay current — not just the three dashboards.
           git add outputs/tableau/forecast_predictions.csv \
                   outputs/tableau/forecast_timeline.csv \
                   outputs/tableau/executive_summary.csv \
+                  docs/index.html \
+                  docs/models.html \
+                  docs/methodology.html \
+                  docs/dashboards.html \
                   docs/dashboard1.html \
                   docs/dashboard2.html \
-                  docs/dashboard3.html
+                  docs/dashboard3.html \
+                  docs/style.css
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
