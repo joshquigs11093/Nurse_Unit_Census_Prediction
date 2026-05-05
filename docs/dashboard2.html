@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Model Performance Analytics — Nurse Census Prediction</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
 
@@ -26,101 +25,57 @@
         <div class="subtitle">Process Improvement View</div>
       </div>
       <div class="meta">
-        <div>Validation set · 10 units · 8 horizons</div>
-        <div>Primary metric: ±2 patient accuracy</div>
+        <div>Live Tableau Public</div>
+        <div>Daily refresh from GitHub Actions cron</div>
       </div>
     </div>
     <div class="dashboard-body">
-      <div class="section-title">Best Model Per Horizon (Highlights)</div>
-      <div class="kpi-row">
-      <div class="kpi-card good">
-        <div class="label">1h Best Model</div>
-        <div class="value">99.7%</div>
-        <div class="sublabel">RandomForest · MAE 0.27</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="label">4h Best Model</div>
-        <div class="value">94.5%</div>
-        <div class="sublabel">LightGBM · MAE 0.72</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="label">24h Best Model</div>
-        <div class="value">89.0%</div>
-        <div class="sublabel">LSTM · MAE 0.97</div>
-      </div>
-      <div class="kpi-card good">
-        <div class="label">72h Best Model</div>
-        <div class="value">87.6%</div>
-        <div class="sublabel">LSTM · MAE 1.20</div>
-      </div></div>
-
-      <div class="section-title">Accuracy Heatmap — Models × Forecast Horizons</div>
-      <div id="heatmap" style="height: 280px;"></div>
-
-      <div class="section-title">Per-Unit Accuracy Breakdown — 24h Horizon</div>
-      <div id="bar-units" style="height: 260px;"></div>
-    </div>
-    <div class="footer-note">
-      Data: model_performance.csv · model_performance_aggregated.csv · best_model_per_horizon.csv
+      
+<div class="tableau-frame">
+  <div class="tableauPlaceholder" id="viz_model_perf" style="position: relative; min-height: 950px;">
+    <noscript>
+      <a href="https://public.tableau.com/shared/DWG6QTPDZ" target="_blank" rel="noopener">
+        <img alt="Model Performance Analytics" src="https://public.tableau.com/static/images/DW/DWG6QTPDZ/1_rss.png" style="border: none; max-width: 100%;" />
+      </a>
+    </noscript>
+    <object class="tableauViz" style="display: none;">
+      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+      <param name="embed_code_version" value="3" />
+      <param name="path" value="shared/DWG6QTPDZ" />
+      <param name="toolbar" value="yes" />
+      <param name="static_image" value="https://public.tableau.com/static/images/DW/DWG6QTPDZ/1.png" />
+      <param name="animate_transition" value="yes" />
+      <param name="display_static_image" value="yes" />
+      <param name="display_spinner" value="yes" />
+      <param name="display_overlay" value="yes" />
+      <param name="display_count" value="yes" />
+      <param name="language" value="en-US" />
+      <param name="filter" value="publish=yes" />
+    </object>
+  </div>
+  <script type="text/javascript">
+    (function() {
+      var divElement = document.getElementById("viz_model_perf");
+      var vizElement = divElement.getElementsByTagName("object")[0];
+      if (divElement.offsetWidth > 800) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else if (divElement.offsetWidth > 500) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else {
+        vizElement.style.width = "100%"; vizElement.style.height = "2000px";
+      }
+      var scriptElement = document.createElement("script");
+      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
+  <p class="tableau-caption">
+    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
+    <a href="https://public.tableau.com/shared/DWG6QTPDZ" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
+  </p>
+</div>
     </div>
   </div>
-
-  <script>
-    const horizons = [1,2,3,4,12,24,48,72];
-    const models = ["RandomForest","LightGBM","LSTM","Ensemble","Prophet","ARIMA"];
-    const matrix = [[99.7,97.39,95.25,93.84,88.14,85.87,82.43,82.1],[99.69,97.79,95.75,94.46,89.63,88.55,86.5,86.37],[98.11,95.63,88.88,94.15,90.52,89.02,87.46,87.58],[97.05,94.12,91.57,91.32,87.65,86.6,85.3,85.15],[86.32,86.32,86.31,86.3,86.31,86.25,86.22,86.11],[81.98,82,82,82,81.98,82.06,82.2,82.08]];
-    const layoutBase = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
-
-    // Heatmap
-    const heatLayout = JSON.parse(JSON.stringify(layoutBase));
-    heatLayout.margin = { t: 20, r: 20, b: 40, l: 140 };
-    heatLayout.xaxis = { ...heatLayout.xaxis, type: "category",
-                         title: { text: "Forecast horizon (hours)", font: { size: 11 } },
-                         tickmode: "array",
-                         tickvals: horizons.map(h => h + "h"),
-                         ticktext: horizons.map(h => h + "h") };
-    heatLayout.yaxis = { ...heatLayout.yaxis, automargin: true, type: "category" };
-
-    Plotly.newPlot("heatmap", [{
-      type: "heatmap",
-      x: horizons.map(h => h + "h"),
-      y: models,
-      z: matrix,
-      colorscale: [
-        [0,    "#FBE4E2"],
-        [0.5,  "#F4D03F"],
-        [0.85, "#76B7B2"],
-        [1,    "#1F4E79"]
-      ],
-      zmin: 50, zmax: 100,
-      colorbar: { title: { text: "± 2 acc %", font: { size: 11 } }, thickness: 12, len: 0.8 },
-      text: matrix.map(row => row.map(v => v !== null ? v.toFixed(1) + "%" : "")),
-      texttemplate: "%{text}",
-      textfont: { size: 11, color: "white" },
-      hoverinfo: "skip"
-    }], heatLayout, { displayModeBar: false });
-
-    // Per-unit bar chart for 24h horizon
-    const perUnit = [{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":84.56,"LightGBM":89.13,"LSTM":91.52},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":43.93,"LightGBM":41.89,"LSTM":48.24},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":89.72,"LightGBM":95.11,"LSTM":94.8},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":92.75,"LightGBM":93.93,"LSTM":94.12},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.51,"LightGBM":97.33,"LSTM":92.45},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.24,"LightGBM":97.83,"LSTM":97.6},{"unit_id":60732673,"unit_name":"Observation Unit","RandomForest":null,"LightGBM":null,"LSTM":null},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.64,"LightGBM":97.83,"LSTM":98.82},{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":82.25,"LightGBM":91.53,"LSTM":91.37},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":88.27,"LightGBM":92.35,"LSTM":92.25}];
-    const unitLabels = perUnit.map(p => p.unit_name);
-    const traceRF = { x: unitLabels, y: perUnit.map(p => p.RandomForest), name: "RandomForest",
-                     type: "bar", marker: { color: "#4E79A7" } };
-    const traceLGBM = { x: unitLabels, y: perUnit.map(p => p.LightGBM), name: "LightGBM",
-                        type: "bar", marker: { color: "#F28E2B" } };
-    const traceLSTM = { x: unitLabels, y: perUnit.map(p => p.LSTM), name: "LSTM",
-                        type: "bar", marker: { color: "#59A14F" } };
-
-    const barLayout = JSON.parse(JSON.stringify(layoutBase));
-    barLayout.barmode = "group";
-    barLayout.xaxis = { ...barLayout.xaxis, type: "category",
-                        title: { text: "Nurse unit", font: { size: 11 } } };
-    barLayout.yaxis.title = { text: "± 2 patient accuracy (%)", font: { size: 11 } };
-    barLayout.yaxis.range = [0, 100];
-    barLayout.legend = { orientation: "h", y: 1.12, x: 0 };
-
-    Plotly.newPlot("bar-units", [traceRF, traceLGBM, traceLSTM], barLayout, { displayModeBar: false })
-      .then(() => { window.RENDERED = true; });
-  </script>
 </div>
 </body>
 </html>

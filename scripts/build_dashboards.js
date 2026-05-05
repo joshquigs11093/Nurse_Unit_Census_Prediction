@@ -246,6 +246,18 @@ body {
 }
 .page-intro p { font-size: 14px; color: var(--text); max-width: 880px; }
 
+/* ── Tableau Public embed frame ── */
+.tableau-frame {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 16px; overflow-x: auto;
+}
+.tableau-frame .tableauPlaceholder { margin: 0 auto; }
+.tableau-caption {
+  font-size: 11px; color: var(--muted); margin-top: 12px; text-align: center;
+}
+.tableau-caption a { color: var(--tableau-light-blue); text-decoration: none; }
+.tableau-caption a:hover { text-decoration: underline; }
+
 /* ── Existing dashboard styles (legacy, embedded inside page) ── */
 .dashboard {
   max-width: 1360px;
@@ -357,6 +369,81 @@ function navBar(active) {
 </nav>`;
 }
 
+// ── Tableau Public embeds (user-authored workbooks) ──
+const TABLEAU_VIZZES = {
+  1: {
+    vizId: "viz_op_forecast",
+    path: "shared/BZ79XYMTJ",
+    title: "Operational Census Forecast",
+    subtitle: "House Supervisor View",
+  },
+  2: {
+    vizId: "viz_model_perf",
+    path: "shared/DWG6QTPDZ",
+    title: "Model Performance Analytics",
+    subtitle: "Process Improvement View",
+  },
+  3: {
+    vizId: "viz_exec_summary",
+    path: "shared/M8QMRYP65",
+    title: "Executive Census Summary",
+    subtitle: "Leadership View",
+  },
+};
+
+function tableauEmbed(viz) {
+  const code = viz.path.split("/").pop();
+  const prefix = code.slice(0, 2);
+  const publicUrl = `https://public.tableau.com/views/${code}/Dashboard1`;
+  const fallbackUrl = `https://public.tableau.com/${viz.path}`;
+  const staticImg = `https://public.tableau.com/static/images/${prefix}/${code}/1.png`;
+  const rssImg = `https://public.tableau.com/static/images/${prefix}/${code}/1_rss.png`;
+  return `
+<div class="tableau-frame">
+  <div class="tableauPlaceholder" id="${viz.vizId}" style="position: relative; min-height: 950px;">
+    <noscript>
+      <a href="${fallbackUrl}" target="_blank" rel="noopener">
+        <img alt="${viz.title}" src="${rssImg}" style="border: none; max-width: 100%;" />
+      </a>
+    </noscript>
+    <object class="tableauViz" style="display: none;">
+      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+      <param name="embed_code_version" value="3" />
+      <param name="path" value="${viz.path}" />
+      <param name="toolbar" value="yes" />
+      <param name="static_image" value="${staticImg}" />
+      <param name="animate_transition" value="yes" />
+      <param name="display_static_image" value="yes" />
+      <param name="display_spinner" value="yes" />
+      <param name="display_overlay" value="yes" />
+      <param name="display_count" value="yes" />
+      <param name="language" value="en-US" />
+      <param name="filter" value="publish=yes" />
+    </object>
+  </div>
+  <script type="text/javascript">
+    (function() {
+      var divElement = document.getElementById("${viz.vizId}");
+      var vizElement = divElement.getElementsByTagName("object")[0];
+      if (divElement.offsetWidth > 800) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else if (divElement.offsetWidth > 500) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else {
+        vizElement.style.width = "100%"; vizElement.style.height = "2000px";
+      }
+      var scriptElement = document.createElement("script");
+      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
+  <p class="tableau-caption">
+    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
+    <a href="${fallbackUrl}" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
+  </p>
+</div>`;
+}
+
 // ── Tableau-like Plotly layout defaults ──
 const PLOTLY_LAYOUT_BASE = {
   font: { family: "Segoe UI, Helvetica Neue, Arial, sans-serif", size: 11, color: "#2A2A2A" },
@@ -369,7 +456,39 @@ const PLOTLY_LAYOUT_BASE = {
 };
 const TABLEAU_PALETTE = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948"];
 
-// ── Dashboard 1: Operational Census Forecast ──
+// ── Tableau-embed dashboard page (replaces the Plotly inline versions) ──
+function buildDashboardEmbed(viz) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${viz.title} — Nurse Census Prediction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+${navBar("dashboards")}
+<div class="page-body">
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <h1>${viz.title}</h1>
+        <div class="subtitle">${viz.subtitle}</div>
+      </div>
+      <div class="meta">
+        <div>Live Tableau Public</div>
+        <div>Daily refresh from GitHub Actions cron</div>
+      </div>
+    </div>
+    <div class="dashboard-body">
+      ${tableauEmbed(viz)}
+    </div>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+// ── Dashboard 1: Operational Census Forecast (legacy Plotly version, unused) ──
 function buildDashboard1() {
   // Pick the most-loaded unit so the dashboard tells a story (alert state)
   // From earlier: 705089 sits at 94% utilization → ideal.
@@ -1432,9 +1551,9 @@ fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "methodology.html"), buildMethodology());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGallery());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboard1());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboard2());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboard3());
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboardEmbed(TABLEAU_VIZZES[1]));
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));
 console.log("Wrote HTML to", OUT_HTML_DIR);
 
 // ── Screenshot via puppeteer (skipped in --no-screenshots / cron mode) ──

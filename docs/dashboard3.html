@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Executive Census Summary — Nurse Census Prediction</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
 
@@ -26,270 +25,57 @@
         <div class="subtitle">Leadership View</div>
       </div>
       <div class="meta">
-        <div>9 active nurse units</div>
-        <div>Census prediction · 1–72h horizons</div>
+        <div>Live Tableau Public</div>
+        <div>Daily refresh from GitHub Actions cron</div>
       </div>
     </div>
     <div class="dashboard-body">
-      <div class="section-title">House-Wide KPIs</div>
-      <div class="kpi-row">
-        <div class="kpi-card">
-          <div class="label">Total Current Census</div>
-          <div class="value">119</div>
-          <div class="sublabel">across 9 units</div>
-        </div>
-        <div class="kpi-card">
-          <div class="label">Total Bed Capacity</div>
-          <div class="value">154</div>
-          <div class="sublabel">max observed historical</div>
-        </div>
-        <div class="kpi-card warn">
-          <div class="label">Average Utilization</div>
-          <div class="value">78.3%</div>
-          <div class="sublabel">across all units</div>
-        </div>
-        <div class="kpi-card good">
-          <div class="label">Units Over 90%</div>
-          <div class="value">0</div>
-          <div class="sublabel">capacity alerts</div>
-        </div>
-      </div>
-
-      <div class="split-row">
-        <div>
-          <div class="section-title">Utilization by Unit (Sorted)</div>
-          <div id="util-bar" style="height: 360px;"></div>
-        </div>
-        <div>
-          <div class="section-title">Best Model Recommendations</div>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Horizon</th>
-                <th>Model</th>
-                <th style="text-align:right;">±2 Acc</th>
-              </tr>
-            </thead>
-            <tbody>
-    <tr>
-      <td><strong>1h</strong></td>
-      <td>RandomForest</td>
-      <td class="num">99.7%</td>
-    </tr>
-    <tr>
-      <td><strong>2h</strong></td>
-      <td>LightGBM</td>
-      <td class="num">97.8%</td>
-    </tr>
-    <tr>
-      <td><strong>3h</strong></td>
-      <td>LightGBM</td>
-      <td class="num">95.8%</td>
-    </tr>
-    <tr>
-      <td><strong>4h</strong></td>
-      <td>LightGBM</td>
-      <td class="num">94.5%</td>
-    </tr>
-    <tr>
-      <td><strong>12h</strong></td>
-      <td>LSTM</td>
-      <td class="num">90.5%</td>
-    </tr>
-    <tr>
-      <td><strong>24h</strong></td>
-      <td>LSTM</td>
-      <td class="num">89.0%</td>
-    </tr>
-    <tr>
-      <td><strong>48h</strong></td>
-      <td>LSTM</td>
-      <td class="num">87.5%</td>
-    </tr>
-    <tr>
-      <td><strong>72h</strong></td>
-      <td>LSTM</td>
-      <td class="num">87.6%</td>
-    </tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="section-title" style="margin-top: 18px;">Per-Unit Detail</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Unit</th>
-            <th style="text-align:right;">Current</th>
-            <th style="text-align:right;">Capacity</th>
-            <th style="text-align:right;">72h Forecast</th>
-            <th>Utilization</th>
-            <th>Alert</th>
-          </tr>
-        </thead>
-        <tbody>
-      <tr class="">
-        <td><strong>Orthopedic 6 North</strong><div style="font-size:10px;color:#999;">21336305</div></td>
-        <td class="num">11</td>
-        <td class="num">13</td>
-        <td class="num">10.5</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 84.6%"></div>
-            <div class="gauge-label">85%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Medical-Surgical 3 North</strong><div style="font-size:10px;color:#999;">705089</div></td>
-        <td class="num">14</td>
-        <td class="num">17</td>
-        <td class="num">13.3</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 82.4%"></div>
-            <div class="gauge-label">82%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Progressive Care</strong><div style="font-size:10px;color:#999;">97635816</div></td>
-        <td class="num">9</td>
-        <td class="num">11</td>
-        <td class="num">8.7</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 81.8%"></div>
-            <div class="gauge-label">82%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Cardiac Stepdown</strong><div style="font-size:10px;color:#999;">705091</div></td>
-        <td class="num">16</td>
-        <td class="num">20</td>
-        <td class="num">16.3</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 80%"></div>
-            <div class="gauge-label">80%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Medical-Surgical 4 South</strong><div style="font-size:10px;color:#999;">4452986337</div></td>
-        <td class="num">11</td>
-        <td class="num">14</td>
-        <td class="num">10.4</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 78.6%"></div>
-            <div class="gauge-label">79%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Surgical 2 West</strong><div style="font-size:10px;color:#999;">21334825</div></td>
-        <td class="num">10</td>
-        <td class="num">13</td>
-        <td class="num">9.9</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 76.9%"></div>
-            <div class="gauge-label">77%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Oncology 5 South</strong><div style="font-size:10px;color:#999;">705092</div></td>
-        <td class="num">9</td>
-        <td class="num">12</td>
-        <td class="num">9.4</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 75%"></div>
-            <div class="gauge-label">75%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Neuro Stepdown</strong><div style="font-size:10px;color:#999;">1775257343</div></td>
-        <td class="num">15</td>
-        <td class="num">20</td>
-        <td class="num">16.0</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill warn" style="width: 75%"></div>
-            <div class="gauge-label">75%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr>
-      <tr class="">
-        <td><strong>Telemetry 4 East</strong><div style="font-size:10px;color:#999;">705090</div></td>
-        <td class="num">24</td>
-        <td class="num">34</td>
-        <td class="num">23.2</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill good" style="width: 70.6%"></div>
-            <div class="gauge-label">71%</div>
-          </div>
-        </td>
-        <td><span class="badge green">OK</span></td>
-      </tr></tbody>
-      </table>
-    </div>
-    <div class="footer-note">
-      Data: executive_summary.csv · unit_metadata.csv · best_model_per_horizon.csv
+      
+<div class="tableau-frame">
+  <div class="tableauPlaceholder" id="viz_exec_summary" style="position: relative; min-height: 950px;">
+    <noscript>
+      <a href="https://public.tableau.com/shared/M8QMRYP65" target="_blank" rel="noopener">
+        <img alt="Executive Census Summary" src="https://public.tableau.com/static/images/M8/M8QMRYP65/1_rss.png" style="border: none; max-width: 100%;" />
+      </a>
+    </noscript>
+    <object class="tableauViz" style="display: none;">
+      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+      <param name="embed_code_version" value="3" />
+      <param name="path" value="shared/M8QMRYP65" />
+      <param name="toolbar" value="yes" />
+      <param name="static_image" value="https://public.tableau.com/static/images/M8/M8QMRYP65/1.png" />
+      <param name="animate_transition" value="yes" />
+      <param name="display_static_image" value="yes" />
+      <param name="display_spinner" value="yes" />
+      <param name="display_overlay" value="yes" />
+      <param name="display_count" value="yes" />
+      <param name="language" value="en-US" />
+      <param name="filter" value="publish=yes" />
+    </object>
+  </div>
+  <script type="text/javascript">
+    (function() {
+      var divElement = document.getElementById("viz_exec_summary");
+      var vizElement = divElement.getElementsByTagName("object")[0];
+      if (divElement.offsetWidth > 800) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else if (divElement.offsetWidth > 500) {
+        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
+      } else {
+        vizElement.style.width = "100%"; vizElement.style.height = "2000px";
+      }
+      var scriptElement = document.createElement("script");
+      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
+  <p class="tableau-caption">
+    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
+    <a href="https://public.tableau.com/shared/M8QMRYP65" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
+  </p>
+</div>
     </div>
   </div>
-
-  <script>
-    const exec = [{"unit_id":21336305,"unit_name":"Orthopedic 6 North","latest_census":11,"capacity":13,"utilization_pct":84.6,"forecast_72hr":10.5,"alert_over_90pct":"False"},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","latest_census":14,"capacity":17,"utilization_pct":82.4,"forecast_72hr":13.3,"alert_over_90pct":"False"},{"unit_id":97635816,"unit_name":"Progressive Care","latest_census":9,"capacity":11,"utilization_pct":81.8,"forecast_72hr":8.7,"alert_over_90pct":"False"},{"unit_id":705091,"unit_name":"Cardiac Stepdown","latest_census":16,"capacity":20,"utilization_pct":80,"forecast_72hr":16.3,"alert_over_90pct":"False"},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","latest_census":11,"capacity":14,"utilization_pct":78.6,"forecast_72hr":10.4,"alert_over_90pct":"False"},{"unit_id":21334825,"unit_name":"Surgical 2 West","latest_census":10,"capacity":13,"utilization_pct":76.9,"forecast_72hr":9.9,"alert_over_90pct":"False"},{"unit_id":705092,"unit_name":"Oncology 5 South","latest_census":9,"capacity":12,"utilization_pct":75,"forecast_72hr":9.4,"alert_over_90pct":"False"},{"unit_id":1775257343,"unit_name":"Neuro Stepdown","latest_census":15,"capacity":20,"utilization_pct":75,"forecast_72hr":16,"alert_over_90pct":"False"},{"unit_id":705090,"unit_name":"Telemetry 4 East","latest_census":24,"capacity":34,"utilization_pct":70.6,"forecast_72hr":23.2,"alert_over_90pct":"False"}];
-    const layoutBase = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
-    const utilLayout = JSON.parse(JSON.stringify(layoutBase));
-    utilLayout.margin = { t: 20, r: 20, b: 70, l: 50 };
-    utilLayout.xaxis = { ...utilLayout.xaxis, type: "category",
-                         title: { text: "Nurse unit", font: { size: 11 } } };
-    utilLayout.yaxis.title = { text: "Utilization (%)", font: { size: 11 } };
-    utilLayout.yaxis.range = [0, 110];
-    utilLayout.shapes = [{
-      type: "line", xref: "paper", x0: 0, x1: 1,
-      yref: "y", y0: 90, y1: 90,
-      line: { color: "#E15759", width: 1.5, dash: "dash" }
-    }];
-    utilLayout.annotations = [{
-      xref: "paper", x: 1, yref: "y", y: 90, xanchor: "right", yanchor: "bottom",
-      text: "Alert threshold 90%", showarrow: false,
-      font: { color: "#E15759", size: 11 }
-    }];
-
-    const colors = exec.map(r => {
-      if (r.utilization_pct >= 90) return "#E15759";
-      if (r.utilization_pct >= 75) return "#F28E2B";
-      return "#4E79A7";
-    });
-
-    Plotly.newPlot("util-bar", [{
-      x: exec.map(r => r.unit_name || ("Unit " + r.unit_id)),
-      y: exec.map(r => r.utilization_pct),
-      type: "bar",
-      marker: { color: colors },
-      text: exec.map(r => r.utilization_pct.toFixed(0) + "%"),
-      textposition: "outside",
-      textfont: { size: 11 },
-      hoverinfo: "skip"
-    }], utilLayout, { displayModeBar: false })
-    .then(() => { window.RENDERED = true; });
-  </script>
 </div>
 </body>
 </html>

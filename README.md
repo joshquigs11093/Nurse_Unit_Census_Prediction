@@ -11,6 +11,14 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 | Methodology — pipeline, splits, leakage filtering, evaluation, deployment | `/methodology.html` |
 | Dashboards gallery + three full-screen dashboards | `/dashboards.html` |
 
+**Live Tableau Public dashboards** (embedded in the dashboard pages above; refresh daily from the same CSV exports via Google Sheets):
+
+| Dashboard | Tableau Public URL |
+|---|---|
+| Operational Census Forecast | https://public.tableau.com/shared/BZ79XYMTJ |
+| Model Performance Analytics | https://public.tableau.com/shared/DWG6QTPDZ |
+| Executive Census Summary | https://public.tableau.com/shared/M8QMRYP65 |
+
 ![Executive Dashboard](outputs/figures/dashboards/dashboard3.png)
 
 ## What it does

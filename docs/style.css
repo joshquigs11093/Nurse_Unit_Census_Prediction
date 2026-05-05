@@ -196,6 +196,18 @@ body {
 }
 .page-intro p { font-size: 14px; color: var(--text); max-width: 880px; }
 
+/* ── Tableau Public embed frame ── */
+.tableau-frame {
+  background: white; border: 1px solid var(--border); border-radius: 2px;
+  padding: 16px; overflow-x: auto;
+}
+.tableau-frame .tableauPlaceholder { margin: 0 auto; }
+.tableau-caption {
+  font-size: 11px; color: var(--muted); margin-top: 12px; text-align: center;
+}
+.tableau-caption a { color: var(--tableau-light-blue); text-decoration: none; }
+.tableau-caption a:hover { text-decoration: underline; }
+
 /* ── Existing dashboard styles (legacy, embedded inside page) ── */
 .dashboard {
   max-width: 1360px;
