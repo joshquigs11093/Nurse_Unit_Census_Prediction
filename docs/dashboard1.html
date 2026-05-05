@@ -57,13 +57,12 @@
     (function() {
       var divElement = document.getElementById("viz_op_forecast");
       var vizElement = divElement.getElementsByTagName("object")[0];
-      if (divElement.offsetWidth >= 1400) {
-        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
-      } else if (divElement.offsetWidth > 800) {
-        vizElement.style.width = "100%"; vizElement.style.height = "900px";
-      } else {
-        vizElement.style.width = "100%"; vizElement.style.height = "1800px";
-      }
+      // The published workbook is authored at a fixed 1400 × 950 size in
+      // Tableau Desktop, so always render the embed at exactly that size.
+      // The outer .tableau-frame allows horizontal scroll on viewports
+      // narrower than ~1450px instead of producing internal scrollbars.
+      vizElement.style.width = "1400px";
+      vizElement.style.height = "950px";
       var scriptElement = document.createElement("script");
       scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
       vizElement.parentNode.insertBefore(scriptElement, vizElement);

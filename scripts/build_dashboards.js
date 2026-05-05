@@ -92,8 +92,9 @@ body {
 .topnav .links a.active { opacity: 1; border-bottom-color: white; }
 
 .page-body { padding: 18px; max-width: 1360px; margin: 0 auto; }
-.page-body.wide { max-width: 1500px; }
-.page-body.wide .dashboard { max-width: 1480px; }
+.page-body.wide { max-width: 1520px; padding: 12px 8px; }
+.page-body.wide .dashboard { max-width: 1500px; }
+.page-body.wide .dashboard-body { padding: 16px 12px; }
 .section { margin-bottom: 28px; }
 
 /* ── Hero (landing page) ── */
@@ -251,9 +252,14 @@ body {
 /* ── Tableau Public embed frame ── */
 .tableau-frame {
   background: white; border: 1px solid var(--border); border-radius: 2px;
-  padding: 16px; overflow-x: auto;
+  padding: 16px;
+  overflow-x: auto;          /* horizontal scroll OUTSIDE the embed if needed */
+  overflow-y: visible;       /* never clip vertically */
 }
-.tableau-frame .tableauPlaceholder { margin: 0 auto; }
+.tableau-frame .tableauPlaceholder {
+  width: 1400px;             /* match the workbook's authored size */
+  margin: 0 auto;
+}
 .tableau-caption {
   font-size: 11px; color: var(--muted); margin-top: 12px; text-align: center;
 }
@@ -435,13 +441,12 @@ function tableauEmbed(viz) {
     (function() {
       var divElement = document.getElementById("${viz.vizId}");
       var vizElement = divElement.getElementsByTagName("object")[0];
-      if (divElement.offsetWidth >= 1400) {
-        vizElement.style.width = "1400px"; vizElement.style.height = "950px";
-      } else if (divElement.offsetWidth > 800) {
-        vizElement.style.width = "100%"; vizElement.style.height = "900px";
-      } else {
-        vizElement.style.width = "100%"; vizElement.style.height = "1800px";
-      }
+      // The published workbook is authored at a fixed 1400 × 950 size in
+      // Tableau Desktop, so always render the embed at exactly that size.
+      // The outer .tableau-frame allows horizontal scroll on viewports
+      // narrower than ~1450px instead of producing internal scrollbars.
+      vizElement.style.width = "1400px";
+      vizElement.style.height = "950px";
       var scriptElement = document.createElement("script");
       scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
       vizElement.parentNode.insertBefore(scriptElement, vizElement);
