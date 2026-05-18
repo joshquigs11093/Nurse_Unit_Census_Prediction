@@ -37,9 +37,6 @@ docs/dashboards/
 docs/node_modules/
 docs/package*.json
 docs/data/
-!docs/index.html
-!docs/dashboard*.html
-!docs/style.css
 
 # Cache
 .cache/
