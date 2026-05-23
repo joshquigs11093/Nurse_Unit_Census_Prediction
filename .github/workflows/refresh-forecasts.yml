@@ -30,7 +30,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Refresh forecast CSVs (synthetic feed)
+      - name: Refresh synthetic feed (census, forecasts, forward drift)
         run: python scripts/generate_synthetic_hour.py
 
       - name: Set up Node
@@ -46,16 +46,18 @@ jobs:
           set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Commit all refreshed CSV exports + every regenerated HTML page
-          # so daily KPI numbers, model cards' accuracy tables, and the
-          # landing-page stats all stay current — not just the three dashboards.
+          # Commit the refreshed synthetic feed (census/forecasts + forward
+          # drift) and every regenerated HTML page.
           git add outputs/tableau/forecast_predictions.csv \
                   outputs/tableau/forecast_timeline.csv \
                   outputs/tableau/executive_summary.csv \
+                  outputs/tableau/drift_history.csv \
                   docs/index.html \
                   docs/models.html \
                   docs/methodology.html \
                   docs/dashboards.html \
+                  docs/monitoring.html \
+                  docs/tests.html \
                   docs/dashboard1.html \
                   docs/dashboard2.html \
                   docs/dashboard3.html \

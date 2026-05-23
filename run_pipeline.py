@@ -207,9 +207,13 @@ def _build_forecast_timeline(fp: pd.DataFrame, horizons: list[int]) -> pd.DataFr
             "horizon_h": 0,
             "capacity": int(r["capacity"]),
         })
-    # Forecasts: only the latest row per unit holds predictions
+    # Forecasts anchor on the latest row per unit that actually has predictions.
+    # On real data the final rows can lack forward-looking features (e.g. future
+    # scheduled-surgery windows), leaving their predictions NaN, so the absolute
+    # last row is not a safe anchor.
     fp_sorted = fp.sort_values("timestamp")
-    latest_by_unit = fp_sorted.groupby("unit_id").tail(1)
+    fp_pred = fp_sorted[fp_sorted["pred_1hr"].notna()]
+    latest_by_unit = (fp_pred if not fp_pred.empty else fp_sorted).groupby("unit_id").tail(1)
     for _, r in latest_by_unit.iterrows():
         anchor_ts = pd.to_datetime(r["timestamp"])
         for h in horizons:
@@ -271,6 +275,57 @@ def _recent_window_drift_inputs(test: pd.DataFrame, config: dict) -> tuple[dict,
             recent_within2[str(uid)] = float(np.mean(accs))
 
     return recent_census, recent_within2
+
+
+def _build_drift_history(test: pd.DataFrame, config: dict, baseline: dict,
+                          step_days: int = 7) -> pd.DataFrame:
+    """PSI trajectory per unit across the test period.
+
+    Steps an as-of cursor through the test window in step_days increments and
+    computes each unit's PSI over the trailing recent_window_hours against the
+    frozen training baseline. Model-free (distribution only), so it is cheap
+    enough to evaluate at every step. Returns long-format rows:
+    as_of, unit_id, unit_name, psi, drift_status.
+    """
+    from src.monitoring.drift import drift_status, psi_from_baseline
+
+    dt_col = config["data"]["datetime_col"]
+    unit_col = config["data"]["unit_col"]
+    census_col = config["data"]["census_col"]
+    window = pd.Timedelta(hours=config.get("drift", {}).get("recent_window_hours", 168))
+    unit_names = config.get("unit_names", {})
+
+    ts = pd.to_datetime(test[dt_col])
+    start, end = ts.min() + window, ts.max()
+    if pd.isna(start) or start >= end:
+        return pd.DataFrame()
+    as_of_dates = pd.date_range(start=start, end=end, freq=f"{step_days}D")
+
+    rows = []
+    for uid in sorted(test[unit_col].unique()):
+        b = baseline.get(str(uid))
+        if not b:
+            continue
+        edges = np.asarray(b["edges"], dtype=float)
+        expected_props = np.asarray(b["expected_props"], dtype=float)
+        u = test[test[unit_col] == uid]
+        u_ts = pd.to_datetime(u[dt_col])
+        name = unit_names.get(uid, f"Unit {uid}")
+        for as_of in as_of_dates:
+            mask = (u_ts > as_of - window) & (u_ts <= as_of)
+            census = u.loc[mask.values, census_col].dropna().to_numpy(dtype=float)
+            if census.size < config.get("drift", {}).get("psi_bins", 10):
+                continue
+            psi = psi_from_baseline(census, edges, expected_props)
+            rows.append({
+                "as_of": as_of.strftime("%Y-%m-%d"),
+                "unit_id": uid,
+                "unit_name": name,
+                "psi": round(psi, 4),
+                "drift_status": drift_status(psi),
+                "source": "test",
+            })
+    return pd.DataFrame(rows)
 
 
 def phase_export(
@@ -414,6 +469,12 @@ def phase_export(
                 if "drift_status" in drift_df else 0
             logger.info("Exported drift_report.csv (%d units, %d major PSI, %d perf alerts)",
                         len(drift_df), n_major, n_alert)
+
+            history = _build_drift_history(test, config, baseline)
+            if not history.empty:
+                history.to_csv(tableau_dir / "drift_history.csv", index=False)
+                logger.info("Exported drift_history.csv (%d rows, %d as-of dates)",
+                            len(history), history["as_of"].nunique())
 
 
 def main():

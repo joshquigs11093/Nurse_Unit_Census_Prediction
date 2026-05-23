@@ -150,10 +150,15 @@ def save_intervals(intervals: dict, config: dict) -> Path:
 
 
 def save_drift_baseline(baseline: dict, config: dict) -> Path:
-    """Persist the drift baseline to models/drift_baseline.json."""
-    models_dir = Path(config["output"]["models_dir"])
-    models_dir.mkdir(parents=True, exist_ok=True)
-    path = models_dir / BASELINE_FILENAME
+    """Persist the drift baseline to outputs/tableau/drift_baseline.json.
+
+    Lives under the tableau exports (aggregate distribution bins, no PHI) so it
+    is committed and available to the daily synthetic refresh, which recomputes
+    PSI without access to the trained models.
+    """
+    out_dir = Path(config["output"]["tableau_dir"])
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / BASELINE_FILENAME
     with open(path, "w") as f:
         json.dump(baseline, f, indent=2)
     logger.info("Saved drift baseline to %s", path)
@@ -170,8 +175,8 @@ def load_intervals(uid, config: dict) -> dict:
 
 
 def load_drift_baseline(config: dict) -> dict:
-    """Load drift_baseline.json; returns {} if absent."""
-    path = Path(config["output"]["models_dir"]) / BASELINE_FILENAME
+    """Load drift_baseline.json from the tableau exports; returns {} if absent."""
+    path = Path(config["output"]["tableau_dir"]) / BASELINE_FILENAME
     if not path.exists():
         return {}
     with open(path) as f:

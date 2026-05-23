@@ -1,0 +1,309 @@
+as_of,unit_id,unit_name,psi,drift_status,source
+2025-10-07,705089,Medical-Surgical 3 North,0.0454,stable,test
+2025-10-14,705089,Medical-Surgical 3 North,0.1087,moderate,test
+2025-10-21,705089,Medical-Surgical 3 North,0.1927,moderate,test
+2025-10-28,705089,Medical-Surgical 3 North,0.3035,major,test
+2025-11-04,705089,Medical-Surgical 3 North,0.8412,major,test
+2025-11-11,705089,Medical-Surgical 3 North,0.9778,major,test
+2025-11-18,705089,Medical-Surgical 3 North,0.2197,moderate,test
+2025-11-25,705089,Medical-Surgical 3 North,0.3611,major,test
+2025-12-02,705089,Medical-Surgical 3 North,0.1964,moderate,test
+2025-12-09,705089,Medical-Surgical 3 North,0.117,moderate,test
+2025-12-16,705089,Medical-Surgical 3 North,0.1703,moderate,test
+2025-12-23,705089,Medical-Surgical 3 North,0.1221,moderate,test
+2025-12-30,705089,Medical-Surgical 3 North,0.0418,stable,test
+2026-01-06,705089,Medical-Surgical 3 North,0.8587,major,test
+2026-01-13,705089,Medical-Surgical 3 North,0.0651,stable,test
+2026-01-20,705089,Medical-Surgical 3 North,1.2316,major,test
+2026-01-27,705089,Medical-Surgical 3 North,0.0197,stable,test
+2026-02-03,705089,Medical-Surgical 3 North,1.3292,major,test
+2026-02-10,705089,Medical-Surgical 3 North,0.1319,moderate,test
+2026-02-17,705089,Medical-Surgical 3 North,0.1531,moderate,test
+2026-02-24,705089,Medical-Surgical 3 North,0.1357,moderate,test
+2026-03-03,705089,Medical-Surgical 3 North,0.1774,moderate,test
+2026-03-10,705089,Medical-Surgical 3 North,0.252,major,test
+2026-03-17,705089,Medical-Surgical 3 North,1.1426,major,test
+2026-03-24,705089,Medical-Surgical 3 North,0.3824,major,test
+2026-03-31,705089,Medical-Surgical 3 North,0.2341,moderate,test
+2026-04-07,705089,Medical-Surgical 3 North,0.1045,moderate,test
+2026-04-14,705089,Medical-Surgical 3 North,0.147,moderate,test
+2026-04-21,705089,Medical-Surgical 3 North,0.0394,stable,test
+2026-04-28,705089,Medical-Surgical 3 North,0.0983,stable,test
+2026-05-05,705089,Medical-Surgical 3 North,0.1083,moderate,test
+2026-05-12,705089,Medical-Surgical 3 North,0.0712,stable,test
+2026-05-19,705089,Medical-Surgical 3 North,0.0857,stable,test
+2025-10-07,705090,Telemetry 4 East,1.5741,major,test
+2025-10-14,705090,Telemetry 4 East,5.9154,major,test
+2025-10-21,705090,Telemetry 4 East,4.1764,major,test
+2025-10-28,705090,Telemetry 4 East,3.2755,major,test
+2025-11-04,705090,Telemetry 4 East,3.7797,major,test
+2025-11-11,705090,Telemetry 4 East,4.6813,major,test
+2025-11-18,705090,Telemetry 4 East,3.0148,major,test
+2025-11-25,705090,Telemetry 4 East,4.1517,major,test
+2025-12-02,705090,Telemetry 4 East,3.3052,major,test
+2025-12-09,705090,Telemetry 4 East,4.0747,major,test
+2025-12-16,705090,Telemetry 4 East,5.261,major,test
+2025-12-23,705090,Telemetry 4 East,0.7854,major,test
+2025-12-30,705090,Telemetry 4 East,0.4816,major,test
+2026-01-06,705090,Telemetry 4 East,0.5959,major,test
+2026-01-13,705090,Telemetry 4 East,3.8164,major,test
+2026-01-20,705090,Telemetry 4 East,5.7486,major,test
+2026-01-27,705090,Telemetry 4 East,4.0968,major,test
+2026-02-03,705090,Telemetry 4 East,6.1455,major,test
+2026-02-10,705090,Telemetry 4 East,3.6089,major,test
+2026-02-17,705090,Telemetry 4 East,5.5168,major,test
+2026-02-24,705090,Telemetry 4 East,4.4679,major,test
+2026-03-03,705090,Telemetry 4 East,4.5753,major,test
+2026-03-10,705090,Telemetry 4 East,6.3218,major,test
+2026-03-17,705090,Telemetry 4 East,6.7601,major,test
+2026-03-24,705090,Telemetry 4 East,4.4646,major,test
+2026-03-31,705090,Telemetry 4 East,1.55,major,test
+2026-04-07,705090,Telemetry 4 East,4.7214,major,test
+2026-04-14,705090,Telemetry 4 East,3.947,major,test
+2026-04-21,705090,Telemetry 4 East,2.4368,major,test
+2026-04-28,705090,Telemetry 4 East,3.7001,major,test
+2026-05-05,705090,Telemetry 4 East,4.9546,major,test
+2026-05-12,705090,Telemetry 4 East,0.8444,major,test
+2026-05-19,705090,Telemetry 4 East,2.8014,major,test
+2025-10-07,705091,Cardiac Stepdown,0.0155,stable,test
+2025-10-14,705091,Cardiac Stepdown,0.061,stable,test
+2025-10-21,705091,Cardiac Stepdown,0.1066,moderate,test
+2025-10-28,705091,Cardiac Stepdown,0.2158,moderate,test
+2025-11-04,705091,Cardiac Stepdown,0.0424,stable,test
+2025-11-11,705091,Cardiac Stepdown,0.0522,stable,test
+2025-11-18,705091,Cardiac Stepdown,0.0385,stable,test
+2025-11-25,705091,Cardiac Stepdown,0.0345,stable,test
+2025-12-02,705091,Cardiac Stepdown,0.142,moderate,test
+2025-12-09,705091,Cardiac Stepdown,0.2801,major,test
+2025-12-16,705091,Cardiac Stepdown,0.0629,stable,test
+2025-12-23,705091,Cardiac Stepdown,0.0523,stable,test
+2025-12-30,705091,Cardiac Stepdown,0.1335,moderate,test
+2026-01-06,705091,Cardiac Stepdown,0.0093,stable,test
+2026-01-13,705091,Cardiac Stepdown,0.1233,moderate,test
+2026-01-20,705091,Cardiac Stepdown,0.1083,moderate,test
+2026-01-27,705091,Cardiac Stepdown,0.1874,moderate,test
+2026-02-03,705091,Cardiac Stepdown,0.1326,moderate,test
+2026-02-10,705091,Cardiac Stepdown,0.1707,moderate,test
+2026-02-17,705091,Cardiac Stepdown,0.1293,moderate,test
+2026-02-24,705091,Cardiac Stepdown,0.0152,stable,test
+2026-03-03,705091,Cardiac Stepdown,0.0102,stable,test
+2026-03-10,705091,Cardiac Stepdown,0.043,stable,test
+2026-03-17,705091,Cardiac Stepdown,0.0855,stable,test
+2026-03-24,705091,Cardiac Stepdown,0.0143,stable,test
+2026-03-31,705091,Cardiac Stepdown,0.117,moderate,test
+2026-04-07,705091,Cardiac Stepdown,0.0185,stable,test
+2026-04-14,705091,Cardiac Stepdown,0.0693,stable,test
+2026-04-21,705091,Cardiac Stepdown,0.1218,moderate,test
+2026-04-28,705091,Cardiac Stepdown,0.1701,moderate,test
+2026-05-05,705091,Cardiac Stepdown,0.018,stable,test
+2026-05-12,705091,Cardiac Stepdown,0.0004,stable,test
+2026-05-19,705091,Cardiac Stepdown,0.1076,moderate,test
+2025-10-07,705092,Oncology 5 South,0.0477,stable,test
+2025-10-14,705092,Oncology 5 South,0.3617,major,test
+2025-10-21,705092,Oncology 5 South,0.1045,moderate,test
+2025-10-28,705092,Oncology 5 South,0.2657,major,test
+2025-11-04,705092,Oncology 5 South,0.1878,moderate,test
+2025-11-11,705092,Oncology 5 South,0.1139,moderate,test
+2025-11-18,705092,Oncology 5 South,0.0156,stable,test
+2025-11-25,705092,Oncology 5 South,0.0197,stable,test
+2025-12-02,705092,Oncology 5 South,0.0749,stable,test
+2025-12-09,705092,Oncology 5 South,0.2366,moderate,test
+2025-12-16,705092,Oncology 5 South,0.0388,stable,test
+2025-12-23,705092,Oncology 5 South,0.1776,moderate,test
+2025-12-30,705092,Oncology 5 South,0.6344,major,test
+2026-01-06,705092,Oncology 5 South,0.1511,moderate,test
+2026-01-13,705092,Oncology 5 South,0.1417,moderate,test
+2026-01-20,705092,Oncology 5 South,0.4129,major,test
+2026-01-27,705092,Oncology 5 South,0.1463,moderate,test
+2026-02-03,705092,Oncology 5 South,0.4543,major,test
+2026-02-10,705092,Oncology 5 South,0.0361,stable,test
+2026-02-17,705092,Oncology 5 South,0.41,major,test
+2026-02-24,705092,Oncology 5 South,0.048,stable,test
+2026-03-03,705092,Oncology 5 South,0.0474,stable,test
+2026-03-10,705092,Oncology 5 South,0.2833,major,test
+2026-03-17,705092,Oncology 5 South,0.2637,major,test
+2026-03-24,705092,Oncology 5 South,0.9227,major,test
+2026-03-31,705092,Oncology 5 South,0.0235,stable,test
+2026-04-07,705092,Oncology 5 South,0.1157,moderate,test
+2026-04-14,705092,Oncology 5 South,1.2135,major,test
+2026-04-21,705092,Oncology 5 South,0.066,stable,test
+2026-04-28,705092,Oncology 5 South,0.0913,stable,test
+2026-05-05,705092,Oncology 5 South,0.0942,stable,test
+2026-05-12,705092,Oncology 5 South,0.197,moderate,test
+2026-05-19,705092,Oncology 5 South,0.1907,moderate,test
+2025-10-07,21334825,Surgical 2 West,0.0195,stable,test
+2025-10-14,21334825,Surgical 2 West,0.0112,stable,test
+2025-10-21,21334825,Surgical 2 West,0.0175,stable,test
+2025-10-28,21334825,Surgical 2 West,0.0101,stable,test
+2025-11-04,21334825,Surgical 2 West,0.0213,stable,test
+2025-11-11,21334825,Surgical 2 West,0.0149,stable,test
+2025-11-18,21334825,Surgical 2 West,0.1603,moderate,test
+2025-11-25,21334825,Surgical 2 West,0.0092,stable,test
+2025-12-02,21334825,Surgical 2 West,0.0179,stable,test
+2025-12-09,21334825,Surgical 2 West,0.0179,stable,test
+2025-12-16,21334825,Surgical 2 West,0.0485,stable,test
+2025-12-23,21334825,Surgical 2 West,0.3251,major,test
+2025-12-30,21334825,Surgical 2 West,0.0001,stable,test
+2026-01-06,21334825,Surgical 2 West,0.0649,stable,test
+2026-01-13,21334825,Surgical 2 West,0.0648,stable,test
+2026-01-20,21334825,Surgical 2 West,0.0399,stable,test
+2026-01-27,21334825,Surgical 2 West,0.148,moderate,test
+2026-02-03,21334825,Surgical 2 West,0.1005,moderate,test
+2026-02-10,21334825,Surgical 2 West,0.0311,stable,test
+2026-02-17,21334825,Surgical 2 West,0.0898,stable,test
+2026-02-24,21334825,Surgical 2 West,0.019,stable,test
+2026-03-03,21334825,Surgical 2 West,0.0545,stable,test
+2026-03-10,21334825,Surgical 2 West,0.0819,stable,test
+2026-03-17,21334825,Surgical 2 West,0.0605,stable,test
+2026-03-24,21334825,Surgical 2 West,0.2466,moderate,test
+2026-03-31,21334825,Surgical 2 West,0.3896,major,test
+2026-04-07,21334825,Surgical 2 West,0.1426,moderate,test
+2026-04-14,21334825,Surgical 2 West,0.0191,stable,test
+2026-04-21,21334825,Surgical 2 West,0.0032,stable,test
+2026-04-28,21334825,Surgical 2 West,0.0441,stable,test
+2026-05-05,21334825,Surgical 2 West,0.0608,stable,test
+2026-05-12,21334825,Surgical 2 West,0.0319,stable,test
+2026-05-19,21334825,Surgical 2 West,0.0008,stable,test
+2025-10-07,21336305,Orthopedic 6 North,0.187,moderate,test
+2025-10-14,21336305,Orthopedic 6 North,0.0258,stable,test
+2025-10-21,21336305,Orthopedic 6 North,0.0014,stable,test
+2025-10-28,21336305,Orthopedic 6 North,0.0788,stable,test
+2025-11-04,21336305,Orthopedic 6 North,0.2623,major,test
+2025-11-11,21336305,Orthopedic 6 North,0.0351,stable,test
+2025-11-18,21336305,Orthopedic 6 North,1.0164,major,test
+2025-11-25,21336305,Orthopedic 6 North,0.0348,stable,test
+2025-12-02,21336305,Orthopedic 6 North,0.0147,stable,test
+2025-12-09,21336305,Orthopedic 6 North,0.0438,stable,test
+2025-12-16,21336305,Orthopedic 6 North,0.0068,stable,test
+2025-12-23,21336305,Orthopedic 6 North,0.0041,stable,test
+2025-12-30,21336305,Orthopedic 6 North,0.0883,stable,test
+2026-01-06,21336305,Orthopedic 6 North,0.0751,stable,test
+2026-01-13,21336305,Orthopedic 6 North,0.1948,moderate,test
+2026-01-20,21336305,Orthopedic 6 North,0.0394,stable,test
+2026-01-27,21336305,Orthopedic 6 North,0.1018,moderate,test
+2026-02-03,21336305,Orthopedic 6 North,0.1865,moderate,test
+2026-02-10,21336305,Orthopedic 6 North,0.1292,moderate,test
+2026-02-17,21336305,Orthopedic 6 North,0.0143,stable,test
+2026-02-24,21336305,Orthopedic 6 North,0.1061,moderate,test
+2026-03-03,21336305,Orthopedic 6 North,0.1794,moderate,test
+2026-03-10,21336305,Orthopedic 6 North,0.0339,stable,test
+2026-03-17,21336305,Orthopedic 6 North,0.1447,moderate,test
+2026-03-24,21336305,Orthopedic 6 North,0.1201,moderate,test
+2026-03-31,21336305,Orthopedic 6 North,0.0238,stable,test
+2026-04-07,21336305,Orthopedic 6 North,0.0675,stable,test
+2026-04-14,21336305,Orthopedic 6 North,0.0364,stable,test
+2026-04-21,21336305,Orthopedic 6 North,0.0482,stable,test
+2026-04-28,21336305,Orthopedic 6 North,0.0247,stable,test
+2026-05-05,21336305,Orthopedic 6 North,0.0038,stable,test
+2026-05-12,21336305,Orthopedic 6 North,0.0104,stable,test
+2026-05-19,21336305,Orthopedic 6 North,0.0676,stable,test
+2026-02-17,60732673,Observation Unit,0.0,stable,test
+2026-04-21,60732673,Observation Unit,0.0,stable,test
+2025-10-07,97635816,Progressive Care,0.0075,stable,test
+2025-10-14,97635816,Progressive Care,0.3472,major,test
+2025-10-21,97635816,Progressive Care,0.0716,stable,test
+2025-10-28,97635816,Progressive Care,0.0082,stable,test
+2025-11-04,97635816,Progressive Care,0.6528,major,test
+2025-11-11,97635816,Progressive Care,0.0193,stable,test
+2025-11-18,97635816,Progressive Care,0.031,stable,test
+2025-11-25,97635816,Progressive Care,0.0602,stable,test
+2025-12-02,97635816,Progressive Care,0.0441,stable,test
+2025-12-09,97635816,Progressive Care,0.0658,stable,test
+2025-12-16,97635816,Progressive Care,0.005,stable,test
+2025-12-23,97635816,Progressive Care,0.2256,moderate,test
+2025-12-30,97635816,Progressive Care,0.0004,stable,test
+2026-01-06,97635816,Progressive Care,0.0681,stable,test
+2026-01-13,97635816,Progressive Care,0.0182,stable,test
+2026-01-20,97635816,Progressive Care,0.0031,stable,test
+2026-01-27,97635816,Progressive Care,0.0631,stable,test
+2026-02-03,97635816,Progressive Care,0.2721,major,test
+2026-02-10,97635816,Progressive Care,0.0187,stable,test
+2026-02-17,97635816,Progressive Care,0.0404,stable,test
+2026-02-24,97635816,Progressive Care,0.6961,major,test
+2026-03-03,97635816,Progressive Care,0.0329,stable,test
+2026-03-10,97635816,Progressive Care,0.1897,moderate,test
+2026-03-17,97635816,Progressive Care,0.0975,stable,test
+2026-03-24,97635816,Progressive Care,0.7522,major,test
+2026-03-31,97635816,Progressive Care,0.0023,stable,test
+2026-04-07,97635816,Progressive Care,0.0593,stable,test
+2026-04-14,97635816,Progressive Care,0.0116,stable,test
+2026-04-21,97635816,Progressive Care,0.006,stable,test
+2026-04-28,97635816,Progressive Care,0.0031,stable,test
+2026-05-05,97635816,Progressive Care,0.0166,stable,test
+2026-05-12,97635816,Progressive Care,0.0017,stable,test
+2026-05-19,97635816,Progressive Care,0.0327,stable,test
+2025-10-07,1775257343,Neuro Stepdown,0.4582,major,test
+2025-10-14,1775257343,Neuro Stepdown,0.1886,moderate,test
+2025-10-21,1775257343,Neuro Stepdown,0.1097,moderate,test
+2025-10-28,1775257343,Neuro Stepdown,0.0549,stable,test
+2025-11-04,1775257343,Neuro Stepdown,0.9243,major,test
+2025-11-11,1775257343,Neuro Stepdown,0.0823,stable,test
+2025-11-18,1775257343,Neuro Stepdown,0.078,stable,test
+2025-11-25,1775257343,Neuro Stepdown,0.0182,stable,test
+2025-12-02,1775257343,Neuro Stepdown,0.0774,stable,test
+2025-12-09,1775257343,Neuro Stepdown,0.1739,moderate,test
+2025-12-16,1775257343,Neuro Stepdown,0.0356,stable,test
+2025-12-23,1775257343,Neuro Stepdown,0.0404,stable,test
+2025-12-30,1775257343,Neuro Stepdown,0.1894,moderate,test
+2026-01-06,1775257343,Neuro Stepdown,0.1485,moderate,test
+2026-01-13,1775257343,Neuro Stepdown,0.2275,moderate,test
+2026-01-20,1775257343,Neuro Stepdown,0.9677,major,test
+2026-01-27,1775257343,Neuro Stepdown,0.0547,stable,test
+2026-02-03,1775257343,Neuro Stepdown,0.7727,major,test
+2026-02-10,1775257343,Neuro Stepdown,0.224,moderate,test
+2026-02-17,1775257343,Neuro Stepdown,0.1311,moderate,test
+2026-02-24,1775257343,Neuro Stepdown,0.1691,moderate,test
+2026-03-03,1775257343,Neuro Stepdown,1.0413,major,test
+2026-03-10,1775257343,Neuro Stepdown,0.1058,moderate,test
+2026-03-17,1775257343,Neuro Stepdown,0.3055,major,test
+2026-03-24,1775257343,Neuro Stepdown,0.2744,major,test
+2026-03-31,1775257343,Neuro Stepdown,0.2765,major,test
+2026-04-07,1775257343,Neuro Stepdown,0.0456,stable,test
+2026-04-14,1775257343,Neuro Stepdown,0.0067,stable,test
+2026-04-21,1775257343,Neuro Stepdown,0.0461,stable,test
+2026-04-28,1775257343,Neuro Stepdown,0.0684,stable,test
+2026-05-05,1775257343,Neuro Stepdown,0.1351,moderate,test
+2026-05-12,1775257343,Neuro Stepdown,0.1334,moderate,test
+2026-05-19,1775257343,Neuro Stepdown,0.2007,moderate,test
+2025-10-07,4452986337,Medical-Surgical 4 South,0.1639,moderate,test
+2025-10-14,4452986337,Medical-Surgical 4 South,0.9148,major,test
+2025-10-21,4452986337,Medical-Surgical 4 South,0.2594,major,test
+2025-10-28,4452986337,Medical-Surgical 4 South,0.8002,major,test
+2025-11-04,4452986337,Medical-Surgical 4 South,0.0602,stable,test
+2025-11-11,4452986337,Medical-Surgical 4 South,0.0687,stable,test
+2025-11-18,4452986337,Medical-Surgical 4 South,0.1783,moderate,test
+2025-11-25,4452986337,Medical-Surgical 4 South,0.1297,moderate,test
+2025-12-02,4452986337,Medical-Surgical 4 South,0.0904,stable,test
+2025-12-09,4452986337,Medical-Surgical 4 South,0.1333,moderate,test
+2025-12-16,4452986337,Medical-Surgical 4 South,0.2186,moderate,test
+2025-12-23,4452986337,Medical-Surgical 4 South,0.7077,major,test
+2025-12-30,4452986337,Medical-Surgical 4 South,0.4506,major,test
+2026-01-06,4452986337,Medical-Surgical 4 South,0.0974,stable,test
+2026-01-13,4452986337,Medical-Surgical 4 South,1.2212,major,test
+2026-01-20,4452986337,Medical-Surgical 4 South,1.8804,major,test
+2026-01-27,4452986337,Medical-Surgical 4 South,0.832,major,test
+2026-02-03,4452986337,Medical-Surgical 4 South,0.281,major,test
+2026-02-10,4452986337,Medical-Surgical 4 South,0.2095,moderate,test
+2026-02-17,4452986337,Medical-Surgical 4 South,0.2042,moderate,test
+2026-02-24,4452986337,Medical-Surgical 4 South,0.3035,major,test
+2026-03-03,4452986337,Medical-Surgical 4 South,0.1113,moderate,test
+2026-03-10,4452986337,Medical-Surgical 4 South,0.7658,major,test
+2026-03-17,4452986337,Medical-Surgical 4 South,0.4237,major,test
+2026-03-24,4452986337,Medical-Surgical 4 South,0.0694,stable,test
+2026-03-31,4452986337,Medical-Surgical 4 South,0.7541,major,test
+2026-04-07,4452986337,Medical-Surgical 4 South,0.254,major,test
+2026-04-14,4452986337,Medical-Surgical 4 South,0.8791,major,test
+2026-04-21,4452986337,Medical-Surgical 4 South,0.0753,stable,test
+2026-04-28,4452986337,Medical-Surgical 4 South,0.0155,stable,test
+2026-05-05,4452986337,Medical-Surgical 4 South,0.19,moderate,test
+2026-05-12,4452986337,Medical-Surgical 4 South,1.693,major,test
+2026-05-19,4452986337,Medical-Surgical 4 South,0.216,moderate,test
+2026-05-23,705089,Medical-Surgical 3 North,0.0404,stable,live
+2026-05-23,705090,Telemetry 4 East,0.0545,stable,live
+2026-05-23,705091,Cardiac Stepdown,0.0247,stable,live
+2026-05-23,705092,Oncology 5 South,0.0361,stable,live
+2026-05-23,21334825,Surgical 2 West,0.067,stable,live
+2026-05-23,21336305,Orthopedic 6 North,0.0383,stable,live
+2026-05-23,97635816,Progressive Care,0.069,stable,live
+2026-05-23,1775257343,Neuro Stepdown,0.0535,stable,live
+2026-05-23,4452986337,Medical-Surgical 4 South,0.0586,stable,live

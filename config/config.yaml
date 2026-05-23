@@ -6,11 +6,14 @@ data:
   census_col: "CENSUS"
   drop_columns: ["Unnamed: 0"]
 
-  # Chronological train/val/test split
-  # ~21 months of data: 70% train, 15% val, 15% test
+  # Chronological train/val/test split. The test set is open-ended (every row
+  # after val_end), so extending postsql.csv with newer data automatically
+  # lengthens the monitored period. Keep train_end/val_end fixed: the drift
+  # baseline is frozen on the original training distribution, so drift is
+  # measured against a stable reference rather than a moving target.
   train_end: "2025-06-30"
   val_end: "2025-09-30"
-  # test: 2025-10-01 to 2025-12-30
+  # test: from val_end + 1 hour through the end of the available data
 
 forecast_horizons: [1, 2, 3, 4, 12, 24, 48, 72]
 

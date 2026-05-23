@@ -13,6 +13,7 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 | Methodology — pipeline, splits, leakage filtering, evaluation, deployment | `/methodology.html` |
 | Tests — full pytest catalog with status pills, summary cards, CI badge | `/tests.html` |
 | Dashboards gallery + three full-screen dashboards | `/dashboards.html` |
+| Monitoring — drift (PSI) over time per unit + prediction-interval bands | `/monitoring.html` |
 
 **Live Tableau Public dashboards** (embedded in the dashboard pages above; refresh daily from the same CSV exports via Google Sheets):
 
@@ -32,7 +33,7 @@ Predicts patient headcount on medical-surgical nurse units at eight forecast hor
 
 ## Operational architecture
 
-The deployed system simulates the full production flow without exposing real patient-flow data. A daily GitHub Actions cron generates synthetic hourly readings calibrated to the real distributions, runs the prediction logic, and pushes refreshed CSVs and HTML — driving both GitHub Pages and any connected Tableau Public workbooks.
+The deployed system demonstrates the full production flow without exposing patient-level data. The pipeline (`run_pipeline.py`) trains the models, calibrates the prediction intervals, and establishes the multi-month drift history shown on the monitoring page from de-identified census data. A daily GitHub Actions cron then runs a synthetic feed — calibrated to the training distribution — that refreshes the operational census and forecasts, appends a forward drift point, and rebuilds the HTML, so the dashboards and monitor stay live without manual intervention. The same drift computation runs unchanged the moment a real ADT feed replaces the synthetic one.
 
 ```
                     ┌─────────────────────────────────────────────┐
@@ -43,8 +44,8 @@ The deployed system simulates the full production flow without exposing real pat
                        ┌─────────────────┴─────────────────┐
                        ▼                                   ▼
    scripts/generate_synthetic_hour.py        docs/build_dashboards.js --no-screenshots
-   (one hour of synthetic ADT per unit,       (regenerates docs/*.html with
-    calibrated to historical means/stds)       fresh data inlined)
+   (synthetic census + forecasts +            (regenerates docs/*.html with
+    forward drift, calibrated to dist)         fresh data inlined)
                        │                                   │
                        ▼                                   ▼
         outputs/tableau/forecast_predictions.csv     docs/dashboard{1,2,3}.html
@@ -61,7 +62,7 @@ The deployed system simulates the full production flow without exposing real pat
             Nurse_Unit_Census_Prediction/          → daily refresh on Tableau side
 ```
 
-In a production deployment, `generate_synthetic_hour.py` would be replaced by an ETL job ingesting the live hospital ADT feed; everything downstream (pipeline, exports, dashboards) is unchanged.
+In a production deployment, the synthetic forward step is replaced by an ETL job ingesting the live hospital ADT feed; everything downstream (pipeline, exports, drift monitoring, dashboards) is unchanged.
 
 ## Tech stack
 
@@ -109,7 +110,7 @@ scripts/
 └── build_dashboards.js            # generates the static site (HTML + CSS + screenshots)
 
 .github/workflows/
-├── refresh-forecasts.yml          # daily cron: synthesize → predict → publish
+├── refresh-forecasts.yml          # daily cron: synthetic feed → forecasts + drift → publish
 └── tests.yml                      # runs the data-free subset on every push/PR
 
 docs/                              # GitHub Pages site source

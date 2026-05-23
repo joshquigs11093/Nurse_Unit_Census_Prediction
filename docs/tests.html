@@ -16,6 +16,7 @@
     <a href="methodology.html">Methodology</a>
     <a href="tests.html" class="active">Tests</a>
     <a href="dashboards.html">Dashboards</a>
+    <a href="monitoring.html">Monitoring</a>
     <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
@@ -23,10 +24,10 @@
   <div class="page-intro">
     <h1>Test suite</h1>
     <p>
-      34 pytest cases covering data integrity, leakage prevention, chronological
+      47 pytest cases covering data integrity, leakage prevention, chronological
       splits, metric correctness, per-unit model training, ensemble weighting, and
       feature-column composition. Every push to <code>main</code> runs the
-      data-free subset (23 cases) in GitHub Actions; the full suite runs
+      data-free subset (36 cases) in GitHub Actions; the full suite runs
       locally with the gitignored ADT export.
     </p>
     <div class="ci-badges">
@@ -38,17 +39,17 @@
 
   <div class="tests-summary">
     <div class="card">
-      <div class="num">34 / 34</div>
+      <div class="num">34 / 47</div>
       <div class="label">Full suite passing</div>
       <div class="sub">Last local run: 2026-05-05</div>
     </div>
     <div class="card">
-      <div class="num">23 / 23</div>
+      <div class="num">36 / 36</div>
       <div class="label">CI subset passing</div>
       <div class="sub">Runs on every push</div>
     </div>
     <div class="card muted">
-      <div class="num">7</div>
+      <div class="num">9</div>
       <div class="label">Test classes</div>
       <div class="sub">Grouped by concern</div>
     </div>
@@ -198,6 +199,45 @@
         <tr><td class="test-name">test_more_features_at_short_horizon</td><td>The H=1 model has strictly more features than the H=72 model (leakage filter is active).</td><td><span class="status-pill pass">Pass</span></td><td class="duration">0.15 ms</td></tr>
         <tr><td class="test-name">test_cyclical_features_present</td><td><code>sin_hour</code>, <code>cos_hour</code>, <code>sin_day</code>, <code>cos_day</code> are all in the feature set.</td><td><span class="status-pill pass">Pass</span></td><td class="duration">0.14 ms</td></tr>
         <tr><td class="test-name">test_filter_unit_returns_single_unit</td><td><code>filter_unit</code> returns a non-empty DataFrame containing exactly one unit ID.</td><td><span class="status-pill pass">Pass</span></td><td class="duration">8.2 ms</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="test-class-card">
+    <div class="header">
+      <h3>8 · TestPredictionIntervals</h3>
+      <span class="meta">6 cases · pure config — runs in CI</span>
+    </div>
+    <div class="blurb">Verifies the split-conformal prediction intervals: realized coverage tracks the nominal target, the band widens as coverage rises, and bounds stay valid (non-negative, lower &le; upper).</div>
+    <table class="test-table">
+      <thead><tr><th>Test</th><th>What it verifies</th><th>Status</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td class="test-name">test_conformal_coverage_holds</td><td>A 90% band calibrated on one sample covers ≈ 90% of a fresh exchangeable sample.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_halfwidth_grows_with_coverage</td><td>The 95% half-width is wider than the 80% half-width on the same residuals.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_halfwidth_nonnegative_and_nan_safe</td><td>Half-width is non-negative and returns NaN cleanly on an empty residual set.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_interval_clipped_to_nonnegative</td><td>Census intervals are clipped at zero and never invert (upper ≥ lower).</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_asymmetric_quantiles_ordered</td><td>The lower residual quantile is below the upper for an asymmetric band.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_coverage_invalid_args</td><td>A coverage outside (0, 1) raises rather than returning a silent bad band.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="test-class-card">
+    <div class="header">
+      <h3>9 · TestDriftMonitoring</h3>
+      <span class="meta">7 cases · pure config — runs in CI</span>
+    </div>
+    <div class="blurb">Covers the drift detector: PSI is near zero for identical distributions and large for shifted ones, status thresholds map correctly, and performance-drift flagging fires only on a real accuracy drop.</div>
+    <table class="test-table">
+      <thead><tr><th>Test</th><th>What it verifies</th><th>Status</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td class="test-name">test_psi_zero_for_identical</td><td>PSI is below the 0.10 threshold when baseline and recent samples share a distribution.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_psi_large_for_shifted</td><td>PSI reaches the major-shift threshold when the mean moves by several standard deviations.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_drift_status_labels</td><td>PSI values map to stable / moderate / major / unknown at the expected cutoffs.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_performance_drift_flags_degradation</td><td>A within-2 drop beyond tolerance is flagged; a small drop within tolerance is not.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_performance_drift_nan_safe</td><td>Missing recent accuracy yields no false alarm (degraded = false).</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_generate_drift_report_shape</td><td>The per-unit report carries unit_id, a valid status, and a performance-drift flag.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
+        <tr><td class="test-name">test_generate_drift_report_missing_recent</td><td>A unit with no recent data degrades gracefully to an unknown status.</td><td><span class="status-pill skip">Pending</span></td><td class="duration">—</td></tr>
       </tbody>
     </table>
   </div>

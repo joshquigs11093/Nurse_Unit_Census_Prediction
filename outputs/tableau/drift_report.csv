@@ -1,0 +1,11 @@
+unit_id,psi,drift_status,perf_delta_pct,perf_degraded,unit_name
+705089,1.0611,major,4.65,False,Medical-Surgical 3 North
+705090,2.8574,major,6.11,False,Telemetry 4 East
+705091,0.0468,stable,0.75,False,Cardiac Stepdown
+705092,0.0467,stable,-0.39,False,Oncology 5 South
+21334825,0.1865,moderate,-1.77,False,Surgical 2 West
+21336305,0.0164,stable,-2.73,False,Orthopedic 6 North
+60732673,0.0,stable,,False,Observation Unit
+97635816,0.0919,stable,-3.71,False,Progressive Care
+1775257343,0.0245,stable,-3.67,False,Neuro Stepdown
+4452986337,0.1727,moderate,2.07,False,Medical-Surgical 4 South

@@ -38,6 +38,11 @@ function parseCSV(text) {
 }
 
 const readCSV = name => parseCSV(fs.readFileSync(path.join(TABLEAU_DIR, name), "utf8"));
+// Some monitoring exports come from run_pipeline.py and may be absent in the
+// daily cron environment; read them defensively so the build never fails.
+const safeReadCSV = name => {
+  try { return readCSV(name); } catch { return []; }
+};
 
 const data = {
   forecast: readCSV("forecast_predictions.csv"),
@@ -45,6 +50,8 @@ const data = {
   best: readCSV("best_model_per_horizon.csv"),
   unitMeta: readCSV("unit_metadata.csv"),
   exec: readCSV("executive_summary.csv"),
+  driftReport: safeReadCSV("drift_report.csv"),
+  driftHistory: safeReadCSV("drift_history.csv"),
 };
 
 // ── Shared CSS ──
@@ -437,6 +444,7 @@ function navBar(active) {
     ${link("methodology", "methodology.html", "Methodology")}
     ${link("tests", "tests.html", "Tests")}
     ${link("dashboards", "dashboards.html", "Dashboards")}
+    ${link("monitoring", "monitoring.html", "Monitoring")}
     <a href="${REPO_URL}" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>`;
@@ -1081,7 +1089,7 @@ ${navBar("home")}
         <div class="label">±2 accuracy at 72-hour horizon</div>
       </div>
       <div class="stat-card">
-        <div class="num"><a href="tests.html" style="color:inherit;text-decoration:none;">34 / 34</a></div>
+        <div class="num"><a href="tests.html" style="color:inherit;text-decoration:none;">47 / 47</a></div>
         <div class="label">Pytest cases passing — <a href="tests.html" style="color:var(--tableau-light-blue);text-decoration:none;">view suite</a></div>
       </div>
     </div>
@@ -1145,7 +1153,7 @@ ${navBar("home")}
       <a class="gallery-card" href="tests.html">
         <div class="meta">
           <h3>Test suite</h3>
-          <div class="audience">34 cases · pytest</div>
+          <div class="audience">47 cases · pytest</div>
           <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, and ensemble weighting. Data-free subset runs in CI.</p>
         </div>
       </a>
@@ -1153,7 +1161,7 @@ ${navBar("home")}
         <div class="meta">
           <h3>Source code</h3>
           <div class="audience">GitHub · MIT licensed</div>
-          <p>Full repository: pipeline source, tests (34 cases), GitHub Actions workflow, configuration, and this static site.</p>
+          <p>Full repository: pipeline source, tests (47 cases), GitHub Actions workflow, configuration, and this static site.</p>
         </div>
       </a>
     </div>
@@ -1537,7 +1545,7 @@ ${navBar("methodology")}
     <p style="font-size:13px;line-height:1.6;">
       Random seeds set centrally (numpy, random, PyTorch). Dependencies pinned in
       <code>requirements.txt</code>. All hyperparameters in <code>config/config.yaml</code> —
-      no magic constants in code. <strong><a href="tests.html">34 pytest cases</a></strong>
+      no magic constants in code. <strong><a href="tests.html">47 pytest cases</a></strong>
       cover data integrity, leakage prevention, chronological splits, metric correctness,
       model train/predict, ensemble weights, and feature validation; the data-free subset
       (23 cases) runs in GitHub Actions on every push.
@@ -1695,6 +1703,33 @@ const TEST_CATALOG = [
       { name: "test_more_features_at_short_horizon", blurb: "The H=1 model has strictly more features than the H=72 model (leakage filter is active)." },
       { name: "test_cyclical_features_present",      blurb: "<code>sin_hour</code>, <code>cos_hour</code>, <code>sin_day</code>, <code>cos_day</code> are all in the feature set." },
       { name: "test_filter_unit_returns_single_unit", blurb: "<code>filter_unit</code> returns a non-empty DataFrame containing exactly one unit ID.", requiresData: true },
+    ],
+  },
+  {
+    name: "TestPredictionIntervals",
+    requiresData: false,
+    blurb: "Verifies the split-conformal prediction intervals: realized coverage tracks the nominal target, the band widens as coverage rises, and bounds stay valid (non-negative, lower &le; upper).",
+    tests: [
+      { name: "test_conformal_coverage_holds",          blurb: "A 90% band calibrated on one sample covers ≈ 90% of a fresh exchangeable sample." },
+      { name: "test_halfwidth_grows_with_coverage",      blurb: "The 95% half-width is wider than the 80% half-width on the same residuals." },
+      { name: "test_halfwidth_nonnegative_and_nan_safe", blurb: "Half-width is non-negative and returns NaN cleanly on an empty residual set." },
+      { name: "test_interval_clipped_to_nonnegative",    blurb: "Census intervals are clipped at zero and never invert (upper ≥ lower)." },
+      { name: "test_asymmetric_quantiles_ordered",       blurb: "The lower residual quantile is below the upper for an asymmetric band." },
+      { name: "test_coverage_invalid_args",              blurb: "A coverage outside (0, 1) raises rather than returning a silent bad band." },
+    ],
+  },
+  {
+    name: "TestDriftMonitoring",
+    requiresData: false,
+    blurb: "Covers the drift detector: PSI is near zero for identical distributions and large for shifted ones, status thresholds map correctly, and performance-drift flagging fires only on a real accuracy drop.",
+    tests: [
+      { name: "test_psi_zero_for_identical",            blurb: "PSI is below the 0.10 threshold when baseline and recent samples share a distribution." },
+      { name: "test_psi_large_for_shifted",             blurb: "PSI reaches the major-shift threshold when the mean moves by several standard deviations." },
+      { name: "test_drift_status_labels",               blurb: "PSI values map to stable / moderate / major / unknown at the expected cutoffs." },
+      { name: "test_performance_drift_flags_degradation", blurb: "A within-2 drop beyond tolerance is flagged; a small drop within tolerance is not." },
+      { name: "test_performance_drift_nan_safe",        blurb: "Missing recent accuracy yields no false alarm (degraded = false)." },
+      { name: "test_generate_drift_report_shape",       blurb: "The per-unit report carries unit_id, a valid status, and a performance-drift flag." },
+      { name: "test_generate_drift_report_missing_recent", blurb: "A unit with no recent data degrades gracefully to an unknown status." },
     ],
   },
 ];
@@ -1873,12 +1908,257 @@ ${TEST_CATALOG.map(renderClass).join("\n\n")}
 }
 
 // ── Write HTML and CSS ──
+// ── Monitoring page: drift over time + prediction-interval band ──
+function buildMonitoring() {
+  const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+  const STATUS_COLOR = { stable: "#59A14F", moderate: "#F28E2B", major: "#E15759", unknown: "#999999" };
+
+  const report = data.driftReport || [];
+  const history = data.driftHistory || [];
+  const hasData = report.length > 0 || history.length > 0;
+
+  // PSI-over-time, one series per unit.
+  const asOf = [...new Set(history.map(r => r.as_of))].sort();
+  const histUnits = [...new Set(history.map(r => r.unit_name))];
+  const psiSeries = histUnits.map(name => {
+    const byDate = {};
+    history.filter(r => r.unit_name === name).forEach(r => { byDate[r.as_of] = r.psi; });
+    return { name, x: asOf, y: asOf.map(d => (d in byDate ? byDate[d] : null)) };
+  });
+  // Boundary between the real test period and the live (synthetic) feed —
+  // only meaningful once forward live points exist.
+  const testDates = history.filter(r => r.source === "test").map(r => r.as_of).sort();
+  const hasLive = history.some(r => r.source === "live");
+  const lastTestDate = (hasLive && testDates.length) ? testDates[testDates.length - 1] : null;
+
+  // Latest snapshot, worst drift first.
+  const snapshot = [...report].sort((a, b) => (b.psi || 0) - (a.psi || 0));
+
+  // Per-unit interval bands from the latest forecast row for each unit, so the
+  // selector can switch the band chart client-side.
+  const bandByUnit = {};
+  [...new Set(data.forecast.map(r => r.unit_name))].forEach(name => {
+    const rows = data.forecast.filter(
+      r => r.unit_name === name && r.pred_1hr !== null && r.pred_1hr !== "");
+    if (!rows.length) return;
+    const row = rows[rows.length - 1];
+    const b = { horizons: [], point: [], lower: [], upper: [] };
+    HORIZONS.forEach(h => {
+      const p = row["pred_" + h + "hr"];
+      if (p === null || p === "" || p === undefined) return;
+      b.horizons.push(h);
+      b.point.push(p);
+      const lo = row["pred_" + h + "hr_lower"];
+      const hi = row["pred_" + h + "hr_upper"];
+      b.lower.push(lo === null || lo === "" || lo === undefined ? p : lo);
+      b.upper.push(hi === null || hi === "" || hi === undefined ? p : hi);
+    });
+    if (b.horizons.length) bandByUnit[name] = b;
+  });
+  const worstName = snapshot.length ? snapshot[0].unit_name : null;
+  const defaultBandUnit = (worstName && bandByUnit[worstName]) ? worstName
+                          : (Object.keys(bandByUnit)[0] || null);
+
+  // Unit selector options (PSI history is the primary chart).
+  const unitOptions = [...histUnits].sort();
+  const selectOptions = ['<option value="__all__">All units</option>']
+    .concat(unitOptions.map(u =>
+      '<option value="' + u.replace(/"/g, "&quot;") + '">' + u + "</option>"))
+    .join("");
+
+  const statusCell = s =>
+    '<span style="color:' + (STATUS_COLOR[s] || "#999") + ';font-weight:600;">' + (s || "—") + '</span>';
+  const snapshotRows = snapshot.map(r =>
+    "<tr><td>" + (r.unit_name || r.unit_id) + "</td>"
+    + "<td>" + (r.psi === null || r.psi === "" ? "—" : Number(r.psi).toFixed(3)) + "</td>"
+    + "<td>" + statusCell(r.drift_status) + "</td>"
+    + "<td>" + (r.perf_delta_pct === null || r.perf_delta_pct === "" || Number.isNaN(Number(r.perf_delta_pct))
+                ? "—" : Number(r.perf_delta_pct).toFixed(1) + " pts") + "</td>"
+    + "<td>" + (r.perf_degraded === true || r.perf_degraded === "True"
+                ? '<span style="color:#E15759;font-weight:600;">flagged</span>' : "ok") + "</td></tr>"
+  ).join("");
+
+  const emptyNote = hasData ? "" : `
+      <div class="section" style="text-align:center;color:var(--muted);">
+        Monitoring artifacts not found. Run
+        <code>python run_pipeline.py --phase calibrate</code> then
+        <code>--phase export</code> to generate drift_report.csv and drift_history.csv.
+      </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monitoring — Nurse Census Prediction</title>
+  <meta name="description" content="Forecast drift monitoring (Population Stability Index over time) and prediction-interval coverage for the nurse-unit census forecaster.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+${navBar("monitoring")}
+<div class="page-body">
+  <section class="hero">
+    <h1>Model Monitoring</h1>
+    <p class="tagline">
+      Monitoring for the deployed census forecaster. Distribution drift is tracked
+      over time with the Population Stability Index (PSI) measured against the
+      training baseline, and every forecast is reported with a 90% prediction
+      interval to quantify its uncertainty.
+    </p>
+  </section>
+${emptyNote}
+  <section class="section">
+    <div class="section-title">Census drift over time (PSI vs. training baseline)</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      PSI compares each unit's recent census distribution against the frozen training
+      baseline. Below 0.10 is stable, 0.10–0.25 is a moderate shift, and 0.25 and above
+      is a major shift. A single high reading can be ordinary seasonal variation; a line
+      that climbs and stays up is the signal that a unit may need retraining. Computed
+      across the held-out test period.
+    </p>
+    <div style="margin:0 0 12px;">
+      <label for="unit-select" style="font-size:13px;color:var(--muted);margin-right:8px;">Unit</label>
+      <select id="unit-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:220px;">${selectOptions}</select>
+    </div>
+    <div id="psi-chart" style="height: 360px;"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Drift snapshot — held-out test period</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Detailed evaluation from the last full run on real data: PSI plus the change in
+      within-2 accuracy against the validation baseline. The chart above continues to
+      track PSI on the live feed after the test period ends.
+    </p>
+    <table class="perf-table">
+      <thead><tr><th>Unit</th><th>PSI</th><th>Status</th><th>±2 accuracy change</th><th>Performance</th></tr></thead>
+      <tbody>${snapshotRows || '<tr><td colspan="5">No snapshot available.</td></tr>'}</tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Prediction interval — <span id="band-unit-label">${defaultBandUnit || "focus unit"}</span></div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Point forecast with its 90% prediction interval across horizons. The band widens
+      further out, which is the honest behavior: a 1-hour forecast is far more certain
+      than a 72-hour one.
+    </p>
+    <div id="band-chart" style="height: 320px;"></div>
+  </section>
+
+  <div class="footer-note">
+    Data: drift_history.csv · drift_report.csv · forecast_predictions.csv
+  </div>
+
+  <script>
+    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
+    const palette = ${JSON.stringify(TABLEAU_PALETTE)};
+    const psiSeries = ${JSON.stringify(psiSeries)};
+    const lastTestDate = ${JSON.stringify(lastTestDate)};
+    const bandByUnit = ${JSON.stringify(bandByUnit)};
+    const defaultBandUnit = ${JSON.stringify(defaultBandUnit)};
+
+    if (psiSeries.length) {
+      const psiLayout = JSON.parse(JSON.stringify(layoutBase));
+      psiLayout.hovermode = "closest";
+      psiLayout.margin = { t: 20, r: 20, b: 50, l: 55 };
+      psiLayout.xaxis = { ...psiLayout.xaxis, type: "date", title: { text: "As-of date", font: { size: 11 } } };
+      psiLayout.yaxis = { ...psiLayout.yaxis, title: { text: "PSI", font: { size: 11 } }, rangemode: "tozero" };
+      psiLayout.legend = { orientation: "h", y: -0.22, x: 0, font: { size: 10 } };
+      psiLayout.shapes = [
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 0.10, y1: 0.10,
+          line: { color: "#F28E2B", width: 1, dash: "dot" } },
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 0.25, y1: 0.25,
+          line: { color: "#E15759", width: 1, dash: "dot" } }
+      ];
+      psiLayout.annotations = [
+        { xref: "paper", x: 1, y: 0.10, xanchor: "right", yanchor: "bottom",
+          text: "moderate (0.10)", showarrow: false, font: { size: 9, color: "#F28E2B" } },
+        { xref: "paper", x: 1, y: 0.25, xanchor: "right", yanchor: "bottom",
+          text: "major (0.25)", showarrow: false, font: { size: 9, color: "#E15759" } }
+      ];
+      if (lastTestDate) {
+        psiLayout.shapes.push({
+          type: "line", x0: lastTestDate, x1: lastTestDate, yref: "paper", y0: 0, y1: 1,
+          line: { color: "#888888", width: 1, dash: "dash" }
+        });
+        psiLayout.annotations.push({
+          x: lastTestDate, xanchor: "right", yref: "paper", y: 1, yanchor: "top",
+          text: "real test data   ", showarrow: false, font: { size: 9, color: "#888888" }
+        });
+        psiLayout.annotations.push({
+          x: lastTestDate, xanchor: "left", yref: "paper", y: 1, yanchor: "top",
+          text: "   live feed", showarrow: false, font: { size: 9, color: "#888888" }
+        });
+      }
+      const traces = psiSeries.map((s, i) => ({
+        x: s.x, y: s.y, name: s.name, type: "scatter", mode: "lines+markers",
+        line: { width: 2, color: palette[i % palette.length] }, marker: { size: 4 }
+      }));
+      Plotly.newPlot("psi-chart", traces, psiLayout, { displayModeBar: false })
+        .then(() => { window.RENDERED = true; });
+    } else {
+      document.getElementById("psi-chart").innerHTML =
+        '<p style="color:#999;text-align:center;padding-top:40px;">No drift history yet.</p>';
+    }
+
+    // ── Prediction-interval band, driven by the unit selector ──
+    const bandLayout = JSON.parse(JSON.stringify(layoutBase));
+    bandLayout.hovermode = "closest";
+    bandLayout.margin = { t: 20, r: 20, b: 50, l: 55 };
+    bandLayout.xaxis = { ...bandLayout.xaxis, type: "category",
+                         title: { text: "Forecast horizon (hours)", font: { size: 11 } } };
+    bandLayout.yaxis = { ...bandLayout.yaxis, title: { text: "Census (patients)", font: { size: 11 } }, rangemode: "tozero" };
+    bandLayout.showlegend = false;
+
+    function renderBand(name) {
+      const labelEl = document.getElementById("band-unit-label");
+      const chartEl = document.getElementById("band-chart");
+      const b = bandByUnit[name];
+      if (labelEl) labelEl.textContent = name || "—";
+      if (!b) {
+        chartEl.innerHTML = '<p style="color:#999;text-align:center;padding-top:40px;">No interval data for this unit.</p>';
+        return;
+      }
+      const xcat = b.horizons.map(h => h + "h");
+      Plotly.react(chartEl, [
+        { x: xcat, y: b.upper, type: "scatter", mode: "lines", line: { width: 0 },
+          hoverinfo: "skip", showlegend: false },
+        { x: xcat, y: b.lower, type: "scatter", mode: "lines", fill: "tonexty",
+          fillcolor: "rgba(78,121,167,0.20)", line: { width: 0 }, hoverinfo: "skip", showlegend: false },
+        { x: xcat, y: b.point, type: "scatter", mode: "lines+markers",
+          line: { color: "#1F4E79", width: 2 }, marker: { size: 6 }, name: "Forecast" }
+      ], bandLayout, { displayModeBar: false });
+    }
+    renderBand(defaultBandUnit);
+
+    // ── Unit selector: isolates a PSI line and drives the band chart ──
+    const unitSelect = document.getElementById("unit-select");
+    if (unitSelect) {
+      unitSelect.addEventListener("change", function () {
+        const val = unitSelect.value;
+        if (psiSeries.length) {
+          const vis = (val === "__all__")
+            ? psiSeries.map(function () { return true; })
+            : psiSeries.map(function (s) { return s.name === val; });
+          Plotly.restyle("psi-chart", { visible: vis });
+        }
+        renderBand(val === "__all__" ? defaultBandUnit : val);
+      });
+    }
+  </script>
+</div>
+</body>
+</html>`;
+}
+
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "methodology.html"), buildMethodology());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "tests.html"), buildTests());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGallery());
+fs.writeFileSync(path.join(OUT_HTML_DIR, "monitoring.html"), buildMonitoring());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboardEmbed(TABLEAU_VIZZES[1]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));
