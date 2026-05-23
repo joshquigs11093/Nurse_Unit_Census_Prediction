@@ -25,8 +25,9 @@
     <h1>Nurse Unit Census Prediction</h1>
     <p class="tagline">
       Multi-horizon census forecasting for hospital nurse units. Five model types
-      trained per unit on 21 months of hourly admit/discharge/transfer data,
-      delivering 1-, 4-, 24-, and 72-hour predictions to three operational dashboards.
+      trained per unit on two years of hourly admit/discharge/transfer data,
+      delivering 1-, 4-, 24-, and 72-hour predictions to three operational
+      dashboards, with a live drift-monitoring view.
     </p>
     <div class="metric-callout">
       <div class="num">99.7%</div>
@@ -42,7 +43,7 @@
   <section class="section">
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="num">10</div>
+        <div class="num">9</div>
         <div class="label">Active nurse units</div>
       </div>
       <div class="stat-card">
@@ -131,7 +132,14 @@
         <div class="meta">
           <h3>Test suite</h3>
           <div class="audience">47 cases · pytest</div>
-          <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, and ensemble weighting. Data-free subset runs in CI.</p>
+          <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, prediction intervals, and drift detection. Data-free subset runs in CI.</p>
+        </div>
+      </a>
+      <a class="gallery-card" href="monitoring.html">
+        <div class="meta">
+          <h3>Monitoring</h3>
+          <div class="audience">Drift over time · intervals</div>
+          <p>Per-unit Population Stability Index tracked against a frozen training baseline, the latest drift snapshot, and 90% prediction-interval bands by horizon.</p>
         </div>
       </a>
       <a class="gallery-card" href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">
@@ -145,7 +153,7 @@
   </section>
 
   <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:32px;">
-    Last regenerated: 2026-05-23 22:21 UTC · Daily refresh via GitHub Actions
+    Last regenerated: 2026-05-23 22:28 UTC · Daily refresh via GitHub Actions
   </p>
 </div>
 </body>

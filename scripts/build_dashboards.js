@@ -1026,12 +1026,16 @@ ${navBar("dashboards")}
 
 // ── Landing page (index.html) ──
 function buildIndex() {
-  const totalUnits = data.unitMeta.length;
+  const totalUnits = data.exec.length;  // units actively forecast
   const totalCapacity = data.exec.reduce((s, r) => s + (r.capacity || 0), 0);
   const totalCensus = data.exec.reduce((s, r) => s + (r.latest_census || 0), 0);
   const best1h = data.best.find(r => r.horizon === 1);
   const best72h = data.best.find(r => r.horizon === 72);
   const refreshTime = new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
+  const _tr = loadTestResults();
+  const totalTests = (_tr && _tr.tests) ? _tr.tests.length : 47;
+  const passedTests = (_tr && _tr.tests)
+    ? _tr.tests.filter(t => t.outcome === "passed").length : totalTests;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1048,8 +1052,9 @@ ${navBar("home")}
     <h1>Nurse Unit Census Prediction</h1>
     <p class="tagline">
       Multi-horizon census forecasting for hospital nurse units. Five model types
-      trained per unit on 21 months of hourly admit/discharge/transfer data,
-      delivering 1-, 4-, 24-, and 72-hour predictions to three operational dashboards.
+      trained per unit on two years of hourly admit/discharge/transfer data,
+      delivering 1-, 4-, 24-, and 72-hour predictions to three operational
+      dashboards, with a live drift-monitoring view.
     </p>
     <div class="metric-callout">
       <div class="num">${best1h ? best1h.within_2_patients_pct.toFixed(1) : "—"}%</div>
@@ -1089,7 +1094,7 @@ ${navBar("home")}
         <div class="label">±2 accuracy at 72-hour horizon</div>
       </div>
       <div class="stat-card">
-        <div class="num"><a href="tests.html" style="color:inherit;text-decoration:none;">47 / 47</a></div>
+        <div class="num"><a href="tests.html" style="color:inherit;text-decoration:none;">${passedTests} / ${totalTests}</a></div>
         <div class="label">Pytest cases passing — <a href="tests.html" style="color:var(--tableau-light-blue);text-decoration:none;">view suite</a></div>
       </div>
     </div>
@@ -1153,15 +1158,22 @@ ${navBar("home")}
       <a class="gallery-card" href="tests.html">
         <div class="meta">
           <h3>Test suite</h3>
-          <div class="audience">47 cases · pytest</div>
-          <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, and ensemble weighting. Data-free subset runs in CI.</p>
+          <div class="audience">${totalTests} cases · pytest</div>
+          <p>Per-test catalog covering data integrity, leakage prevention, chronological splits, metric correctness, model fits, prediction intervals, and drift detection. Data-free subset runs in CI.</p>
+        </div>
+      </a>
+      <a class="gallery-card" href="monitoring.html">
+        <div class="meta">
+          <h3>Monitoring</h3>
+          <div class="audience">Drift over time · intervals</div>
+          <p>Per-unit Population Stability Index tracked against a frozen training baseline, the latest drift snapshot, and 90% prediction-interval bands by horizon.</p>
         </div>
       </a>
       <a class="gallery-card" href="${REPO_URL}" target="_blank" rel="noopener">
         <div class="meta">
           <h3>Source code</h3>
           <div class="audience">GitHub · MIT licensed</div>
-          <p>Full repository: pipeline source, tests (47 cases), GitHub Actions workflow, configuration, and this static site.</p>
+          <p>Full repository: pipeline source, tests (${totalTests} cases), GitHub Actions workflow, configuration, and this static site.</p>
         </div>
       </a>
     </div>
@@ -1463,9 +1475,9 @@ ${navBar("methodology")}
   <div class="section">
     <div class="section-title">1. Data</div>
     <p style="font-size:13px;line-height:1.6;">
-      The training data is 21 months (Mar 2024 – Dec 2025) of de-identified hourly census
+      The dataset is two years (May 2024 – May 2026) of de-identified hourly census
       and ADT (admit / discharge / transfer) aggregates across 9 active nurse units, plus
-      contextual features (ED census, scheduled surgeries, holiday flags). 139,507 hourly
+      contextual features (ED census, scheduled surgeries, holiday flags). 157,754 hourly
       observations after cleaning. Lag features (1–72 hour previous census, rolling 4/8/24h
       flow rates, 7-day rolling stats) are pre-computed in SQL and consumed directly by the
       pipeline. Real production deployment would replace the static CSV input with an ETL job
@@ -1478,14 +1490,15 @@ ${navBar("methodology")}
     <table class="perf-table" style="margin-top:12px;">
       <thead><tr><th>Split</th><th>Date range</th><th>Rows</th><th>%</th></tr></thead>
       <tbody>
-        <tr><td>Train</td><td>2024-03-25 – 2025-06-30</td><td>99,772</td><td>71.5%</td></tr>
-        <tr><td>Validation</td><td>2025-07-01 – 2025-09-30</td><td>19,872</td><td>14.2%</td></tr>
-        <tr><td>Test</td><td>2025-10-01 – 2025-12-30</td><td>19,863</td><td>14.2%</td></tr>
+        <tr><td>Train</td><td>2024-05-23 – 2025-06-30</td><td>86,984</td><td>55.1%</td></tr>
+        <tr><td>Validation</td><td>2025-06-30 – 2025-09-30</td><td>19,872</td><td>12.6%</td></tr>
+        <tr><td>Test</td><td>2025-09-30 – 2026-05-22</td><td>50,898</td><td>32.3%</td></tr>
       </tbody>
     </table>
     <p style="font-size:12px;color:var(--muted);margin-top:8px;">
-      Strictly chronological — no shuffling. Train spans full seasonal cycles; validation
-      captures the late-summer trough; test holds out the year-end peak.
+      Strictly chronological — no shuffling. Train and validation are frozen so the drift
+      baseline stays fixed; the test split holds out everything after September 2025, which
+      is also the period monitored for drift.
     </p>
   </div>
 
