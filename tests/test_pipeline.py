@@ -217,3 +217,119 @@ class TestFeatureColumns:
         filtered = filter_unit(clean_df, uid, config)
         assert filtered[config["data"]["unit_col"]].nunique() == 1
         assert len(filtered) > 0
+
+
+# ---------- Test 8: Prediction intervals (data-free) ----------
+
+class TestPredictionIntervals:
+    def test_conformal_coverage_holds(self):
+        """A 90% conformal band built on one sample should cover ~90% on a
+        fresh exchangeable sample."""
+        from src.evaluation.intervals import build_interval, conformal_halfwidth, empirical_coverage
+
+        rng = np.random.default_rng(0)
+        cal_resid = rng.normal(0, 3.0, size=5000)
+        hw = conformal_halfwidth(cal_resid, coverage=0.90)
+
+        point = np.full(5000, 20.0)
+        y_true = 20.0 + rng.normal(0, 3.0, size=5000)
+        lower, upper = build_interval(point, hw, lower_bound=0.0, upper_bound=None)
+        cov = empirical_coverage(y_true, lower, upper)
+        assert 0.86 <= cov <= 0.94
+
+    def test_halfwidth_grows_with_coverage(self):
+        from src.evaluation.intervals import conformal_halfwidth
+        rng = np.random.default_rng(1)
+        resid = rng.normal(0, 5.0, size=2000)
+        assert conformal_halfwidth(resid, 0.95) > conformal_halfwidth(resid, 0.80)
+
+    def test_halfwidth_nonnegative_and_nan_safe(self):
+        from src.evaluation.intervals import conformal_halfwidth
+        assert conformal_halfwidth(np.array([-2.0, 1.0, np.nan, 3.0]), 0.9) >= 0
+        assert np.isnan(conformal_halfwidth(np.array([]), 0.9))
+
+    def test_interval_clipped_to_nonnegative(self):
+        from src.evaluation.intervals import build_interval
+        lower, upper = build_interval(np.array([1.0, 0.5]), 5.0, lower_bound=0.0)
+        assert (lower >= 0).all() and (upper >= lower).all()
+
+    def test_asymmetric_quantiles_ordered(self):
+        from src.evaluation.intervals import asymmetric_quantiles
+        rng = np.random.default_rng(2)
+        q_lo, q_hi = asymmetric_quantiles(rng.normal(0, 2, 3000), 0.90)
+        assert q_lo < q_hi
+
+    def test_coverage_invalid_args(self):
+        from src.evaluation.intervals import conformal_halfwidth
+        with pytest.raises(ValueError):
+            conformal_halfwidth(np.array([1.0, 2.0]), coverage=1.5)
+
+
+# ---------- Test 9: Drift monitoring (data-free) ----------
+
+class TestDriftMonitoring:
+    def test_psi_zero_for_identical(self):
+        from src.monitoring.drift import population_stability_index
+        rng = np.random.default_rng(3)
+        x = rng.normal(20, 4, 5000)
+        # Same distribution → PSI near zero.
+        assert population_stability_index(x, rng.normal(20, 4, 5000)) < 0.10
+
+    def test_psi_large_for_shifted(self):
+        from src.monitoring.drift import population_stability_index, PSI_MAJOR
+        rng = np.random.default_rng(4)
+        baseline = rng.normal(20, 4, 5000)
+        shifted = rng.normal(32, 4, 5000)  # mean shifted +12
+        assert population_stability_index(baseline, shifted) >= PSI_MAJOR
+
+    def test_drift_status_labels(self):
+        from src.monitoring.drift import drift_status
+        assert drift_status(0.02) == "stable"
+        assert drift_status(0.15) == "moderate"
+        assert drift_status(0.40) == "major"
+        assert drift_status(float("nan")) == "unknown"
+
+    def test_performance_drift_flags_degradation(self):
+        from src.monitoring.drift import performance_drift
+        degraded = performance_drift(80.0, 90.0, tolerance_pct=5.0)
+        assert degraded["degraded"] is True
+        ok = performance_drift(88.0, 90.0, tolerance_pct=5.0)
+        assert ok["degraded"] is False
+
+    def test_performance_drift_nan_safe(self):
+        from src.monitoring.drift import performance_drift
+        res = performance_drift(float("nan"), 90.0)
+        assert res["degraded"] is False
+
+    def test_generate_drift_report_shape(self):
+        from src.monitoring.drift import build_psi_bins, generate_drift_report
+        rng = np.random.default_rng(5)
+        base_census = rng.normal(20, 4, 2000)
+        edges = build_psi_bins(base_census, n_bins=10)
+        counts, _ = np.histogram(base_census, bins=edges)
+        props = counts / counts.sum()
+        baseline = {
+            "1": {
+                "edges": [float(e) for e in edges],
+                "expected_props": [float(p) for p in props],
+                "within_2_patients_pct": 90.0,
+            }
+        }
+        report = generate_drift_report(
+            baseline,
+            {"1": rng.normal(20, 4, 500)},
+            {"1": 91.0},
+        )
+        assert len(report) == 1
+        rec = report[0]
+        assert rec["unit_id"] == "1"
+        assert rec["drift_status"] in {"stable", "moderate", "major", "unknown"}
+        assert "perf_degraded" in rec
+
+    def test_generate_drift_report_missing_recent(self):
+        from src.monitoring.drift import generate_drift_report
+        baseline = {"1": {"edges": [-np.inf, 10, np.inf],
+                          "expected_props": [0.5, 0.5],
+                          "within_2_patients_pct": 90.0}}
+        report = generate_drift_report(baseline, {})  # no recent data for unit
+        assert report[0]["drift_status"] == "unknown"

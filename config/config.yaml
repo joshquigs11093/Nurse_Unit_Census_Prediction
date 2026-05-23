@@ -156,6 +156,20 @@ evaluation:
   metrics: ["mae", "rmse", "mape", "within_2_patients_pct"]
   target_accuracy: 2
 
+# Probabilistic forecasting: split-conformal prediction intervals derived
+# from validation residuals during the calibrate phase.
+uncertainty:
+  enabled: true
+  coverage: 0.90          # nominal interval coverage (90% band)
+
+# Drift monitoring: PSI on the census distribution plus performance drift on
+# the live within-2 accuracy, both against a frozen training baseline.
+drift:
+  enabled: true
+  psi_bins: 10
+  performance_tolerance_pct: 5.0   # allowed within-2 drop (pts) before flagging
+  recent_window_hours: 168         # live window compared against baseline (7 days)
+
 random_seed: 42
 
 output:

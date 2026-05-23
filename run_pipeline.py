@@ -27,6 +27,15 @@ from src.utils import load_config, setup_logging, set_random_seeds
 from src.data import load_raw_data, validate_data, clean_data, split_data, save_processed_data
 from src.features import add_cyclical_features, filter_unit, get_feature_columns
 from src.models import ModelRegistry
+from src.monitoring.calibrate import (
+    compute_drift_baseline,
+    compute_prediction_intervals,
+    load_drift_baseline,
+    load_intervals,
+    save_drift_baseline,
+    save_intervals,
+)
+from src.monitoring.drift import generate_drift_report
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +75,27 @@ def phase_train(
     return registry
 
 
+def phase_calibrate(
+    train: pd.DataFrame, val: pd.DataFrame, config: dict,
+) -> None:
+    """Derive prediction intervals + drift baseline from trained models."""
+    logger.info("=" * 60)
+    logger.info("PHASE: Calibration (prediction intervals + drift baseline)")
+    logger.info("=" * 60)
+
+    if config.get("uncertainty", {}).get("enabled", True):
+        coverage = config.get("uncertainty", {}).get("coverage", 0.90)
+        intervals = compute_prediction_intervals(val, config, coverage=coverage)
+        save_intervals(intervals, config)
+        logger.info("Calibrated intervals for %d units (coverage=%.0f%%)",
+                    len(intervals), coverage * 100)
+
+    if config.get("drift", {}).get("enabled", True):
+        n_bins = config.get("drift", {}).get("psi_bins", 10)
+        baseline = compute_drift_baseline(train, config, n_bins=n_bins)
+        save_drift_baseline(baseline, config)
+
+
 def _model_path_for_horizon(models_dir: Path, uid, h: int) -> tuple[str, Path]:
     """Pick best tabular model for horizon h: RF at 1h, LightGBM otherwise."""
     name = "randomforest" if h == 1 else "lightgbm"
@@ -101,12 +131,16 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
 
     test_feat = add_cyclical_features(test)
     units = sorted(test[unit_col].unique())
+    intervals_on = config.get("uncertainty", {}).get("enabled", True)
     rows = []
 
     for uid in units:
         u = filter_unit(test_feat, uid, config).sort_values(dt_col)
         if len(u) < 50:
             continue
+
+        unit_intervals = load_intervals(uid, config) if intervals_on else {}
+        cap = capacity_by_unit.get(uid)
 
         base = pd.DataFrame({
             "timestamp": u[dt_col].values,
@@ -120,13 +154,26 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
             name, mp = _model_path_for_horizon(models_dir, uid, h)
             if not mp.exists():
                 base[f"pred_{h}hr"] = np.nan
+                base[f"pred_{h}hr_lower"] = np.nan
+                base[f"pred_{h}hr_upper"] = np.nan
                 models_used[h] = None
                 continue
             preds = _predict_unit_horizon(u, config, h, mp)
             base[f"pred_{h}hr"] = preds.values
+
+            hw = unit_intervals.get(str(h), {}).get("halfwidth")
+            if hw is not None and not pd.isna(hw):
+                lower = (preds - hw).clip(lower=0.0)
+                upper = preds + hw
+                if cap is not None:
+                    upper = upper.clip(upper=float(cap))
+                base[f"pred_{h}hr_lower"] = lower.round(1).values
+                base[f"pred_{h}hr_upper"] = upper.round(1).values
+            else:
+                base[f"pred_{h}hr_lower"] = np.nan
+                base[f"pred_{h}hr_upper"] = np.nan
             models_used[h] = name
 
-        cap = capacity_by_unit.get(uid)
         base["capacity"] = cap
         for h in horizons:
             col = f"pred_{h}hr"
@@ -154,6 +201,8 @@ def _build_forecast_timeline(fp: pd.DataFrame, horizons: list[int]) -> pd.DataFr
             "unit_id": r["unit_id"],
             "unit_name": r["unit_name"],
             "value": int(r["actual_census"]),
+            "value_lower": int(r["actual_census"]),
+            "value_upper": int(r["actual_census"]),
             "series": "Actual",
             "horizon_h": 0,
             "capacity": int(r["capacity"]),
@@ -167,17 +216,61 @@ def _build_forecast_timeline(fp: pd.DataFrame, horizons: list[int]) -> pd.DataFr
             v = r.get(f"pred_{h}hr")
             if v is None or pd.isna(v):
                 continue
+            lo = r.get(f"pred_{h}hr_lower")
+            hi = r.get(f"pred_{h}hr_upper")
             forecast_ts = anchor_ts + pd.Timedelta(hours=h)
             rows.append({
                 "timestamp": forecast_ts.strftime("%Y-%m-%d %H:%M:%S"),
                 "unit_id": r["unit_id"],
                 "unit_name": r["unit_name"],
                 "value": round(float(v), 1),
+                "value_lower": (round(float(lo), 1) if lo is not None
+                                and not pd.isna(lo) else round(float(v), 1)),
+                "value_upper": (round(float(hi), 1) if hi is not None
+                                and not pd.isna(hi) else round(float(v), 1)),
                 "series": "Forecast",
                 "horizon_h": h,
                 "capacity": int(r["capacity"]),
             })
     return pd.DataFrame(rows)
+
+
+def _recent_window_drift_inputs(test: pd.DataFrame, config: dict) -> tuple[dict, dict]:
+    """Census array + observed within-2 accuracy per unit over the recent live
+    window, for the drift report. Mirrors validation eval on recent test rows."""
+    from src.evaluation import compute_within_n
+    from src.features import prepare_ml_features
+
+    dt_col = config["data"]["datetime_col"]
+    unit_col = config["data"]["unit_col"]
+    census_col = config["data"]["census_col"]
+    horizons = config["forecast_horizons"]
+    models_dir = Path(config["output"]["models_dir"])
+    window = config.get("drift", {}).get("recent_window_hours", 168)
+
+    test_feat = add_cyclical_features(test)
+    recent_census, recent_within2 = {}, {}
+
+    for uid in sorted(test[unit_col].unique()):
+        u = filter_unit(test_feat, uid, config).sort_values(dt_col).tail(window)
+        if u.empty:
+            continue
+        recent_census[str(uid)] = u[census_col].dropna().to_numpy(dtype=float)
+
+        accs = []
+        for h in horizons:
+            _, mp = _model_path_for_horizon(models_dir, uid, h)
+            if not mp.exists():
+                continue
+            X, y, _ = prepare_ml_features(u, config, h)
+            if len(X) < 10:
+                continue
+            preds = joblib.load(mp).predict(X)
+            accs.append(compute_within_n(np.asarray(y, dtype=float), preds, n=2))
+        if accs:
+            recent_within2[str(uid)] = float(np.mean(accs))
+
+    return recent_census, recent_within2
 
 
 def phase_export(
@@ -294,12 +387,40 @@ def phase_export(
     pd.DataFrame(summary_rows).to_csv(tableau_dir / "executive_summary.csv", index=False)
     logger.info("Exported executive_summary.csv")
 
+    # 6. drift_report.csv (PSI covariate drift + performance drift per unit)
+    if config.get("drift", {}).get("enabled", True):
+        baseline = load_drift_baseline(config)
+        if not baseline:
+            logger.warning("drift_report skipped — no drift_baseline.json "
+                           "(run --phase calibrate first)")
+        else:
+            recent_census, recent_within2 = _recent_window_drift_inputs(test, config)
+            tol = config.get("drift", {}).get("performance_tolerance_pct", 5.0)
+            n_bins = config.get("drift", {}).get("psi_bins", 10)
+            report = generate_drift_report(
+                baseline, recent_census, recent_within2,
+                n_bins=n_bins, perf_tolerance_pct=tol,
+            )
+            names_by_str = {str(k): v for k, v in unit_names.items()}
+            for rec in report:
+                rec["unit_name"] = names_by_str.get(
+                    rec["unit_id"], f"Unit {rec['unit_id']}"
+                )
+            drift_df = pd.DataFrame(report)
+            drift_df.to_csv(tableau_dir / "drift_report.csv", index=False)
+            n_alert = int(drift_df.get("perf_degraded", pd.Series(dtype=bool)).sum()) \
+                if "perf_degraded" in drift_df else 0
+            n_major = int((drift_df.get("drift_status") == "major").sum()) \
+                if "drift_status" in drift_df else 0
+            logger.info("Exported drift_report.csv (%d units, %d major PSI, %d perf alerts)",
+                        len(drift_df), n_major, n_alert)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Nurse Unit Census Prediction Pipeline")
     parser.add_argument("--config", default="config/config.yaml", help="Path to config file")
     parser.add_argument("--phase", default="all",
-                        choices=["all", "clean", "train", "export"],
+                        choices=["all", "clean", "train", "calibrate", "export"],
                         help="Pipeline phase to run")
     args = parser.parse_args()
 
@@ -322,6 +443,9 @@ def main():
 
     if args.phase in ("all", "train"):
         registry = phase_train(train, val, config)
+
+    if args.phase in ("all", "calibrate"):
+        phase_calibrate(train, val, config)
 
     if args.phase in ("all", "export"):
         phase_export(train, val, test, config)

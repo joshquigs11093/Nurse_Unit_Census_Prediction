@@ -72,7 +72,9 @@ In a production deployment, `generate_synthetic_hour.py` would be replaced by an
 | Pipeline orchestration | joblib (parallel per-unit training), PyYAML config |
 | Evaluation | custom MAE / RMSE / MAPE / ±2-accuracy metrics, Ljung-Box residual diagnostics |
 | Dashboards | Plotly.js + custom CSS, deployed via GitHub Pages |
-| Testing | pytest (34 cases covering data leakage, splits, metrics, models); data-free subset (23 cases) runs in GitHub Actions on every push |
+| Uncertainty | split-conformal prediction intervals (90% coverage) from validation residuals |
+| Monitoring | drift detection — PSI (covariate drift) + within-2 performance drift vs. a frozen training baseline |
+| Testing | pytest (47 cases covering data leakage, splits, metrics, models, intervals, drift); data-free subset (36 cases) runs in GitHub Actions on every push |
 
 ## Architecture
 
@@ -89,10 +91,15 @@ src/
 │   ├── lgbm_model.py              # LightGBM with early stopping
 │   ├── ensemble_model.py          # inverse-MAPE weighted average
 │   └── model_registry.py          # parallel orchestration across units
-├── evaluation/metrics.py          # MAE, RMSE, MAPE, ±2 accuracy, residual diagnostics
+├── evaluation/
+│   ├── metrics.py                 # MAE, RMSE, MAPE, ±2 accuracy, residual diagnostics
+│   └── intervals.py              # split-conformal prediction intervals
+├── monitoring/
+│   ├── drift.py                   # PSI + performance-drift detection
+│   └── calibrate.py              # derive intervals + drift baseline from trained models
 └── utils/helpers.py               # config loading, logging, RNG seeding
 
-run_pipeline.py                    # entry point: clean | train | export | all
+run_pipeline.py                    # entry point: clean | train | calibrate | export | all
 config/config.yaml                 # all hyperparameters and split dates
 pytest.ini                         # registers the requires_data marker
 tests/test_pipeline.py             # 34 pytest cases (11 marked requires_data)
@@ -144,7 +151,7 @@ python -m pytest tests/test_pipeline.py -v
 python -m pytest tests/test_pipeline.py -m "not requires_data" -v
 ```
 
-Phases can be run individually: `--phase clean`, `--phase train`, `--phase export`.
+Phases can be run individually: `--phase clean`, `--phase train`, `--phase calibrate`, `--phase export`. The `calibrate` phase derives the prediction intervals and drift baseline from the trained models and must run before `export` for the interval columns and `drift_report.csv` to be populated.
 
 ## Outputs
 
@@ -152,8 +159,9 @@ Phases can be run individually: `--phase clean`, `--phase train`, `--phase expor
 |---|---|
 | `outputs/reports/model_comparison.csv` | (model, unit, horizon) × (MAE, RMSE, MAPE, ±2 acc) |
 | `outputs/reports/best_model_per_horizon.csv` | Winning model + accuracy per horizon |
-| `outputs/tableau/forecast_predictions.csv` | Wide-format predictions: actual_census + pred_{1..72}hr per (timestamp, unit) |
+| `outputs/tableau/forecast_predictions.csv` | Wide-format predictions: actual_census + pred_{1..72}hr (with _lower/_upper 90% bounds) per (timestamp, unit) |
 | `outputs/tableau/executive_summary.csv` | Per-unit current census, capacity, utilization %, 72h forecast, alert flag |
+| `outputs/tableau/drift_report.csv` | Per-unit PSI, drift status, and within-2 performance drift vs. training baseline |
 | `models/{unit_id}/...` | Trained per-unit artifacts (joblib, .pt, .json) |
 
 ## Site map
