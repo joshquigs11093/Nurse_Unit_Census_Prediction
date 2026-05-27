@@ -334,3 +334,12 @@ as_of,unit_id,unit_name,psi,drift_status,source
 2026-05-26,97635816,Progressive Care,0.0583,stable,live
 2026-05-26,1775257343,Neuro Stepdown,0.0963,stable,live
 2026-05-26,4452986337,Medical-Surgical 4 South,0.0767,stable,live
+2026-05-27,705089,Medical-Surgical 3 North,0.0398,stable,live
+2026-05-27,705090,Telemetry 4 East,0.0789,stable,live
+2026-05-27,705091,Cardiac Stepdown,0.0732,stable,live
+2026-05-27,705092,Oncology 5 South,0.0637,stable,live
+2026-05-27,21334825,Surgical 2 West,0.0444,stable,live
+2026-05-27,21336305,Orthopedic 6 North,0.0173,stable,live
+2026-05-27,97635816,Progressive Care,0.0517,stable,live
+2026-05-27,1775257343,Neuro Stepdown,0.038,stable,live
+2026-05-27,4452986337,Medical-Surgical 4 South,0.031,stable,live
