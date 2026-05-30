@@ -5,4 +5,6 @@ from .drift import (
     performance_drift,
     drift_status,
     generate_drift_report,
+    stl_residual_series,
+    derive_alert_kind,
 )

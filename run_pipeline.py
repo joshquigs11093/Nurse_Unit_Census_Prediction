@@ -279,27 +279,47 @@ def _recent_window_drift_inputs(test: pd.DataFrame, config: dict) -> tuple[dict,
 
 def _build_drift_history(test: pd.DataFrame, config: dict, baseline: dict,
                           step_days: int = 7) -> pd.DataFrame:
-    """PSI trajectory per unit across the test period.
+    """PSI trajectory per unit across the test period, with seasonality-aware
+    signals layered on top of the raw PSI.
 
-    Steps an as-of cursor through the test window in step_days increments and
-    computes each unit's PSI over the trailing recent_window_hours against the
-    frozen training baseline. Model-free (distribution only), so it is cheap
-    enough to evaluate at every step. Returns long-format rows:
-    as_of, unit_id, unit_name, psi, drift_status.
+    For each as-of date the function records both the raw PSI (recent census
+    vs. frozen baseline) and a deseasoned PSI computed on STL residuals,
+    along with a per-unit persistence counter and a per-as_of systemic
+    fraction. The combination is what separates a one-off seasonal spike from
+    sustained, unit-specific drift.
     """
-    from src.monitoring.drift import drift_status, psi_from_baseline
+    from src.monitoring.drift import (
+        PSI_MAJOR, derive_alert_kind, drift_status, psi_from_baseline,
+        stl_residual_series,
+    )
 
     dt_col = config["data"]["datetime_col"]
     unit_col = config["data"]["unit_col"]
     census_col = config["data"]["census_col"]
-    window = pd.Timedelta(hours=config.get("drift", {}).get("recent_window_hours", 168))
+    drift_cfg = config.get("drift", {})
+    window = pd.Timedelta(hours=drift_cfg.get("recent_window_hours", 168))
+    psi_bins = drift_cfg.get("psi_bins", 10)
+    stl_period = drift_cfg.get("stl_period", 168)
+    persistence_threshold = drift_cfg.get("persistence_threshold", 3)
+    systemic_threshold = drift_cfg.get("systemic_threshold", 0.5)
     unit_names = config.get("unit_names", {})
 
-    ts = pd.to_datetime(test[dt_col])
-    start, end = ts.min() + window, ts.max()
+    ts_all = pd.to_datetime(test[dt_col])
+    start, end = ts_all.min() + window, ts_all.max()
     if pd.isna(start) or start >= end:
         return pd.DataFrame()
     as_of_dates = pd.date_range(start=start, end=end, freq=f"{step_days}D")
+
+    # Pre-compute the STL residual series per unit (once each) so the as-of
+    # loop only has to slice rather than re-decompose.
+    residual_by_unit: dict = {}
+    for uid in sorted(test[unit_col].unique()):
+        u = test[test[unit_col] == uid].sort_values(dt_col)
+        census = u[census_col].to_numpy(dtype=float)
+        residuals = stl_residual_series(census, period=stl_period)
+        if residuals.size == census.size:
+            residual_by_unit[uid] = pd.Series(
+                residuals, index=pd.to_datetime(u[dt_col]).to_numpy())
 
     rows = []
     for uid in sorted(test[unit_col].unique()):
@@ -308,24 +328,79 @@ def _build_drift_history(test: pd.DataFrame, config: dict, baseline: dict,
             continue
         edges = np.asarray(b["edges"], dtype=float)
         expected_props = np.asarray(b["expected_props"], dtype=float)
+        res_edges = np.asarray(b.get("residual_edges", b["edges"]), dtype=float)
+        res_props = np.asarray(
+            b.get("residual_expected_props", b["expected_props"]), dtype=float)
+
         u = test[test[unit_col] == uid]
         u_ts = pd.to_datetime(u[dt_col])
+        resid_series = residual_by_unit.get(uid)
         name = unit_names.get(uid, f"Unit {uid}")
+
         for as_of in as_of_dates:
             mask = (u_ts > as_of - window) & (u_ts <= as_of)
             census = u.loc[mask.values, census_col].dropna().to_numpy(dtype=float)
-            if census.size < config.get("drift", {}).get("psi_bins", 10):
+            if census.size < psi_bins:
                 continue
             psi = psi_from_baseline(census, edges, expected_props)
+
+            psi_residual = float("nan")
+            if resid_series is not None:
+                res_window = resid_series[
+                    (resid_series.index > (as_of - window).to_datetime64())
+                    & (resid_series.index <= as_of.to_datetime64())
+                ].dropna().to_numpy()
+                if res_window.size >= psi_bins:
+                    psi_residual = psi_from_baseline(res_window, res_edges, res_props)
+
             rows.append({
                 "as_of": as_of.strftime("%Y-%m-%d"),
                 "unit_id": uid,
                 "unit_name": name,
                 "psi": round(psi, 4),
+                "psi_residual": round(psi_residual, 4) if not np.isnan(psi_residual)
+                                else float("nan"),
                 "drift_status": drift_status(psi),
                 "source": "test",
             })
-    return pd.DataFrame(rows)
+
+    if not rows:
+        return pd.DataFrame()
+    df = pd.DataFrame(rows)
+
+    # Alerts run on the deseasoned residual PSI when available so a flu-season
+    # spike (which lifts raw PSI but not the residual) does not trip a retrain
+    # alert; raw PSI is the fallback when STL had too little data.
+    alert_signal = df["psi_residual"].where(df["psi_residual"].notna(), df["psi"])
+    in_major = alert_signal >= PSI_MAJOR
+
+    # systemic_fraction per as_of: how many units are simultaneously in major.
+    systemic = (pd.DataFrame({"as_of": df["as_of"], "_major": in_major})
+                  .groupby("as_of")["_major"].mean())
+    df["systemic_fraction"] = df["as_of"].map(systemic).round(3)
+
+    # consecutive_major counter per unit across the chronological as_of sequence.
+    df = df.sort_values(["unit_id", "as_of"]).reset_index(drop=True)
+    alert_signal = df["psi_residual"].where(df["psi_residual"].notna(), df["psi"])
+    in_major = alert_signal >= PSI_MAJOR
+    counters: dict = {}
+    consec_col = []
+    for uid, flag in zip(df["unit_id"], in_major):
+        counters[uid] = counters.get(uid, 0) + 1 if flag else 0
+        consec_col.append(counters[uid])
+    df["consecutive_major"] = consec_col
+
+    df["alert_kind"] = [
+        derive_alert_kind(
+            in_major=bool(im),
+            consecutive_major=int(c),
+            systemic_fraction=float(s) if pd.notna(s) else float("nan"),
+            persistence_threshold=persistence_threshold,
+            systemic_threshold=systemic_threshold,
+        )
+        for im, c, s in zip(in_major, df["consecutive_major"], df["systemic_fraction"])
+    ]
+    return df
 
 
 def phase_export(
@@ -442,39 +517,56 @@ def phase_export(
     pd.DataFrame(summary_rows).to_csv(tableau_dir / "executive_summary.csv", index=False)
     logger.info("Exported executive_summary.csv")
 
-    # 6. drift_report.csv (PSI covariate drift + performance drift per unit)
+    # 6. drift_history.csv + drift_report.csv (snapshot derived from latest history).
     if config.get("drift", {}).get("enabled", True):
+        from src.monitoring.drift import performance_drift
         baseline = load_drift_baseline(config)
         if not baseline:
-            logger.warning("drift_report skipped — no drift_baseline.json "
+            logger.warning("drift exports skipped — no drift_baseline.json "
                            "(run --phase calibrate first)")
         else:
-            recent_census, recent_within2 = _recent_window_drift_inputs(test, config)
-            tol = config.get("drift", {}).get("performance_tolerance_pct", 5.0)
-            n_bins = config.get("drift", {}).get("psi_bins", 10)
-            report = generate_drift_report(
-                baseline, recent_census, recent_within2,
-                n_bins=n_bins, perf_tolerance_pct=tol,
-            )
-            names_by_str = {str(k): v for k, v in unit_names.items()}
-            for rec in report:
-                rec["unit_name"] = names_by_str.get(
-                    rec["unit_id"], f"Unit {rec['unit_id']}"
-                )
-            drift_df = pd.DataFrame(report)
-            drift_df.to_csv(tableau_dir / "drift_report.csv", index=False)
-            n_alert = int(drift_df.get("perf_degraded", pd.Series(dtype=bool)).sum()) \
-                if "perf_degraded" in drift_df else 0
-            n_major = int((drift_df.get("drift_status") == "major").sum()) \
-                if "drift_status" in drift_df else 0
-            logger.info("Exported drift_report.csv (%d units, %d major PSI, %d perf alerts)",
-                        len(drift_df), n_major, n_alert)
-
             history = _build_drift_history(test, config, baseline)
-            if not history.empty:
+            if history.empty:
+                logger.warning("drift_history is empty; drift_report also skipped")
+            else:
                 history.to_csv(tableau_dir / "drift_history.csv", index=False)
                 logger.info("Exported drift_history.csv (%d rows, %d as-of dates)",
                             len(history), history["as_of"].nunique())
+
+                # Snapshot = latest as_of per unit, enriched with performance drift.
+                latest = (history.sort_values("as_of")
+                                  .groupby("unit_id", as_index=False).tail(1))
+                _, recent_within2 = _recent_window_drift_inputs(test, config)
+                tol = config.get("drift", {}).get("performance_tolerance_pct", 5.0)
+                names_by_str = {str(k): v for k, v in unit_names.items()}
+
+                report_rows = []
+                for _, r in latest.iterrows():
+                    uid_str = str(r["unit_id"])
+                    baseline_w2 = baseline.get(uid_str, {}).get(
+                        "within_2_patients_pct", float("nan"))
+                    recent_w2 = recent_within2.get(uid_str, float("nan"))
+                    perf = performance_drift(recent_w2, baseline_w2, tolerance_pct=tol)
+                    report_rows.append({
+                        "unit_id": r["unit_id"],
+                        "unit_name": names_by_str.get(uid_str, r["unit_name"]),
+                        "psi": r["psi"],
+                        "psi_residual": r["psi_residual"],
+                        "drift_status": r["drift_status"],
+                        "consecutive_major": int(r["consecutive_major"]),
+                        "systemic_fraction": float(r["systemic_fraction"])
+                                              if pd.notna(r["systemic_fraction"])
+                                              else float("nan"),
+                        "alert_kind": r["alert_kind"],
+                        "perf_delta_pct": perf["delta_pct"],
+                        "perf_degraded": perf["degraded"],
+                    })
+                drift_df = pd.DataFrame(report_rows)
+                drift_df.to_csv(tableau_dir / "drift_report.csv", index=False)
+                n_true = int((drift_df["alert_kind"] == "true_drift").sum())
+                n_sys = int((drift_df["alert_kind"] == "systemic").sum())
+                logger.info("Exported drift_report.csv (%d units, %d true_drift, "
+                            "%d systemic)", len(drift_df), n_true, n_sys)
 
 
 def main():

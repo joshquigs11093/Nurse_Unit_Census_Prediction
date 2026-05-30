@@ -1745,6 +1745,18 @@ const TEST_CATALOG = [
       { name: "test_generate_drift_report_missing_recent", blurb: "A unit with no recent data degrades gracefully to an unknown status." },
     ],
   },
+  {
+    name: "TestSeasonalityAwareDrift",
+    requiresData: false,
+    blurb: "Verifies the seasonality-aware drift signals: STL residual extraction (and its short-series fallback), and the alert-kind state machine that distinguishes transient, systemic, and true-drift alerts from raw PSI alone.",
+    tests: [
+      { name: "test_stl_residual_falls_back_when_too_short",  blurb: "When the series is shorter than two STL periods, the function returns mean-centered values rather than raising." },
+      { name: "test_stl_residual_runs_on_long_series",         blurb: "On a synthetic series with a 24-hour cycle, STL extracts a residual that is tighter (lower variance) than the raw input." },
+      { name: "test_derive_alert_kind_state_machine",         blurb: "All four outcomes fire correctly: stable, transient, systemic, and true_drift, given (in_major, consecutive_major, systemic_fraction) inputs." },
+      { name: "test_derive_alert_kind_handles_nan_systemic",  blurb: "A NaN systemic_fraction does not trip a false systemic flag; the unit-specific true_drift path is taken instead." },
+      { name: "test_derive_alert_kind_custom_thresholds",     blurb: "Persistence and systemic thresholds are configurable; the function honors overrides." },
+    ],
+  },
 ];
 
 function loadTestResults() {
@@ -1925,6 +1937,7 @@ ${TEST_CATALOG.map(renderClass).join("\n\n")}
 function buildMonitoring() {
   const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
   const STATUS_COLOR = { stable: "#59A14F", moderate: "#F28E2B", major: "#E15759", unknown: "#999999" };
+  const ALERT_COLOR = { stable: "#59A14F", transient: "#F4D03F", systemic: "#4E79A7", true_drift: "#E15759" };
 
   const report = data.driftReport || [];
   const history = data.driftHistory || [];
@@ -1981,10 +1994,17 @@ function buildMonitoring() {
 
   const statusCell = s =>
     '<span style="color:' + (STATUS_COLOR[s] || "#999") + ';font-weight:600;">' + (s || "—") + '</span>';
+  const alertCell = a => {
+    const label = (a || "—").replace("_", " ");
+    return '<span style="color:' + (ALERT_COLOR[a] || "#999") + ';font-weight:600;">' + label + '</span>';
+  };
+  const fmtPsi = v => (v === null || v === "" || v === undefined || Number.isNaN(Number(v))
+                       ? "—" : Number(v).toFixed(3));
   const snapshotRows = snapshot.map(r =>
     "<tr><td>" + (r.unit_name || r.unit_id) + "</td>"
-    + "<td>" + (r.psi === null || r.psi === "" ? "—" : Number(r.psi).toFixed(3)) + "</td>"
-    + "<td>" + statusCell(r.drift_status) + "</td>"
+    + "<td>" + fmtPsi(r.psi) + "</td>"
+    + "<td>" + fmtPsi(r.psi_residual) + "</td>"
+    + "<td>" + alertCell(r.alert_kind) + "</td>"
     + "<td>" + (r.perf_delta_pct === null || r.perf_delta_pct === "" || Number.isNaN(Number(r.perf_delta_pct))
                 ? "—" : Number(r.perf_delta_pct).toFixed(1) + " pts") + "</td>"
     + "<td>" + (r.perf_degraded === true || r.perf_degraded === "True"
@@ -2039,13 +2059,17 @@ ${emptyNote}
   <section class="section">
     <div class="section-title">Drift snapshot — held-out test period</div>
     <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
-      Detailed evaluation from the last full run on real data: PSI plus the change in
-      within-2 accuracy against the validation baseline. The chart above continues to
-      track PSI on the live feed after the test period ends.
+      Detailed evaluation from the last full run on real data. The alert column is
+      driven by the deseasoned residual PSI rather than the raw value, so a unit only
+      reads as drift after persistent residual movement: <em>stable</em> means within
+      tolerance, <em>transient</em> is a recent spike that has not persisted,
+      <em>systemic</em> means the shift coincides with most other units (often
+      seasonal), and <em>true_drift</em> is unit-specific persistent drift that
+      warrants a retrain.
     </p>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th>PSI</th><th>Status</th><th>±2 accuracy change</th><th>Performance</th></tr></thead>
-      <tbody>${snapshotRows || '<tr><td colspan="5">No snapshot available.</td></tr>'}</tbody>
+      <thead><tr><th>Unit</th><th>PSI</th><th>Residual PSI</th><th>Alert</th><th>±2 accuracy change</th><th>Performance</th></tr></thead>
+      <tbody>${snapshotRows || '<tr><td colspan="6">No snapshot available.</td></tr>'}</tbody>
     </table>
   </section>
 

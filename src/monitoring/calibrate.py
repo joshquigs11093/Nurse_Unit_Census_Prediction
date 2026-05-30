@@ -19,7 +19,7 @@ import pandas as pd
 from src.evaluation import asymmetric_quantiles, conformal_halfwidth
 from src.evaluation.intervals import build_interval, empirical_coverage
 from src.features import add_cyclical_features, filter_unit, prepare_ml_features
-from src.monitoring.drift import build_psi_bins
+from src.monitoring.drift import build_psi_bins, stl_residual_series
 
 logger = logging.getLogger(__name__)
 
@@ -106,20 +106,25 @@ def _baseline_within2_by_unit(config: dict) -> dict:
     return {str(k): float(v) for k, v in out.items()}
 
 
-def compute_drift_baseline(train_df: pd.DataFrame, config: dict, n_bins: int = 10) -> dict:
+def compute_drift_baseline(train_df: pd.DataFrame, config: dict,
+                            n_bins: int = 10, stl_period: int = 168) -> dict:
     """
     Freeze the training-window census distribution per unit as the PSI baseline,
-    plus the per-unit baseline within-2 accuracy for performance drift.
+    plus the per-unit baseline within-2 accuracy for performance drift and a
+    second baseline built from STL residuals so the deseasoned drift signal
+    can be tracked separately.
 
     Returns {unit_id(str): {edges, expected_props, within_2_patients_pct,
-             n, mean_census}}.
+             n, mean_census, residual_edges, residual_expected_props}}.
     """
     unit_col = config["data"]["unit_col"]
     census_col = config["data"]["census_col"]
+    dt_col = config["data"]["datetime_col"]
     within2 = _baseline_within2_by_unit(config)
 
     baseline: dict[str, dict] = {}
     for uid, grp in train_df.groupby(unit_col):
+        grp = grp.sort_values(dt_col)
         census = grp[census_col].dropna().to_numpy(dtype=float)
         if census.size < n_bins:
             continue
@@ -127,14 +132,29 @@ def compute_drift_baseline(train_df: pd.DataFrame, config: dict, n_bins: int = 1
         counts, _ = np.histogram(census, bins=edges)
         total = counts.sum()
         expected_props = (counts / total) if total else np.zeros(len(edges) - 1)
+
+        residuals = stl_residual_series(census, period=stl_period)
+        residuals = residuals[~np.isnan(residuals)]
+        if residuals.size >= n_bins:
+            res_edges = build_psi_bins(residuals, n_bins=n_bins)
+            res_counts, _ = np.histogram(residuals, bins=res_edges)
+            res_total = res_counts.sum()
+            res_props = (res_counts / res_total) if res_total else np.zeros(len(res_edges) - 1)
+        else:
+            res_edges = edges
+            res_props = expected_props
+
         baseline[str(uid)] = {
             "edges": [float(e) for e in edges],
             "expected_props": [float(p) for p in expected_props],
+            "residual_edges": [float(e) for e in res_edges],
+            "residual_expected_props": [float(p) for p in res_props],
             "within_2_patients_pct": within2.get(str(uid), float("nan")),
             "n": int(census.size),
             "mean_census": round(float(np.mean(census)), 2),
         }
-    logger.info("Drift baseline computed for %d units", len(baseline))
+    logger.info("Drift baseline computed for %d units (with STL residual baseline)",
+                len(baseline))
     return baseline
 
 

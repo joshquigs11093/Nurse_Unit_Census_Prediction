@@ -362,7 +362,12 @@ def append_drift_history(all_rows: list[dict], now: datetime) -> None:
     last_real_date = ""
     if HISTORY_PATH.exists():
         with HISTORY_PATH.open(encoding="utf-8") as f:
-            for row in csv.DictReader(f):
+            reader = csv.DictReader(f)
+            # Preserve whatever schema is on disk so richer columns added by the
+            # offline pipeline (e.g. psi_residual, alert_kind) are not dropped.
+            if reader.fieldnames:
+                fieldnames = list(reader.fieldnames)
+            for row in reader:
                 if row.get("source") == "test":
                     last_real_date = max(last_real_date, row.get("as_of", ""))
                 if row.get("as_of") != today:  # replace any prior run from today
@@ -374,6 +379,12 @@ def append_drift_history(all_rows: list[dict], now: datetime) -> None:
         print(f"Real drift data covers {today} (through {last_real_date}); "
               "skipping synthetic append")
         return
+
+    # Pad new live rows so they carry every column in the on-disk schema; the
+    # richer offline-only columns just stay blank for live points.
+    for nr in new_rows:
+        for col in fieldnames:
+            nr.setdefault(col, "")
 
     with HISTORY_PATH.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)

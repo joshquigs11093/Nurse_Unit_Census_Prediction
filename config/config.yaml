@@ -167,11 +167,17 @@ uncertainty:
 
 # Drift monitoring: PSI on the census distribution plus performance drift on
 # the live within-2 accuracy, both against a frozen training baseline.
+# Seasonality-aware signals separate real drift from ordinary seasonal variation:
+# a deseasoned PSI on STL residuals, a persistence gate, and a systemic flag
+# when most units shift at once.
 drift:
   enabled: true
   psi_bins: 10
   performance_tolerance_pct: 5.0   # allowed within-2 drop (pts) before flagging
   recent_window_hours: 168         # live window compared against baseline (7 days)
+  stl_period: 168                  # hours; weekly seasonality on hourly data
+  persistence_threshold: 3         # consecutive major readings before true_drift fires
+  systemic_threshold: 0.5          # fraction of units in major to call the event systemic
 
 random_seed: 42
 

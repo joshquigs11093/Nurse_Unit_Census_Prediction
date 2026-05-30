@@ -333,3 +333,51 @@ class TestDriftMonitoring:
                           "within_2_patients_pct": 90.0}}
         report = generate_drift_report(baseline, {})  # no recent data for unit
         assert report[0]["drift_status"] == "unknown"
+
+
+# ---------- Test 10: Seasonality-aware drift signals (data-free) ----------
+
+class TestSeasonalityAwareDrift:
+    def test_stl_residual_falls_back_when_too_short(self):
+        from src.monitoring.drift import stl_residual_series
+        # Series shorter than 2 periods triggers the fallback (mean-centered).
+        x = np.array([10.0, 12.0, 11.0, 13.0, 9.0], dtype=float)
+        out = stl_residual_series(x, period=168)
+        assert out.shape == x.shape
+        assert abs(out.mean()) < 1e-9
+
+    def test_stl_residual_runs_on_long_series(self):
+        from src.monitoring.drift import stl_residual_series
+        rng = np.random.default_rng(0)
+        t = np.arange(168 * 4)
+        x = 20 + 3 * np.sin(2 * np.pi * t / 24) + rng.normal(0, 1, t.size)
+        out = stl_residual_series(x, period=24)
+        # STL should leave a centered residual roughly the size of the noise.
+        assert out.size == x.size
+        assert abs(out.mean()) < 0.5
+        assert out.std() < x.std()  # residual is tighter than the raw signal
+
+    def test_derive_alert_kind_state_machine(self):
+        from src.monitoring.drift import derive_alert_kind
+        # Not in major -> stable regardless of history.
+        assert derive_alert_kind(False, 0, 0.0) == "stable"
+        assert derive_alert_kind(False, 5, 0.9) == "stable"
+        # In major but not persistent -> transient.
+        assert derive_alert_kind(True, 1, 0.0) == "transient"
+        assert derive_alert_kind(True, 2, 0.9) == "transient"
+        # Persistent and systemic -> systemic.
+        assert derive_alert_kind(True, 3, 0.6) == "systemic"
+        # Persistent and unit-specific -> true_drift.
+        assert derive_alert_kind(True, 3, 0.2) == "true_drift"
+        assert derive_alert_kind(True, 10, 0.0) == "true_drift"
+
+    def test_derive_alert_kind_handles_nan_systemic(self):
+        from src.monitoring.drift import derive_alert_kind
+        assert derive_alert_kind(True, 5, float("nan")) == "true_drift"
+
+    def test_derive_alert_kind_custom_thresholds(self):
+        from src.monitoring.drift import derive_alert_kind
+        # With persistence=2 the second consecutive reading already trips.
+        assert derive_alert_kind(True, 2, 0.1, persistence_threshold=2) == "true_drift"
+        # Custom systemic threshold of 0.3 turns a moderate-coincidence event systemic.
+        assert derive_alert_kind(True, 3, 0.35, systemic_threshold=0.3) == "systemic"

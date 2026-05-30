@@ -1,11 +1,11 @@
-unit_id,psi,drift_status,perf_delta_pct,perf_degraded,unit_name
-705089,1.0611,major,4.65,False,Medical-Surgical 3 North
-705090,2.8574,major,6.11,False,Telemetry 4 East
-705091,0.0468,stable,0.75,False,Cardiac Stepdown
-705092,0.0467,stable,-0.39,False,Oncology 5 South
-21334825,0.1865,moderate,-1.77,False,Surgical 2 West
-21336305,0.0164,stable,-2.73,False,Orthopedic 6 North
-60732673,0.0,stable,,False,Observation Unit
-97635816,0.0919,stable,-3.71,False,Progressive Care
-1775257343,0.0245,stable,-3.67,False,Neuro Stepdown
-4452986337,0.1727,moderate,2.07,False,Medical-Surgical 4 South
+unit_id,unit_name,psi,psi_residual,drift_status,consecutive_major,systemic_fraction,alert_kind,perf_delta_pct,perf_degraded
+60732673,Observation Unit,0.0,0.0,stable,0,0.2,stable,,False
+705089,Medical-Surgical 3 North,0.1067,0.2162,moderate,0,0.556,stable,4.65,False
+705090,Telemetry 4 East,2.8119,0.2374,major,0,0.556,stable,6.11,False
+705091,Cardiac Stepdown,0.099,0.1831,stable,0,0.556,stable,0.75,False
+705092,Oncology 5 South,0.1971,0.3318,moderate,1,0.556,transient,-0.39,False
+21334825,Surgical 2 West,0.0009,0.3335,stable,1,0.556,transient,-1.77,False
+21336305,Orthopedic 6 North,0.0671,0.4772,stable,1,0.556,transient,-2.73,False
+97635816,Progressive Care,0.0329,2.4265,stable,33,0.556,systemic,-3.71,False
+1775257343,Neuro Stepdown,0.1876,0.157,moderate,0,0.556,stable,-3.67,False
+4452986337,Medical-Surgical 4 South,0.217,0.3132,moderate,2,0.556,transient,2.07,False

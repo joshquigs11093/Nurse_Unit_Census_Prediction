@@ -93,6 +93,49 @@ def drift_status(psi: float) -> str:
     return "major"
 
 
+def stl_residual_series(values: np.ndarray, period: int) -> np.ndarray:
+    """Residual component from STL decomposition; the deseasoned signal used to
+    separate genuine drift from ordinary seasonal variation.
+
+    Falls back to mean-centered values when the series is too short for STL
+    (it needs at least two full periods) or when statsmodels is unavailable,
+    so the caller never has to special-case missing dependencies.
+    """
+    arr = np.asarray(values, dtype=float)
+    arr = arr[~np.isnan(arr)]
+    if arr.size < 2 * period:
+        return arr - np.mean(arr) if arr.size else arr
+    try:
+        from statsmodels.tsa.seasonal import STL
+        return np.asarray(STL(arr, period=period, robust=True).fit().resid, dtype=float)
+    except Exception as exc:
+        logger.warning("STL decomposition failed (%s); falling back to mean-centered", exc)
+        return arr - np.mean(arr)
+
+
+def derive_alert_kind(in_major: bool,
+                      consecutive_major: int,
+                      systemic_fraction: float,
+                      persistence_threshold: int = 3,
+                      systemic_threshold: float = 0.5) -> str:
+    """Classify a per-unit drift reading into a human-actionable label.
+
+    - stable: not in major.
+    - transient: in major now but not yet persistent (could be a one-off spike).
+    - systemic: persistent major AND most other units are also in major
+      (likely seasonal or external event).
+    - true_drift: persistent major while other units are stable
+      (unit-specific, retrain candidate).
+    """
+    if not in_major:
+        return "stable"
+    if consecutive_major < persistence_threshold:
+        return "transient"
+    if not np.isnan(systemic_fraction) and systemic_fraction >= systemic_threshold:
+        return "systemic"
+    return "true_drift"
+
+
 def performance_drift(
     recent_within2: float,
     baseline_within2: float,
