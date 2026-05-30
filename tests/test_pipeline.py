@@ -381,3 +381,38 @@ class TestSeasonalityAwareDrift:
         assert derive_alert_kind(True, 2, 0.1, persistence_threshold=2) == "true_drift"
         # Custom systemic threshold of 0.3 turns a moderate-coincidence event systemic.
         assert derive_alert_kind(True, 3, 0.35, systemic_threshold=0.3) == "systemic"
+
+
+# ---------- Test 11: Feature-importance explainability (data-free) ----------
+
+class TestExplainability:
+    class _StubModel:
+        def __init__(self, importances):
+            self.feature_importances_ = np.asarray(importances, dtype=float)
+
+    def test_extract_orders_descending_with_ranks(self):
+        from src.evaluation.explainability import extract_feature_importance
+        m = self._StubModel([0.1, 0.5, 0.3, 0.05])
+        out = extract_feature_importance(m, ["a", "b", "c", "d"])
+        assert [r["feature"] for r in out] == ["b", "c", "a", "d"]
+        assert [r["rank"] for r in out] == [1, 2, 3, 4]
+        assert out[0]["importance"] == 0.5
+
+    def test_extract_falls_back_on_name_length_mismatch(self):
+        from src.evaluation.explainability import extract_feature_importance
+        m = self._StubModel([0.7, 0.3])
+        # Mismatched names length triggers positional fallback rather than crashing.
+        out = extract_feature_importance(m, ["only_one_name"])
+        assert [r["feature"] for r in out] == ["feature_0", "feature_1"]
+
+    def test_extract_empty_when_model_lacks_importances(self):
+        from src.evaluation.explainability import extract_feature_importance
+        class Bare:
+            pass
+        assert extract_feature_importance(Bare(), ["a", "b"]) == []
+
+    def test_extract_single_feature(self):
+        from src.evaluation.explainability import extract_feature_importance
+        m = self._StubModel([0.9])
+        out = extract_feature_importance(m, ["only"])
+        assert len(out) == 1 and out[0]["rank"] == 1 and out[0]["feature"] == "only"

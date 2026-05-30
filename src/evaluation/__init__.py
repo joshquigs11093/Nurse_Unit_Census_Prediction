@@ -14,3 +14,7 @@ from .intervals import (
     empirical_coverage,
     mean_interval_width,
 )
+from .explainability import (
+    extract_feature_importance,
+    compute_feature_importance_table,
+)

@@ -52,6 +52,7 @@ const data = {
   exec: readCSV("executive_summary.csv"),
   driftReport: safeReadCSV("drift_report.csv"),
   driftHistory: safeReadCSV("drift_history.csv"),
+  featureImportance: safeReadCSV("feature_importance.csv"),
 };
 
 // ── Shared CSS ──
@@ -445,6 +446,7 @@ function navBar(active) {
     ${link("tests", "tests.html", "Tests")}
     ${link("dashboards", "dashboards.html", "Dashboards")}
     ${link("monitoring", "monitoring.html", "Monitoring")}
+    ${link("explainability", "explainability.html", "Explainability")}
     <a href="${REPO_URL}" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>`;
@@ -1169,6 +1171,13 @@ ${navBar("home")}
           <p>Per-unit Population Stability Index tracked against a frozen training baseline, the latest drift snapshot, and 90% prediction-interval bands by horizon.</p>
         </div>
       </a>
+      <a class="gallery-card" href="explainability.html">
+        <div class="meta">
+          <h3>Explainability</h3>
+          <div class="audience">Feature importance · per unit · per horizon</div>
+          <p>Which features the deployed Random Forest and LightGBM models rely on for each unit and forecast horizon, ranked by importance.</p>
+        </div>
+      </a>
       <a class="gallery-card" href="${REPO_URL}" target="_blank" rel="noopener">
         <div class="meta">
           <h3>Source code</h3>
@@ -1757,6 +1766,17 @@ const TEST_CATALOG = [
       { name: "test_derive_alert_kind_custom_thresholds",     blurb: "Persistence and systemic thresholds are configurable; the function honors overrides." },
     ],
   },
+  {
+    name: "TestExplainability",
+    requiresData: false,
+    blurb: "Verifies the feature-importance extraction: ranking is correct, the function tolerates name/length mismatches without crashing, and degrades gracefully on models that do not expose feature_importances_.",
+    tests: [
+      { name: "test_extract_orders_descending_with_ranks",      blurb: "Features come back sorted by importance descending, with ranks 1..N attached." },
+      { name: "test_extract_falls_back_on_name_length_mismatch", blurb: "When feature_names length does not match the importance vector, positional names (<code>feature_0</code>, ...) are used instead of mismatched labels." },
+      { name: "test_extract_empty_when_model_lacks_importances", blurb: "A model without a <code>feature_importances_</code> attribute returns an empty list rather than raising." },
+      { name: "test_extract_single_feature",                    blurb: "Single-feature models are handled correctly (rank = 1, no edge-case crashes)." },
+    ],
+  },
 ];
 
 function loadTestResults() {
@@ -2189,6 +2209,138 @@ ${emptyNote}
 </html>`;
 }
 
+// ── Explainability page: per-(unit, horizon) feature importance ──
+function buildExplainability() {
+  const fi = data.featureImportance || [];
+
+  // Filter to top-15 per (unit, horizon) so the inlined payload stays small.
+  const byUnitHorizon = {};
+  fi.forEach(r => {
+    if (Number(r.rank) > 15) return;
+    const u = r.unit_name || ("Unit " + r.unit_id);
+    const h = Number(r.horizon);
+    byUnitHorizon[u] = byUnitHorizon[u] || {};
+    byUnitHorizon[u][h] = byUnitHorizon[u][h] || [];
+    byUnitHorizon[u][h].push({
+      feature: r.feature,
+      importance: Number(r.importance),
+      rank: Number(r.rank),
+    });
+  });
+  Object.values(byUnitHorizon).forEach(byH => {
+    Object.values(byH).forEach(arr => arr.sort((a, b) => a.rank - b.rank));
+  });
+
+  const units = Object.keys(byUnitHorizon).sort();
+  const horizonSet = new Set();
+  fi.forEach(r => horizonSet.add(Number(r.horizon)));
+  const horizons = [...horizonSet].sort((a, b) => a - b);
+  const defaultUnit = units[0] || null;
+  const defaultHorizon = horizons[0] || null;
+  const hasData = !!defaultUnit;
+
+  const unitOptions = units.map(u =>
+    '<option value="' + u.replace(/"/g, "&quot;") + '">' + u + '</option>').join("");
+  const horizonOptions = horizons.map(h =>
+    '<option value="' + h + '">' + h + 'h</option>').join("");
+
+  const emptyNote = hasData ? "" : `
+    <div class="section" style="text-align:center;color:var(--muted);">
+      Feature-importance data not found. Run
+      <code>python run_pipeline.py --phase calibrate</code>
+      to generate feature_importance.csv.
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Explainability — Nurse Census Prediction</title>
+  <meta name="description" content="Per-unit, per-horizon feature-importance view for the deployed Random Forest and LightGBM census forecasters.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+${navBar("explainability")}
+<div class="page-body">
+  <section class="hero">
+    <h1>Forecast Explainability</h1>
+    <p class="tagline">
+      Per-unit, per-horizon view of which input features the deployed model
+      actually relies on. The bars rank the top-15 features by importance
+      (impurity decrease for Random Forest at the 1-hour horizon, split count
+      for LightGBM at the longer horizons), so a clinician or auditor can see
+      what drives a given forecast.
+    </p>
+  </section>
+${emptyNote}
+  <section class="section">
+    <div class="section-title">Top features by importance</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Feature importance describes what the model uses, not whether the model
+      is right; pair it with the drift monitor and prediction intervals to read
+      the full picture. Pick a unit and horizon to see the drivers.
+    </p>
+    <div style="margin:0 0 12px;">
+      <label for="unit-select" style="font-size:13px;color:var(--muted);margin-right:8px;">Unit</label>
+      <select id="unit-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:220px;">${unitOptions}</select>
+      <label for="horizon-select" style="font-size:13px;color:var(--muted);margin:0 8px 0 16px;">Horizon</label>
+      <select id="horizon-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:80px;">${horizonOptions}</select>
+    </div>
+    <div id="fi-chart" style="height: 460px;"></div>
+  </section>
+
+  <div class="footer-note">
+    Data: feature_importance.csv (deployed Random Forest at 1h, LightGBM at 2-72h)
+  </div>
+
+  <script>
+    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
+    const byUnitHorizon = ${JSON.stringify(byUnitHorizon)};
+    const defaultUnit = ${JSON.stringify(defaultUnit)};
+    const defaultHorizon = ${JSON.stringify(defaultHorizon)};
+
+    function render(name, horizon) {
+      const chart = document.getElementById("fi-chart");
+      const entry = (byUnitHorizon[name] || {})[horizon] || [];
+      if (!entry.length) {
+        chart.innerHTML = '<p style="color:#999;text-align:center;padding-top:60px;">No importance data for this unit/horizon.</p>';
+        return;
+      }
+      // Reverse so the highest-ranked bar sits at the top.
+      const features = entry.map(d => d.feature).reverse();
+      const importances = entry.map(d => d.importance).reverse();
+      const layout = JSON.parse(JSON.stringify(layoutBase));
+      layout.margin = { t: 20, r: 30, b: 50, l: 200 };
+      layout.xaxis = { ...layout.xaxis, title: { text: "Importance", font: { size: 11 } } };
+      layout.yaxis = { ...layout.yaxis, type: "category", automargin: true };
+      layout.showlegend = false;
+      Plotly.react(chart, [{
+        x: importances, y: features, type: "bar", orientation: "h",
+        marker: { color: "#1F4E79" },
+        hovertemplate: "%{y}: %{x:.4f}<extra></extra>"
+      }], layout, { displayModeBar: false })
+        .then(() => { window.RENDERED = true; });
+    }
+
+    if (defaultUnit && defaultHorizon !== null) {
+      render(defaultUnit, defaultHorizon);
+    }
+    const unitSelect = document.getElementById("unit-select");
+    const horizonSelect = document.getElementById("horizon-select");
+    function onChange() {
+      if (unitSelect && horizonSelect) {
+        render(unitSelect.value, parseInt(horizonSelect.value, 10));
+      }
+    }
+    if (unitSelect) unitSelect.addEventListener("change", onChange);
+    if (horizonSelect) horizonSelect.addEventListener("change", onChange);
+  </script>
+</div>
+</body>
+</html>`;
+}
+
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
@@ -2196,6 +2348,7 @@ fs.writeFileSync(path.join(OUT_HTML_DIR, "methodology.html"), buildMethodology()
 fs.writeFileSync(path.join(OUT_HTML_DIR, "tests.html"), buildTests());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGallery());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "monitoring.html"), buildMonitoring());
+fs.writeFileSync(path.join(OUT_HTML_DIR, "explainability.html"), buildExplainability());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboardEmbed(TABLEAU_VIZZES[1]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));

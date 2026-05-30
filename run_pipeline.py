@@ -27,6 +27,7 @@ from src.utils import load_config, setup_logging, set_random_seeds
 from src.data import load_raw_data, validate_data, clean_data, split_data, save_processed_data
 from src.features import add_cyclical_features, filter_unit, get_feature_columns
 from src.models import ModelRegistry
+from src.evaluation.explainability import compute_feature_importance_table
 from src.monitoring.calibrate import (
     compute_drift_baseline,
     compute_prediction_intervals,
@@ -94,6 +95,16 @@ def phase_calibrate(
         n_bins = config.get("drift", {}).get("psi_bins", 10)
         baseline = compute_drift_baseline(train, config, n_bins=n_bins)
         save_drift_baseline(baseline, config)
+
+    # Feature-importance export: which features drive each unit's forecast.
+    fi = compute_feature_importance_table(config)
+    if not fi.empty:
+        out_dir = Path(config["output"]["tableau_dir"])
+        out_dir.mkdir(parents=True, exist_ok=True)
+        fi_path = out_dir / "feature_importance.csv"
+        fi.to_csv(fi_path, index=False)
+        logger.info("Exported feature_importance.csv (%d rows, %d units, %d horizons)",
+                    len(fi), fi["unit_id"].nunique(), fi["horizon"].nunique())
 
 
 def _model_path_for_horizon(models_dir: Path, uid, h: int) -> tuple[str, Path]:
