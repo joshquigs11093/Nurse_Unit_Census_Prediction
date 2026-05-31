@@ -454,88 +454,6 @@ function navBar(active) {
 </nav>`;
 }
 
-// ── Tableau Public embeds (user-authored workbooks) ──
-const TABLEAU_VIZZES = {
-  1: {
-    vizId: "viz_op_forecast",
-    path: "shared/BZ79XYMTJ",
-    title: "Operational Census Forecast",
-    subtitle: "House Supervisor View",
-  },
-  2: {
-    vizId: "viz_model_perf",
-    path: "shared/DWG6QTPDZ",
-    title: "Model Performance Analytics",
-    subtitle: "Process Improvement View",
-  },
-  3: {
-    vizId: "viz_exec_summary",
-    path: "shared/M8QMRYP65",
-    title: "Executive Census Summary",
-    subtitle: "Leadership View",
-  },
-};
-
-// Tableau Public auto-generates thumbnail images for every published workbook.
-// They update whenever you re-publish, so they always reflect the current viz.
-function tableauThumbnail(viz) {
-  const code = viz.path.split("/").pop();
-  const prefix = code.slice(0, 2);
-  return `https://public.tableau.com/static/images/${prefix}/${code}/1.png`;
-}
-
-function tableauEmbed(viz) {
-  const code = viz.path.split("/").pop();
-  const prefix = code.slice(0, 2);
-  const publicUrl = `https://public.tableau.com/views/${code}/Dashboard1`;
-  const fallbackUrl = `https://public.tableau.com/${viz.path}`;
-  const staticImg = `https://public.tableau.com/static/images/${prefix}/${code}/1.png`;
-  const rssImg = `https://public.tableau.com/static/images/${prefix}/${code}/1_rss.png`;
-  return `
-<div class="tableau-frame">
-  <div class="tableauPlaceholder" id="${viz.vizId}" style="position: relative; min-height: 950px;">
-    <noscript>
-      <a href="${fallbackUrl}" target="_blank" rel="noopener">
-        <img alt="${viz.title}" src="${rssImg}" style="border: none; max-width: 100%;" />
-      </a>
-    </noscript>
-    <object class="tableauViz" style="display: none;">
-      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
-      <param name="embed_code_version" value="3" />
-      <param name="path" value="${viz.path}" />
-      <param name="toolbar" value="yes" />
-      <param name="static_image" value="${staticImg}" />
-      <param name="animate_transition" value="yes" />
-      <param name="display_static_image" value="yes" />
-      <param name="display_spinner" value="yes" />
-      <param name="display_overlay" value="yes" />
-      <param name="display_count" value="yes" />
-      <param name="language" value="en-US" />
-      <param name="filter" value="publish=yes" />
-    </object>
-  </div>
-  <script type="text/javascript">
-    (function() {
-      var divElement = document.getElementById("${viz.vizId}");
-      var vizElement = divElement.getElementsByTagName("object")[0];
-      // The published workbook is authored at a fixed 1400 × 950 size in
-      // Tableau Desktop, so always render the embed at exactly that size.
-      // The outer .tableau-frame allows horizontal scroll on viewports
-      // narrower than ~1450px instead of producing internal scrollbars.
-      vizElement.style.width = "1400px";
-      vizElement.style.height = "950px";
-      var scriptElement = document.createElement("script");
-      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
-      vizElement.parentNode.insertBefore(scriptElement, vizElement);
-    })();
-  </script>
-  <p class="tableau-caption">
-    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
-    <a href="${fallbackUrl}" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
-  </p>
-</div>`;
-}
-
 // ── Tableau-like Plotly layout defaults ──
 // hovermode defaults to "closest" so any chart that does not override it
 // still shows its hovertemplate; pages that want a unified-by-x tooltip
@@ -550,486 +468,6 @@ const PLOTLY_LAYOUT_BASE = {
   yaxis: { gridcolor: "#EEEEEE", linecolor: "#CCCCCC", tickfont: { size: 11 } },
 };
 const TABLEAU_PALETTE = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948"];
-
-// ── Tableau-embed dashboard page (replaces the Plotly inline versions) ──
-function buildDashboardEmbed(viz) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>${viz.title} — Nurse Census Prediction</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-${navBar("dashboards")}
-<div class="page-body wide">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>${viz.title}</h1>
-        <div class="subtitle">${viz.subtitle}</div>
-      </div>
-      <div class="meta">
-        <div>Live Tableau Public</div>
-        <div>Daily refresh from GitHub Actions cron</div>
-      </div>
-    </div>
-    <div class="dashboard-body">
-      ${tableauEmbed(viz)}
-    </div>
-  </div>
-</div>
-</body>
-</html>`;
-}
-
-// ── Dashboard 1: Operational Census Forecast (legacy Plotly version, unused) ──
-function buildDashboard1() {
-  // Pick the most-loaded unit so the dashboard tells a story (alert state)
-  // From earlier: 705089 sits at 94% utilization → ideal.
-  const focusUnit = 705089;
-  const meta = data.unitMeta.find(r => r.unit_id === focusUnit);
-  const exec = data.exec.find(r => r.unit_id === focusUnit);
-
-  // Time series: last 168h (7 days) of actual + forecast extension at the end
-  const rowsAll = data.forecast.filter(r => r.unit_id === focusUnit);
-  const last168 = rowsAll.slice(-168);
-  const last = last168[last168.length - 1];
-  const horizons = [1, 2, 3, 4, 12, 24, 48, 72];
-  const lastTs = new Date(last.timestamp);
-
-  const actualX = last168.map(r => r.timestamp);
-  const actualY = last168.map(r => r.actual_census);
-  const fcX = horizons.map(h => new Date(lastTs.getTime() + h * 3600 * 1000).toISOString().replace("T", " ").slice(0, 16));
-  const fcY = horizons.map(h => last[`pred_${h}hr`]);
-  // Connect forecast to last actual
-  const fcXFull = [last.timestamp, ...fcX];
-  const fcYFull = [last.actual_census, ...fcY];
-
-  // KPI cards: current census + capacity + utilization + 8 forecast cards
-  const utilization = exec.utilization_pct;
-  const utilCls = utilization >= 90 ? "alert" : utilization >= 75 ? "warn" : "good";
-
-  const forecastCards = horizons.map(h => {
-    const v = last[`pred_${h}hr`];
-    const over = last[`over_capacity_${h}hr`] === 1;
-    return `
-      <div class="kpi-card ${over ? "alert" : ""}">
-        <div class="label">${h}h Forecast</div>
-        <div class="value">${v != null ? v.toFixed(1) : "—"}</div>
-        <div class="sublabel">${over ? "OVER CAPACITY" : "patients"}</div>
-      </div>`;
-  }).join("");
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Operational Census Forecast — Nurse Census Prediction</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-</head>
-<body>
-${navBar("dashboards")}
-<div class="page-body">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Operational Census Forecast</h1>
-        <div class="subtitle">House Supervisor View</div>
-      </div>
-      <div class="meta">
-        <div><strong>${last.unit_name || "Unit " + focusUnit}</strong> (${focusUnit})</div>
-        <div>As of ${last.timestamp}</div>
-      </div>
-    </div>
-    <div class="dashboard-body">
-      <div class="section-title">Current Status</div>
-      <div class="kpi-row" style="grid-template-columns: 1fr 1fr 2fr;">
-        <div class="kpi-card">
-          <div class="label">Current Census</div>
-          <div class="value">${last.actual_census}</div>
-          <div class="sublabel">patients</div>
-        </div>
-        <div class="kpi-card">
-          <div class="label">Bed Capacity</div>
-          <div class="value">${meta.capacity}</div>
-          <div class="sublabel">max observed</div>
-        </div>
-        <div class="kpi-card ${utilCls}">
-          <div class="label">Utilization</div>
-          <div class="value">${utilization.toFixed(1)}%</div>
-          <div class="gauge" style="margin-top: 8px;">
-            <div class="fill ${utilCls}" style="width: ${Math.min(utilization, 100)}%"></div>
-            <div class="gauge-label">${utilization.toFixed(0)}%</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-title">Forecast Cards (Multi-Horizon)</div>
-      <div class="kpi-row tight">${forecastCards}</div>
-
-      <div class="section-title">Census Trend — Last 7 Days + 72h Forecast</div>
-      <div id="ts-chart" style="height: 320px;"></div>
-    </div>
-    <div class="footer-note">
-      Data: forecast_predictions.csv, unit_metadata.csv · Forecasts via best tabular model per horizon (RF for 1h, LightGBM for 2-72h)
-    </div>
-  </div>
-
-  <script>
-    const actualX = ${JSON.stringify(actualX)};
-    const actualY = ${JSON.stringify(actualY)};
-    const fcX = ${JSON.stringify(fcXFull)};
-    const fcY = ${JSON.stringify(fcYFull)};
-    const capacity = ${meta.capacity};
-    const layout = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
-    layout.shapes = [{
-      type: "line", xref: "paper", x0: 0, x1: 1,
-      yref: "y", y0: capacity, y1: capacity,
-      line: { color: "#E15759", width: 1.5, dash: "dash" }
-    }];
-    layout.annotations = [{
-      xref: "paper", x: 1, yref: "y", y: capacity, xanchor: "right", yanchor: "bottom",
-      text: "Capacity " + capacity, showarrow: false,
-      font: { color: "#E15759", size: 11 }
-    }];
-    layout.yaxis.title = { text: "Census", font: { size: 11 } };
-    layout.xaxis.title = { text: "Time", font: { size: 11 } };
-    layout.legend = { orientation: "h", y: 1.12, x: 0 };
-
-    Plotly.newPlot("ts-chart", [
-      {
-        x: actualX, y: actualY, name: "Actual census",
-        type: "scatter", mode: "lines",
-        line: { color: "#1F4E79", width: 2 }
-      },
-      {
-        x: fcX, y: fcY, name: "Forecast",
-        type: "scatter", mode: "lines+markers",
-        line: { color: "#F28E2B", width: 2, dash: "dot" },
-        marker: { size: 7, color: "#F28E2B" }
-      }
-    ], layout, { displayModeBar: false, responsive: true })
-    .then(() => { window.RENDERED = true; });
-  </script>
-</div>
-</body>
-</html>`;
-  return html;
-}
-
-// ── Dashboard 2: Model Performance Analytics ──
-function buildDashboard2() {
-  const horizons = [1, 2, 3, 4, 12, 24, 48, 72];
-  const models = ["RandomForest", "LightGBM", "LSTM", "Ensemble", "Prophet", "ARIMA"];
-  const matrix = models.map(m =>
-    horizons.map(h => {
-      const row = data.perfAgg.find(r => r.model === m && r.horizon === h);
-      return row ? row.within_2_patients_pct : null;
-    })
-  );
-
-  // Best model per horizon (already in best_model_per_horizon.csv)
-  const bestRows = data.best;
-
-  // KPI cards: best at 1h, 4h, 24h, 72h
-  const featuredHorizons = [1, 4, 24, 72];
-  const kpiCards = featuredHorizons.map(h => {
-    const row = bestRows.find(r => r.horizon === h);
-    return `
-      <div class="kpi-card good">
-        <div class="label">${h}h Best Model</div>
-        <div class="value">${row.within_2_patients_pct.toFixed(1)}%</div>
-        <div class="sublabel">${row.model} · MAE ${row.mae.toFixed(2)}</div>
-      </div>`;
-  }).join("");
-
-  // Per-unit breakdown for 24h horizon (representative mid-horizon)
-  const focusH = 24;
-  const perfByUnit = readCSV("model_performance.csv");
-  const perUnit = data.unitMeta.map(u => {
-    const allModels = ["RandomForest", "LightGBM", "LSTM"];
-    return {
-      unit_id: u.unit_id,
-      unit_name: u.unit_name || `Unit ${u.unit_id}`,
-      ...Object.fromEntries(allModels.map(m => {
-        const r = perfByUnit.find(
-          r => r.unit_id === u.unit_id && r.model === m && r.horizon === focusH);
-        return [m, r ? r.within_2_patients_pct : null];
-      })),
-    };
-  });
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Model Performance Analytics — Nurse Census Prediction</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-</head>
-<body>
-${navBar("dashboards")}
-<div class="page-body">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Model Performance Analytics</h1>
-        <div class="subtitle">Process Improvement View</div>
-      </div>
-      <div class="meta">
-        <div>Validation set · ${data.unitMeta.length} units · 8 horizons</div>
-        <div>Primary metric: ±2 patient accuracy</div>
-      </div>
-    </div>
-    <div class="dashboard-body">
-      <div class="section-title">Best Model Per Horizon (Highlights)</div>
-      <div class="kpi-row">${kpiCards}</div>
-
-      <div class="section-title">Accuracy Heatmap — Models × Forecast Horizons</div>
-      <div id="heatmap" style="height: 280px;"></div>
-
-      <div class="section-title">Per-Unit Accuracy Breakdown — 24h Horizon</div>
-      <div id="bar-units" style="height: 260px;"></div>
-    </div>
-    <div class="footer-note">
-      Data: model_performance.csv · model_performance_aggregated.csv · best_model_per_horizon.csv
-    </div>
-  </div>
-
-  <script>
-    const horizons = ${JSON.stringify(horizons)};
-    const models = ${JSON.stringify(models)};
-    const matrix = ${JSON.stringify(matrix)};
-    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
-
-    // Heatmap
-    const heatLayout = JSON.parse(JSON.stringify(layoutBase));
-    heatLayout.margin = { t: 20, r: 20, b: 40, l: 140 };
-    heatLayout.xaxis = { ...heatLayout.xaxis, type: "category",
-                         title: { text: "Forecast horizon (hours)", font: { size: 11 } },
-                         tickmode: "array",
-                         tickvals: horizons.map(h => h + "h"),
-                         ticktext: horizons.map(h => h + "h") };
-    heatLayout.yaxis = { ...heatLayout.yaxis, automargin: true, type: "category" };
-
-    Plotly.newPlot("heatmap", [{
-      type: "heatmap",
-      x: horizons.map(h => h + "h"),
-      y: models,
-      z: matrix,
-      colorscale: [
-        [0,    "#FBE4E2"],
-        [0.5,  "#F4D03F"],
-        [0.85, "#76B7B2"],
-        [1,    "#1F4E79"]
-      ],
-      zmin: 50, zmax: 100,
-      colorbar: { title: { text: "± 2 acc %", font: { size: 11 } }, thickness: 12, len: 0.8 },
-      text: matrix.map(row => row.map(v => v !== null ? v.toFixed(1) + "%" : "")),
-      texttemplate: "%{text}",
-      textfont: { size: 11, color: "white" },
-      hoverinfo: "skip"
-    }], heatLayout, { displayModeBar: false });
-
-    // Per-unit bar chart for 24h horizon
-    const perUnit = ${JSON.stringify(perUnit)};
-    const unitLabels = perUnit.map(p => p.unit_name);
-    const traceRF = { x: unitLabels, y: perUnit.map(p => p.RandomForest), name: "RandomForest",
-                     type: "bar", marker: { color: "#4E79A7" } };
-    const traceLGBM = { x: unitLabels, y: perUnit.map(p => p.LightGBM), name: "LightGBM",
-                        type: "bar", marker: { color: "#F28E2B" } };
-    const traceLSTM = { x: unitLabels, y: perUnit.map(p => p.LSTM), name: "LSTM",
-                        type: "bar", marker: { color: "#59A14F" } };
-
-    const barLayout = JSON.parse(JSON.stringify(layoutBase));
-    barLayout.barmode = "group";
-    barLayout.xaxis = { ...barLayout.xaxis, type: "category",
-                        title: { text: "Nurse unit", font: { size: 11 } } };
-    barLayout.yaxis.title = { text: "± 2 patient accuracy (%)", font: { size: 11 } };
-    barLayout.yaxis.range = [0, 100];
-    barLayout.legend = { orientation: "h", y: 1.12, x: 0 };
-
-    Plotly.newPlot("bar-units", [traceRF, traceLGBM, traceLSTM], barLayout, { displayModeBar: false })
-      .then(() => { window.RENDERED = true; });
-  </script>
-</div>
-</body>
-</html>`;
-  return html;
-}
-
-// ── Dashboard 3: Executive Summary ──
-function buildDashboard3() {
-  const exec = [...data.exec].sort((a, b) => b.utilization_pct - a.utilization_pct);
-  const totalCensus = data.exec.reduce((s, r) => s + r.latest_census, 0);
-  const totalCapacity = data.exec.reduce((s, r) => s + r.capacity, 0);
-  const avgUtil = data.exec.reduce((s, r) => s + r.utilization_pct, 0) / data.exec.length;
-  const alertCount = data.exec.filter(r =>
-    r.alert_over_90pct === "True" || r.alert_over_90pct === true).length;
-
-  const totalUtilCls = avgUtil >= 90 ? "alert" : avgUtil >= 75 ? "warn" : "good";
-  const alertCls = alertCount > 0 ? "alert" : "good";
-
-  const tableRows = exec.map(r => {
-    const isAlert = r.alert_over_90pct === "True" || r.alert_over_90pct === true;
-    const utilCls = r.utilization_pct >= 90 ? "alert" : r.utilization_pct >= 75 ? "warn" : "good";
-    const fc72 = r.forecast_72hr != null ? r.forecast_72hr.toFixed(1) : "—";
-    const displayName = r.unit_name || `Unit ${r.unit_id}`;
-    return `
-      <tr class="${isAlert ? "alert" : ""}">
-        <td><strong>${displayName}</strong><div style="font-size:10px;color:#999;">${r.unit_id}</div></td>
-        <td class="num">${r.latest_census}</td>
-        <td class="num">${r.capacity}</td>
-        <td class="num">${fc72}</td>
-        <td>
-          <div class="gauge" style="height: 22px;">
-            <div class="fill ${utilCls}" style="width: ${Math.min(r.utilization_pct, 100)}%"></div>
-            <div class="gauge-label">${r.utilization_pct.toFixed(0)}%</div>
-          </div>
-        </td>
-        <td>${isAlert ? '<span class="badge red">>90%</span>' : '<span class="badge green">OK</span>'}</td>
-      </tr>`;
-  }).join("");
-
-  const bestModelRows = data.best.map(r => `
-    <tr>
-      <td><strong>${r.horizon}h</strong></td>
-      <td>${r.model}</td>
-      <td class="num">${r.within_2_patients_pct.toFixed(1)}%</td>
-    </tr>`).join("");
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Executive Census Summary — Nurse Census Prediction</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-</head>
-<body>
-${navBar("dashboards")}
-<div class="page-body">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Executive Census Summary</h1>
-        <div class="subtitle">Leadership View</div>
-      </div>
-      <div class="meta">
-        <div>${data.exec.length} active nurse units</div>
-        <div>Census prediction · 1–72h horizons</div>
-      </div>
-    </div>
-    <div class="dashboard-body">
-      <div class="section-title">House-Wide KPIs</div>
-      <div class="kpi-row">
-        <div class="kpi-card">
-          <div class="label">Total Current Census</div>
-          <div class="value">${totalCensus}</div>
-          <div class="sublabel">across ${data.exec.length} units</div>
-        </div>
-        <div class="kpi-card">
-          <div class="label">Total Bed Capacity</div>
-          <div class="value">${totalCapacity}</div>
-          <div class="sublabel">max observed historical</div>
-        </div>
-        <div class="kpi-card ${totalUtilCls}">
-          <div class="label">Average Utilization</div>
-          <div class="value">${avgUtil.toFixed(1)}%</div>
-          <div class="sublabel">across all units</div>
-        </div>
-        <div class="kpi-card ${alertCls}">
-          <div class="label">Units Over 90%</div>
-          <div class="value">${alertCount}</div>
-          <div class="sublabel">capacity alerts</div>
-        </div>
-      </div>
-
-      <div class="split-row">
-        <div>
-          <div class="section-title">Utilization by Unit (Sorted)</div>
-          <div id="util-bar" style="height: 360px;"></div>
-        </div>
-        <div>
-          <div class="section-title">Best Model Recommendations</div>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Horizon</th>
-                <th>Model</th>
-                <th style="text-align:right;">±2 Acc</th>
-              </tr>
-            </thead>
-            <tbody>${bestModelRows}</tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="section-title" style="margin-top: 18px;">Per-Unit Detail</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Unit</th>
-            <th style="text-align:right;">Current</th>
-            <th style="text-align:right;">Capacity</th>
-            <th style="text-align:right;">72h Forecast</th>
-            <th>Utilization</th>
-            <th>Alert</th>
-          </tr>
-        </thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    </div>
-    <div class="footer-note">
-      Data: executive_summary.csv · unit_metadata.csv · best_model_per_horizon.csv
-    </div>
-  </div>
-
-  <script>
-    const exec = ${JSON.stringify(exec)};
-    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
-    const utilLayout = JSON.parse(JSON.stringify(layoutBase));
-    utilLayout.margin = { t: 20, r: 20, b: 70, l: 50 };
-    utilLayout.xaxis = { ...utilLayout.xaxis, type: "category",
-                         title: { text: "Nurse unit", font: { size: 11 } } };
-    utilLayout.yaxis.title = { text: "Utilization (%)", font: { size: 11 } };
-    utilLayout.yaxis.range = [0, 110];
-    utilLayout.shapes = [{
-      type: "line", xref: "paper", x0: 0, x1: 1,
-      yref: "y", y0: 90, y1: 90,
-      line: { color: "#E15759", width: 1.5, dash: "dash" }
-    }];
-    utilLayout.annotations = [{
-      xref: "paper", x: 1, yref: "y", y: 90, xanchor: "right", yanchor: "bottom",
-      text: "Alert threshold 90%", showarrow: false,
-      font: { color: "#E15759", size: 11 }
-    }];
-
-    const colors = exec.map(r => {
-      if (r.utilization_pct >= 90) return "#E15759";
-      if (r.utilization_pct >= 75) return "#F28E2B";
-      return "#4E79A7";
-    });
-
-    Plotly.newPlot("util-bar", [{
-      x: exec.map(r => r.unit_name || ("Unit " + r.unit_id)),
-      y: exec.map(r => r.utilization_pct),
-      type: "bar",
-      marker: { color: colors },
-      text: exec.map(r => r.utilization_pct.toFixed(0) + "%"),
-      textposition: "outside",
-      textfont: { size: 11 },
-      hoverinfo: "skip"
-    }], utilLayout, { displayModeBar: false })
-    .then(() => { window.RENDERED = true; });
-  </script>
-</div>
-</body>
-</html>`;
-  return html;
-}
 
 // ── Landing page (index.html) ──
 function buildIndex() {
@@ -1125,9 +563,7 @@ ${navBar("home")}
         <div class="flow-step">Git commit + push<span class="step-sub">github-actions[bot]</span></div>
       </div>
       <div class="flow-row">
-        <div class="flow-step muted">GitHub Pages<span class="step-sub">static dashboards (this site)</span></div>
-        <div class="flow-arrow">↘</div>
-        <div class="flow-step muted">Tableau Public<span class="step-sub">refreshes from raw.githubusercontent.com</span></div>
+        <div class="flow-step muted">GitHub Pages<span class="step-sub">in-repo Plotly dashboards (this site)</span></div>
       </div>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-top:8px;">
@@ -1138,7 +574,14 @@ ${navBar("home")}
 
   <section class="section featured-preview">
     <h3>Featured: Executive Census Summary</h3>
-    <a href="dashboard3.html"><img src="${tableauThumbnail(TABLEAU_VIZZES[3])}" alt="Executive Census Summary preview"></a>
+    <a href="dashboard3.html" style="display:block;background:#FFFFFF;border:1px solid var(--border);border-radius:3px;padding:24px;text-decoration:none;color:inherit;">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:space-around;">
+        <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:#1F4E79;">${Math.round(totalCensus)}</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">House-wide census</div></div>
+        <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:#1F4E79;">${Math.round(totalCapacity)}</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Capacity</div></div>
+        <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:${totalCapacity > 0 && (totalCensus/totalCapacity) >= 0.9 ? "#E15759" : (totalCapacity > 0 && (totalCensus/totalCapacity) >= 0.75 ? "#F28E2B" : "#59A14F")};">${totalCapacity > 0 ? (totalCensus/totalCapacity*100).toFixed(1) + "%" : "—"}</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Utilization</div></div>
+        <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:#E15759;">${data.exec.filter(r => r.alert_over_90pct === true || r.alert_over_90pct === "True" || Number(r.utilization_pct) >= 90).length}</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Units in alert</div></div>
+      </div>
+    </a>
     <div class="caption">
       <span>House-wide capacity utilization, 72-hour forecasts per unit, capacity alerts.</span>
       <a href="dashboard3.html">View live →</a>
@@ -1424,11 +867,10 @@ ${navBar("models")}
   </div>
 
   <div class="section">
-    <div class="section-title">Live model performance — Tableau Public</div>
-    <a href="dashboard2.html" class="featured-preview" style="display: block; text-decoration: none; color: inherit;">
-      <img src="${tableauThumbnail(TABLEAU_VIZZES[2])}" alt="Live Tableau Model Performance dashboard" style="display: block; margin: 0 auto;">
-      <div class="caption">
-        <span>Heatmap, per-unit breakdown, best-model callouts — interactive in the live dashboard.</span>
+    <div class="section-title">Live model performance</div>
+    <a href="dashboard2.html" class="featured-preview" style="display: block; text-decoration: none; color: inherit; background:#FFFFFF; border:1px solid var(--border); border-radius:3px; padding:20px;">
+      <div class="caption" style="margin:0;">
+        <span>Interactive ±2 accuracy heatmap (models × horizons), per-unit accuracy breakdown with horizon selector, and best-model-per-horizon highlights.</span>
         <a href="dashboard2.html">Open dashboard →</a>
       </div>
     </a>
@@ -1605,35 +1047,33 @@ ${navBar("dashboards")}
 
   <div class="gallery">
     <a class="gallery-card" href="dashboard1.html">
-      <img src="${tableauThumbnail(TABLEAU_VIZZES[1])}" alt="Operational Census Forecast preview">
       <div class="meta">
         <h3>Operational Census Forecast</h3>
-        <div class="audience">House Supervisors</div>
-        <p>Current census, multi-horizon forecast cards (1h–72h), 7-day actual vs predicted trend, capacity alert indicators.</p>
+        <div class="audience">House supervisors</div>
+        <p>Current census per unit, eight-horizon forecast cards (1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h) with 90% prediction intervals, seven-day actuals + forward forecast timeline with shaded band, capacity alerts.</p>
       </div>
     </a>
     <a class="gallery-card" href="dashboard2.html">
-      <img src="${tableauThumbnail(TABLEAU_VIZZES[2])}" alt="Model Performance Analytics preview">
       <div class="meta">
         <h3>Model Performance Analytics</h3>
-        <div class="audience">Process Improvement</div>
-        <p>Best-per-horizon callouts, full 6-model × 8-horizon accuracy heatmap, per-unit accuracy breakdown.</p>
+        <div class="audience">Process improvement</div>
+        <p>Best-model-per-horizon highlights, full six-model × eight-horizon accuracy heatmap, per-unit accuracy breakdown with a horizon selector.</p>
       </div>
     </a>
     <a class="gallery-card" href="dashboard3.html">
-      <img src="${tableauThumbnail(TABLEAU_VIZZES[3])}" alt="Executive Census Summary preview">
       <div class="meta">
         <h3>Executive Census Summary</h3>
         <div class="audience">Leadership</div>
-        <p>House-wide KPIs, utilization-by-unit ranking with 90% alert threshold, best-model recommendations, per-unit detail table.</p>
+        <p>House-wide census, capacity, and utilization KPIs, utilization-by-unit ranking with 75% watch and 90% alert thresholds, per-unit detail table with 72-hour forecasts.</p>
       </div>
     </a>
   </div>
 
   <p style="font-size:12px;color:var(--muted);margin-top:24px;">
-    Underlying data: <code>outputs/tableau/forecast_predictions.csv</code>, <code>executive_summary.csv</code>,
-    <code>model_performance.csv</code>, <code>unit_metadata.csv</code>, <code>best_model_per_horizon.csv</code>.
-    All refreshed daily via the GitHub Actions cron.
+    Underlying data: <code>outputs/tableau/forecast_predictions.csv</code>, <code>forecast_timeline.csv</code>,
+    <code>executive_summary.csv</code>, <code>model_performance.csv</code>,
+    <code>unit_metadata.csv</code>, <code>best_model_per_horizon.csv</code>.
+    All refreshed daily via the GitHub Actions cron and rendered in-repo with Plotly.
   </p>
 </div>
 </body>

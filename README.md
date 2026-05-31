@@ -15,19 +15,11 @@ Hourly patient-census forecasting across hospital nurse units, with multi-horizo
 | Dashboards gallery + three full-screen dashboards | `/dashboards.html` |
 | Monitoring — drift (PSI) over time per unit + prediction-interval bands | `/monitoring.html` |
 
-**Live Tableau Public dashboards** (embedded in the dashboard pages above; refresh daily from the same CSV exports via Google Sheets):
-
-| Dashboard | Tableau Public URL |
-|---|---|
-| Operational Census Forecast | https://public.tableau.com/shared/BZ79XYMTJ |
-| Model Performance Analytics | https://public.tableau.com/shared/DWG6QTPDZ |
-| Executive Census Summary | https://public.tableau.com/shared/M8QMRYP65 |
-
-[![Executive Dashboard — Tableau Public](https://public.tableau.com/static/images/M8/M8QMRYP65/1.png)](https://public.tableau.com/shared/M8QMRYP65)
+All three operational dashboards render in-repo with Plotly from the CSV exports the cron refreshes daily — no Tableau or other external visualization dependency.
 
 ## What it does
 
-Predicts patient headcount on medical-surgical nurse units at eight forecast horizons (1, 2, 3, 4, 12, 24, 48, 72 hours) using historical admissions, discharges, transfers, ED census, scheduled surgeries, and seasonal patterns. The pipeline trains five model types per unit (ARIMA, Prophet, LSTM, Random Forest, LightGBM) plus a weighted ensemble and exports Tableau-ready CSVs.
+Predicts patient headcount on medical-surgical nurse units at eight forecast horizons (1, 2, 3, 4, 12, 24, 48, 72 hours) using historical admissions, discharges, transfers, ED census, scheduled surgeries, and seasonal patterns. The pipeline trains five model types per unit (ARIMA, Prophet, LSTM, Random Forest, LightGBM) plus a weighted ensemble and exports aggregate CSVs that the in-repo Plotly dashboards read directly.
 
 **Primary metric:** percentage of forecasts within ±2 patients of actual census. Validation accuracy: 99.7% at 1h (Random Forest), 87.6% at 72h (LSTM).
 
@@ -55,11 +47,9 @@ The deployed system demonstrates the full production flow without exposing patie
                                           ▼
                           git commit + push (bot)
                                           │
-                       ┌──────────────────┴───────────────────┐
-                       ▼                                      ▼
-            GitHub Pages auto-rebuild              Tableau Public workbook
-            https://joshquigs11093.github.io/      connects via raw.githubusercontent.com
-            Nurse_Unit_Census_Prediction/          → daily refresh on Tableau side
+                                          ▼
+                          GitHub Pages auto-rebuild
+                          https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/
 ```
 
 In a production deployment, the synthetic forward step is replaced by an ETL job ingesting the live hospital ADT feed; everything downstream (pipeline, exports, drift monitoring, dashboards) is unchanged.

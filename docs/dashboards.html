@@ -31,35 +31,33 @@
 
   <div class="gallery">
     <a class="gallery-card" href="dashboard1.html">
-      <img src="https://public.tableau.com/static/images/BZ/BZ79XYMTJ/1.png" alt="Operational Census Forecast preview">
       <div class="meta">
         <h3>Operational Census Forecast</h3>
-        <div class="audience">House Supervisors</div>
-        <p>Current census, multi-horizon forecast cards (1h–72h), 7-day actual vs predicted trend, capacity alert indicators.</p>
+        <div class="audience">House supervisors</div>
+        <p>Current census per unit, eight-horizon forecast cards (1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h) with 90% prediction intervals, seven-day actuals + forward forecast timeline with shaded band, capacity alerts.</p>
       </div>
     </a>
     <a class="gallery-card" href="dashboard2.html">
-      <img src="https://public.tableau.com/static/images/DW/DWG6QTPDZ/1.png" alt="Model Performance Analytics preview">
       <div class="meta">
         <h3>Model Performance Analytics</h3>
-        <div class="audience">Process Improvement</div>
-        <p>Best-per-horizon callouts, full 6-model × 8-horizon accuracy heatmap, per-unit accuracy breakdown.</p>
+        <div class="audience">Process improvement</div>
+        <p>Best-model-per-horizon highlights, full six-model × eight-horizon accuracy heatmap, per-unit accuracy breakdown with a horizon selector.</p>
       </div>
     </a>
     <a class="gallery-card" href="dashboard3.html">
-      <img src="https://public.tableau.com/static/images/M8/M8QMRYP65/1.png" alt="Executive Census Summary preview">
       <div class="meta">
         <h3>Executive Census Summary</h3>
         <div class="audience">Leadership</div>
-        <p>House-wide KPIs, utilization-by-unit ranking with 90% alert threshold, best-model recommendations, per-unit detail table.</p>
+        <p>House-wide census, capacity, and utilization KPIs, utilization-by-unit ranking with 75% watch and 90% alert thresholds, per-unit detail table with 72-hour forecasts.</p>
       </div>
     </a>
   </div>
 
   <p style="font-size:12px;color:var(--muted);margin-top:24px;">
-    Underlying data: <code>outputs/tableau/forecast_predictions.csv</code>, <code>executive_summary.csv</code>,
-    <code>model_performance.csv</code>, <code>unit_metadata.csv</code>, <code>best_model_per_horizon.csv</code>.
-    All refreshed daily via the GitHub Actions cron.
+    Underlying data: <code>outputs/tableau/forecast_predictions.csv</code>, <code>forecast_timeline.csv</code>,
+    <code>executive_summary.csv</code>, <code>model_performance.csv</code>,
+    <code>unit_metadata.csv</code>, <code>best_model_per_horizon.csv</code>.
+    All refreshed daily via the GitHub Actions cron and rendered in-repo with Plotly.
   </p>
 </div>
 </body>
