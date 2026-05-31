@@ -537,12 +537,15 @@ function tableauEmbed(viz) {
 }
 
 // ── Tableau-like Plotly layout defaults ──
+// hovermode defaults to "closest" so any chart that does not override it
+// still shows its hovertemplate; pages that want a unified-by-x tooltip
+// (e.g. the operational timeline) override locally.
 const PLOTLY_LAYOUT_BASE = {
   font: { family: "Segoe UI, Helvetica Neue, Arial, sans-serif", size: 11, color: "#2A2A2A" },
   paper_bgcolor: "#FFFFFF",
   plot_bgcolor: "#FFFFFF",
   margin: { t: 30, r: 20, b: 50, l: 60 },
-  hovermode: false,
+  hovermode: "closest",
   xaxis: { gridcolor: "#EEEEEE", linecolor: "#CCCCCC", tickfont: { size: 11 } },
   yaxis: { gridcolor: "#EEEEEE", linecolor: "#CCCCCC", tickfont: { size: 11 } },
 };
