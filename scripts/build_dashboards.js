@@ -211,18 +211,30 @@ body {
 .model-card .grid ul { list-style: none; padding-left: 0; font-size: 12px; }
 .model-card .grid li { padding: 3px 0; }
 .model-card .grid li::before { content: "• "; color: var(--muted); }
-.model-card .perf-table {
-  width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;
+.perf-table {
+  width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px;
+  background: #FFFFFF; border: 1px solid var(--border); border-radius: 3px;
+  overflow: hidden;
 }
-.model-card .perf-table th {
-  background: #F8F8F8; padding: 6px 10px; font-weight: 600; text-align: center;
-  border-bottom: 2px solid var(--tableau-blue);
+.perf-table th {
+  background: #F4F4F4; padding: 10px 14px; font-weight: 600; text-align: left;
+  text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; color: #555;
+  border-bottom: 2px solid var(--tableau-blue); white-space: nowrap;
 }
-.model-card .perf-table td {
-  padding: 6px 10px; text-align: center;
+.perf-table td {
+  padding: 9px 14px; text-align: left;
   border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums;
+  color: #2A2A2A;
 }
-.model-card .perf-table td.best { background: #E8F4F8; font-weight: 600; }
+.perf-table tbody tr:last-child td { border-bottom: none; }
+.perf-table tbody tr:nth-child(even) td { background: #FAFAFA; }
+.perf-table tbody tr:hover td { background: #F0F4FA; }
+.perf-table th.num, .perf-table td.num { text-align: right; }
+.perf-table th.center, .perf-table td.center { text-align: center; }
+.perf-table td.best { background: #E8F4F8; font-weight: 600; }
+/* Model cards on the models page need slightly tighter centered cells. */
+.model-card .perf-table th, .model-card .perf-table td { text-align: center; padding: 6px 10px; font-size: 12px; }
+.model-card .perf-table tbody tr:nth-child(even) td { background: #FFFFFF; }
 
 /* ── Dashboards gallery ── */
 .gallery {
@@ -944,11 +956,11 @@ ${navBar("methodology")}
   <div class="section">
     <div class="section-title">2. Train / validation / test split</div>
     <table class="perf-table" style="margin-top:12px;">
-      <thead><tr><th>Split</th><th>Date range</th><th>Rows</th><th>%</th></tr></thead>
+      <thead><tr><th>Split</th><th>Date range</th><th class="num">Rows</th><th class="num">%</th></tr></thead>
       <tbody>
-        <tr><td>Train</td><td>2024-05-23 – 2025-06-30</td><td>86,984</td><td>55.1%</td></tr>
-        <tr><td>Validation</td><td>2025-06-30 – 2025-09-30</td><td>19,872</td><td>12.6%</td></tr>
-        <tr><td>Test</td><td>2025-09-30 – 2026-05-22</td><td>50,898</td><td>32.3%</td></tr>
+        <tr><td>Train</td><td>2024-05-23 – 2025-06-30</td><td class="num">86,984</td><td class="num">55.1%</td></tr>
+        <tr><td>Validation</td><td>2025-06-30 – 2025-09-30</td><td class="num">19,872</td><td class="num">12.6%</td></tr>
+        <tr><td>Test</td><td>2025-09-30 – 2026-05-22</td><td class="num">50,898</td><td class="num">32.3%</td></tr>
       </tbody>
     </table>
     <p style="font-size:12px;color:var(--muted);margin-top:8px;">
@@ -1484,12 +1496,12 @@ function buildMonitoring() {
                        ? "—" : Number(v).toFixed(3));
   const snapshotRows = snapshot.map(r =>
     "<tr><td>" + (r.unit_name || r.unit_id) + "</td>"
-    + "<td>" + fmtPsi(r.psi) + "</td>"
-    + "<td>" + fmtPsi(r.psi_residual) + "</td>"
-    + "<td>" + alertCell(r.alert_kind) + "</td>"
-    + "<td>" + (r.perf_delta_pct === null || r.perf_delta_pct === "" || Number.isNaN(Number(r.perf_delta_pct))
+    + '<td class="num">' + fmtPsi(r.psi) + "</td>"
+    + '<td class="num">' + fmtPsi(r.psi_residual) + "</td>"
+    + '<td class="center">' + alertCell(r.alert_kind) + "</td>"
+    + '<td class="num">' + (r.perf_delta_pct === null || r.perf_delta_pct === "" || Number.isNaN(Number(r.perf_delta_pct))
                 ? "—" : Number(r.perf_delta_pct).toFixed(1) + " pts") + "</td>"
-    + "<td>" + (r.perf_degraded === true || r.perf_degraded === "True"
+    + '<td class="center">' + (r.perf_degraded === true || r.perf_degraded === "True"
                 ? '<span style="color:#E15759;font-weight:600;">flagged</span>' : "ok") + "</td></tr>"
   ).join("");
 
@@ -1512,8 +1524,8 @@ function buildMonitoring() {
       const statusCell = '<span style="color:' + (EQUITY_COLOR[status] || "#666")
                          + ';font-weight:600;">' + status + '</span>';
       return "<tr><td>" + (r.unit_name || r.unit_id) + "</td>"
-           + "<td>" + acc + "</td><td>" + delta + "</td><td>" + cov + "</td>"
-           + "<td>" + statusCell + "</td></tr>";
+           + '<td class="num">' + acc + '</td><td class="num">' + delta + '</td><td class="num">' + cov + "</td>"
+           + '<td class="center">' + statusCell + "</td></tr>";
     }).join("");
 
   const emptyNote = hasData ? "" : `
@@ -1573,7 +1585,7 @@ ${emptyNote}
       warrants a retrain.
     </p>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th>PSI</th><th>Residual PSI</th><th>Alert</th><th>±2 accuracy change</th><th>Performance</th></tr></thead>
+      <thead><tr><th>Unit</th><th class="num">PSI</th><th class="num">Residual PSI</th><th class="center">Alert</th><th class="num">±2 accuracy change</th><th class="center">Performance</th></tr></thead>
       <tbody>${snapshotRows || '<tr><td colspan="6">No snapshot available.</td></tr>'}</tbody>
     </table>
   </section>
@@ -1590,7 +1602,7 @@ ${emptyNote}
       tolerance. Underserved units sort to the top.
     </p>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th>±2 accuracy</th><th>vs cohort median</th><th>90% coverage</th><th>Equity</th></tr></thead>
+      <thead><tr><th>Unit</th><th class="num">±2 accuracy</th><th class="num">vs cohort median</th><th class="num">90% coverage</th><th class="center">Equity</th></tr></thead>
       <tbody>${equityRows || '<tr><td colspan="5">No equity data available.</td></tr>'}</tbody>
     </table>
   </section>
@@ -2305,20 +2317,21 @@ function buildDashboard3() {
   const recommendedAcc = (best72 && best72.within_2_patients_pct != null)
     ? Number(best72.within_2_patients_pct).toFixed(1) + "%" : "—";
 
-  // Per-unit detail rows, sorted high-utilization first.
+  // Per-unit detail rows, sorted high-utilization first. Numeric cells are
+  // right-aligned via the .num class; alert state is centered.
   const detailRows = sorted.map(r => {
     const util = Number(r.utilization_pct) || 0;
     const utilColor = util >= 90 ? "#E15759" : (util >= 75 ? "#F28E2B" : "#59A14F");
     const alert = isAlert(r);
     return "<tr>"
       + "<td>" + (r.unit_name || r.unit_id) + "</td>"
-      + "<td>" + (r.latest_census != null ? Math.round(Number(r.latest_census)) : "—") + "</td>"
-      + "<td>" + (r.capacity != null ? Math.round(Number(r.capacity)) : "—") + "</td>"
-      + '<td><span style="color:' + utilColor + ';font-weight:600;">' + util.toFixed(1) + "%</span></td>"
-      + "<td>" + (alert
+      + '<td class="num">' + (r.latest_census != null ? Math.round(Number(r.latest_census)) : "—") + "</td>"
+      + '<td class="num">' + (r.capacity != null ? Math.round(Number(r.capacity)) : "—") + "</td>"
+      + '<td class="num"><span style="color:' + utilColor + ';font-weight:600;">' + util.toFixed(1) + "%</span></td>"
+      + '<td class="center">' + (alert
           ? '<span style="color:#E15759;font-weight:600;">over 90%</span>'
-          : '<span style="color:#59A14F;">OK</span>') + "</td>"
-      + "<td>" + (r.forecast_72hr != null && r.forecast_72hr !== ""
+          : '<span style="color:#59A14F;font-weight:600;">OK</span>') + "</td>"
+      + '<td class="num">' + (r.forecast_72hr != null && r.forecast_72hr !== ""
           ? Number(r.forecast_72hr).toFixed(1) : "—") + "</td>"
       + "</tr>";
   }).join("");
@@ -2389,7 +2402,7 @@ ${emptyNote}
   <section class="section">
     <div class="section-title">Per-unit detail</div>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th>Current</th><th>Capacity</th><th>Utilization</th><th>Alert</th><th>72h forecast</th></tr></thead>
+      <thead><tr><th>Unit</th><th class="num">Current</th><th class="num">Capacity</th><th class="num">Utilization</th><th class="center">Alert</th><th class="num">72h forecast</th></tr></thead>
       <tbody>${detailRows || '<tr><td colspan="6">No data available.</td></tr>'}</tbody>
     </table>
   </section>
