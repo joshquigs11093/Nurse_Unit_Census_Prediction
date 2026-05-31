@@ -1777,6 +1777,19 @@ const TEST_CATALOG = [
       { name: "test_extract_single_feature",                    blurb: "Single-feature models are handled correctly (rank = 1, no edge-case crashes)." },
     ],
   },
+  {
+    name: "TestEquity",
+    requiresData: false,
+    blurb: "Covers the per-unit equity classifier: flags underserved when accuracy lags the cohort median or when interval coverage drifts off nominal, recognizes well-served units, and defaults to served on missing inputs.",
+    tests: [
+      { name: "test_underserved_when_accuracy_far_below_median", blurb: "A 10-pt gap below the cohort median fires the <em>underserved</em> label." },
+      { name: "test_underserved_when_coverage_drifts",           blurb: "Solid accuracy but a 90% interval covering only 78% still fires <em>underserved</em>." },
+      { name: "test_well_served_when_clearly_above_median",      blurb: "A unit comfortably above the median with healthy coverage reads as <em>well-served</em>." },
+      { name: "test_served_when_within_tolerance",               blurb: "Small accuracy variations within the configured tolerance read as <em>served</em>." },
+      { name: "test_nan_inputs_default_to_served",               blurb: "Missing accuracy or coverage does not fire a spurious flag." },
+      { name: "test_custom_thresholds",                          blurb: "Tighter custom thresholds escalate borderline gaps to <em>underserved</em>." },
+    ],
+  },
 ];
 
 function loadTestResults() {
@@ -1958,6 +1971,7 @@ function buildMonitoring() {
   const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
   const STATUS_COLOR = { stable: "#59A14F", moderate: "#F28E2B", major: "#E15759", unknown: "#999999" };
   const ALERT_COLOR = { stable: "#59A14F", transient: "#F4D03F", systemic: "#4E79A7", true_drift: "#E15759" };
+  const EQUITY_COLOR = { "well-served": "#59A14F", served: "#666666", underserved: "#E15759" };
 
   const report = data.driftReport || [];
   const history = data.driftHistory || [];
@@ -2031,6 +2045,29 @@ function buildMonitoring() {
                 ? '<span style="color:#E15759;font-weight:600;">flagged</span>' : "ok") + "</td></tr>"
   ).join("");
 
+  // Equity rows: sort underserved first so issues land at the top.
+  const equityRows = [...snapshot]
+    .sort((a, b) => {
+      const order = { underserved: 0, served: 1, "well-served": 2 };
+      return (order[a.equity_status] ?? 1) - (order[b.equity_status] ?? 1);
+    })
+    .map(r => {
+      const acc = (r.accuracy_pct === null || r.accuracy_pct === "" || Number.isNaN(Number(r.accuracy_pct)))
+        ? "—" : Number(r.accuracy_pct).toFixed(2) + "%";
+      const delta = (r.accuracy_delta_from_median_pct === null || r.accuracy_delta_from_median_pct === ""
+                     || Number.isNaN(Number(r.accuracy_delta_from_median_pct)))
+        ? "—" : (Number(r.accuracy_delta_from_median_pct) >= 0 ? "+" : "")
+                + Number(r.accuracy_delta_from_median_pct).toFixed(1) + " pts";
+      const cov = (r.coverage_pct === null || r.coverage_pct === "" || Number.isNaN(Number(r.coverage_pct)))
+        ? "—" : (Number(r.coverage_pct) * 100).toFixed(1) + "%";
+      const status = r.equity_status || "served";
+      const statusCell = '<span style="color:' + (EQUITY_COLOR[status] || "#666")
+                         + ';font-weight:600;">' + status + '</span>';
+      return "<tr><td>" + (r.unit_name || r.unit_id) + "</td>"
+           + "<td>" + acc + "</td><td>" + delta + "</td><td>" + cov + "</td>"
+           + "<td>" + statusCell + "</td></tr>";
+    }).join("");
+
   const emptyNote = hasData ? "" : `
       <div class="section" style="text-align:center;color:var(--muted);">
         Monitoring artifacts not found. Run
@@ -2090,6 +2127,23 @@ ${emptyNote}
     <table class="perf-table">
       <thead><tr><th>Unit</th><th>PSI</th><th>Residual PSI</th><th>Alert</th><th>±2 accuracy change</th><th>Performance</th></tr></thead>
       <tbody>${snapshotRows || '<tr><td colspan="6">No snapshot available.</td></tr>'}</tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Equity across units</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Since each unit has its own model, an equity question is whether smaller
+      or lower-volume units get forecasts as good as the high-volume ones, both
+      in point accuracy (within-2 patients) and in interval reliability (does
+      the 90% band actually cover 90% of actuals). A unit is flagged
+      <em>underserved</em> when its accuracy is well below the cohort median
+      or its coverage drifts off the nominal 90% by more than a small
+      tolerance. Underserved units sort to the top.
+    </p>
+    <table class="perf-table">
+      <thead><tr><th>Unit</th><th>±2 accuracy</th><th>vs cohort median</th><th>90% coverage</th><th>Equity</th></tr></thead>
+      <tbody>${equityRows || '<tr><td colspan="5">No equity data available.</td></tr>'}</tbody>
     </table>
   </section>
 

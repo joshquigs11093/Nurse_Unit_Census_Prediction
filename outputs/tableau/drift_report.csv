@@ -1,11 +1,11 @@
-unit_id,unit_name,psi,psi_residual,drift_status,consecutive_major,systemic_fraction,alert_kind,perf_delta_pct,perf_degraded
-60732673,Observation Unit,0.0,0.0,stable,0,0.2,stable,,False
-705089,Medical-Surgical 3 North,0.1067,0.2162,moderate,0,0.556,stable,4.65,False
-705090,Telemetry 4 East,2.8119,0.2374,major,0,0.556,stable,6.11,False
-705091,Cardiac Stepdown,0.099,0.1831,stable,0,0.556,stable,0.75,False
-705092,Oncology 5 South,0.1971,0.3318,moderate,1,0.556,transient,-0.39,False
-21334825,Surgical 2 West,0.0009,0.3335,stable,1,0.556,transient,-1.77,False
-21336305,Orthopedic 6 North,0.0671,0.4772,stable,1,0.556,transient,-2.73,False
-97635816,Progressive Care,0.0329,2.4265,stable,33,0.556,systemic,-3.71,False
-1775257343,Neuro Stepdown,0.1876,0.157,moderate,0,0.556,stable,-3.67,False
-4452986337,Medical-Surgical 4 South,0.217,0.3132,moderate,2,0.556,transient,2.07,False
+unit_id,unit_name,psi,psi_residual,drift_status,consecutive_major,systemic_fraction,alert_kind,perf_delta_pct,perf_degraded,accuracy_pct,coverage_pct,accuracy_delta_from_median_pct,equity_status
+60732673,Observation Unit,0.0,0.0,stable,0,0.2,stable,,False,,,,served
+705089,Medical-Surgical 3 North,0.1067,0.2162,moderate,0,0.556,stable,4.65,False,93.25,0.9013,-2.91,served
+705090,Telemetry 4 East,2.8119,0.2374,major,0,0.556,stable,6.11,False,63.52,0.9022,-32.64,underserved
+705091,Cardiac Stepdown,0.099,0.1831,stable,0,0.556,stable,0.75,False,96.42,0.9013,0.26,served
+705092,Oncology 5 South,0.1971,0.3318,moderate,1,0.556,transient,-0.39,False,96.16,0.9013,0.0,served
+21334825,Surgical 2 West,0.0009,0.3335,stable,1,0.556,transient,-1.77,False,98.01,0.9013,1.85,served
+21336305,Orthopedic 6 North,0.0671,0.4772,stable,1,0.556,transient,-2.73,False,98.6,0.9013,2.44,served
+97635816,Progressive Care,0.0329,2.4265,stable,33,0.556,systemic,-3.71,False,98.6,0.9013,2.44,served
+1775257343,Neuro Stepdown,0.1876,0.157,moderate,0,0.556,stable,-3.67,False,92.24,0.9018,-3.92,served
+4452986337,Medical-Surgical 4 South,0.217,0.3132,moderate,2,0.556,transient,2.07,False,94.3,0.9013,-1.86,served

@@ -179,6 +179,14 @@ drift:
   persistence_threshold: 3         # consecutive major readings before true_drift fires
   systemic_threshold: 0.5          # fraction of units in major to call the event systemic
 
+# Equity (fairness across units): flags a unit as underserved when its accuracy
+# is well below the cohort median or its 90% interval coverage drifts off
+# nominal by more than the tolerance.
+equity:
+  enabled: true
+  accuracy_gap_pct: 5.0            # within-2 pts below cohort median to flag underserved
+  coverage_tolerance: 0.05         # allowed deviation from nominal coverage
+
 random_seed: 42
 
 output:

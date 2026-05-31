@@ -416,3 +416,37 @@ class TestExplainability:
         m = self._StubModel([0.9])
         out = extract_feature_importance(m, ["only"])
         assert len(out) == 1 and out[0]["rank"] == 1 and out[0]["feature"] == "only"
+
+
+# ---------- Test 12: Per-unit equity (data-free) ----------
+
+class TestEquity:
+    def test_underserved_when_accuracy_far_below_median(self):
+        from src.monitoring.equity import classify_equity
+        # 10 pts below median with healthy coverage -> underserved.
+        assert classify_equity(accuracy_delta_pct=-10.0, coverage_pct=0.90) == "underserved"
+
+    def test_underserved_when_coverage_drifts(self):
+        from src.monitoring.equity import classify_equity
+        # Accuracy fine, but coverage misses 90% by 0.10 -> underserved.
+        assert classify_equity(accuracy_delta_pct=0.0, coverage_pct=0.78) == "underserved"
+
+    def test_well_served_when_clearly_above_median(self):
+        from src.monitoring.equity import classify_equity
+        assert classify_equity(accuracy_delta_pct=8.0, coverage_pct=0.91) == "well-served"
+
+    def test_served_when_within_tolerance(self):
+        from src.monitoring.equity import classify_equity
+        assert classify_equity(accuracy_delta_pct=-1.0, coverage_pct=0.89) == "served"
+        assert classify_equity(accuracy_delta_pct=2.0, coverage_pct=0.91) == "served"
+
+    def test_nan_inputs_default_to_served(self):
+        from src.monitoring.equity import classify_equity
+        assert classify_equity(accuracy_delta_pct=float("nan"),
+                                coverage_pct=float("nan")) == "served"
+
+    def test_custom_thresholds(self):
+        from src.monitoring.equity import classify_equity
+        # A 3-pt gap with default 5-pt tolerance is fine, but a 3-pt tolerance fires.
+        assert classify_equity(-3.0, 0.90) == "served"
+        assert classify_equity(-3.0, 0.90, accuracy_gap_pct=2.0) == "underserved"

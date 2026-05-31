@@ -37,6 +37,7 @@ from src.monitoring.calibrate import (
     save_intervals,
 )
 from src.monitoring.drift import generate_drift_report
+from src.monitoring.equity import compute_unit_equity
 
 logger = logging.getLogger(__name__)
 
@@ -544,12 +545,22 @@ def phase_export(
                 logger.info("Exported drift_history.csv (%d rows, %d as-of dates)",
                             len(history), history["as_of"].nunique())
 
-                # Snapshot = latest as_of per unit, enriched with performance drift.
+                # Snapshot = latest as_of per unit, enriched with performance drift
+                # and per-unit equity (fairness across units).
                 latest = (history.sort_values("as_of")
                                   .groupby("unit_id", as_index=False).tail(1))
                 _, recent_within2 = _recent_window_drift_inputs(test, config)
                 tol = config.get("drift", {}).get("performance_tolerance_pct", 5.0)
                 names_by_str = {str(k): v for k, v in unit_names.items()}
+
+                equity_cfg = config.get("equity", {})
+                unit_ids_str = [str(uid) for uid in latest["unit_id"]]
+                equity_map = compute_unit_equity(
+                    config, unit_ids_str,
+                    nominal_coverage=config.get("uncertainty", {}).get("coverage", 0.90),
+                    accuracy_gap_pct=equity_cfg.get("accuracy_gap_pct", 5.0),
+                    coverage_tolerance=equity_cfg.get("coverage_tolerance", 0.05),
+                ) if equity_cfg.get("enabled", True) else {}
 
                 report_rows = []
                 for _, r in latest.iterrows():
@@ -558,6 +569,7 @@ def phase_export(
                         "within_2_patients_pct", float("nan"))
                     recent_w2 = recent_within2.get(uid_str, float("nan"))
                     perf = performance_drift(recent_w2, baseline_w2, tolerance_pct=tol)
+                    eq = equity_map.get(uid_str, {})
                     report_rows.append({
                         "unit_id": r["unit_id"],
                         "unit_name": names_by_str.get(uid_str, r["unit_name"]),
@@ -571,6 +583,11 @@ def phase_export(
                         "alert_kind": r["alert_kind"],
                         "perf_delta_pct": perf["delta_pct"],
                         "perf_degraded": perf["degraded"],
+                        "accuracy_pct": eq.get("accuracy_pct", float("nan")),
+                        "coverage_pct": eq.get("coverage_pct", float("nan")),
+                        "accuracy_delta_from_median_pct":
+                            eq.get("accuracy_delta_from_median_pct", float("nan")),
+                        "equity_status": eq.get("equity_status", "served"),
                     })
                 drift_df = pd.DataFrame(report_rows)
                 drift_df.to_csv(tableau_dir / "drift_report.csv", index=False)

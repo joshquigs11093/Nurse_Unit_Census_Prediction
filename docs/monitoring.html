@@ -67,6 +67,23 @@
   </section>
 
   <section class="section">
+    <div class="section-title">Equity across units</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Since each unit has its own model, an equity question is whether smaller
+      or lower-volume units get forecasts as good as the high-volume ones, both
+      in point accuracy (within-2 patients) and in interval reliability (does
+      the 90% band actually cover 90% of actuals). A unit is flagged
+      <em>underserved</em> when its accuracy is well below the cohort median
+      or its coverage drifts off the nominal 90% by more than a small
+      tolerance. Underserved units sort to the top.
+    </p>
+    <table class="perf-table">
+      <thead><tr><th>Unit</th><th>±2 accuracy</th><th>vs cohort median</th><th>90% coverage</th><th>Equity</th></tr></thead>
+      <tbody><tr><td>Telemetry 4 East</td><td>63.52%</td><td>-32.6 pts</td><td>90.2%</td><td><span style="color:#E15759;font-weight:600;">underserved</span></td></tr><tr><td>Medical-Surgical 4 South</td><td>94.30%</td><td>-1.9 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Oncology 5 South</td><td>96.16%</td><td>+0.0 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Neuro Stepdown</td><td>92.24%</td><td>-3.9 pts</td><td>90.2%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Medical-Surgical 3 North</td><td>93.25%</td><td>-2.9 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Cardiac Stepdown</td><td>96.42%</td><td>+0.3 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Orthopedic 6 North</td><td>98.60%</td><td>+2.4 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Progressive Care</td><td>98.60%</td><td>+2.4 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Surgical 2 West</td><td>98.01%</td><td>+1.9 pts</td><td>90.1%</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Observation Unit</td><td>—</td><td>—</td><td>—</td><td><span style="color:#666666;font-weight:600;">served</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="section">
     <div class="section-title">Prediction interval — <span id="band-unit-label">Telemetry 4 East</span></div>
     <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
       Point forecast with its 90% prediction interval across horizons. The band widens
