@@ -151,18 +151,55 @@ body {
 .model-card .grid ul { list-style: none; padding-left: 0; font-size: 12px; }
 .model-card .grid li { padding: 3px 0; }
 .model-card .grid li::before { content: "• "; color: var(--muted); }
-.model-card .perf-table {
-  width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;
+.perf-table {
+  width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px;
+  background: #FFFFFF; border: 1px solid var(--border); border-radius: 4px;
+  overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
-.model-card .perf-table th {
-  background: #F8F8F8; padding: 6px 10px; font-weight: 600; text-align: center;
-  border-bottom: 2px solid var(--tableau-blue);
+.perf-table th {
+  background: #F4F4F4; padding: 14px 20px; font-weight: 600; text-align: left;
+  text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; color: #555;
+  border-bottom: 2px solid var(--tableau-blue); white-space: nowrap;
 }
-.model-card .perf-table td {
-  padding: 6px 10px; text-align: center;
+.perf-table td {
+  padding: 14px 20px; text-align: left;
   border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums;
+  color: #2A2A2A; line-height: 1.4;
 }
-.model-card .perf-table td.best { background: #E8F4F8; font-weight: 600; }
+.perf-table tbody tr:last-child td { border-bottom: none; }
+.perf-table tbody tr:nth-child(even) td { background: #FAFAFA; }
+.perf-table tbody tr:hover td { background: #F0F4FA; }
+.perf-table th.num, .perf-table td.num { text-align: right; }
+.perf-table th.center, .perf-table td.center { text-align: center; }
+.perf-table td.best { background: #E8F4F8; font-weight: 600; }
+.perf-table td .unit-name { font-weight: 600; color: #1F2937; }
+/* Pill-style status badges for "OK" / "over 90%" / "flagged" cells. */
+.status-pill {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; line-height: 1.4; white-space: nowrap;
+}
+.status-pill.alert { background: #FDECEA; color: #C13B33; border: 1px solid #F5C7C2; }
+.status-pill.ok    { background: #E8F5E9; color: #2F7D31; border: 1px solid #C4E1C5; }
+.status-pill.warn  { background: #FEF3DC; color: #B26A00; border: 1px solid #F5DCA0; }
+.status-pill.info  { background: #E7EEF7; color: #2B5DA0; border: 1px solid #C2D3EB; }
+/* In-cell utilization fill: linear-gradient mask scaled to the percent value. */
+.util-cell { position: relative; }
+.util-cell .util-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: rgba(78, 121, 167, 0.10); border-right: 2px solid rgba(78, 121, 167, 0.35);
+  pointer-events: none;
+}
+.util-cell.warn .util-fill { background: rgba(242, 142, 43, 0.14); border-right-color: rgba(242, 142, 43, 0.55); }
+.util-cell.alert .util-fill { background: rgba(225, 87, 89, 0.16); border-right-color: rgba(225, 87, 89, 0.65); }
+.util-cell .util-value { position: relative; font-weight: 600; font-size: 16px; }
+.util-cell.alert .util-value { color: #C13B33; }
+.util-cell.warn  .util-value { color: #B26A00; }
+.util-cell.ok    .util-value { color: #2F7D31; }
+/* Model cards on the models page keep the older tighter centered styling. */
+.model-card .perf-table { font-size: 12px; box-shadow: none; border-radius: 2px; }
+.model-card .perf-table th, .model-card .perf-table td { text-align: center; padding: 6px 10px; }
+.model-card .perf-table tbody tr:nth-child(even) td { background: #FFFFFF; }
 
 /* ── Dashboards gallery ── */
 .gallery {

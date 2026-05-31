@@ -212,19 +212,19 @@ body {
 .model-card .grid li { padding: 3px 0; }
 .model-card .grid li::before { content: "• "; color: var(--muted); }
 .perf-table {
-  width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px;
-  background: #FFFFFF; border: 1px solid var(--border); border-radius: 3px;
-  overflow: hidden;
+  width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px;
+  background: #FFFFFF; border: 1px solid var(--border); border-radius: 4px;
+  overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .perf-table th {
-  background: #F4F4F4; padding: 10px 14px; font-weight: 600; text-align: left;
-  text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; color: #555;
+  background: #F4F4F4; padding: 14px 20px; font-weight: 600; text-align: left;
+  text-transform: uppercase; letter-spacing: 0.04em; font-size: 12px; color: #555;
   border-bottom: 2px solid var(--tableau-blue); white-space: nowrap;
 }
 .perf-table td {
-  padding: 9px 14px; text-align: left;
+  padding: 14px 20px; text-align: left;
   border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums;
-  color: #2A2A2A;
+  color: #2A2A2A; line-height: 1.4;
 }
 .perf-table tbody tr:last-child td { border-bottom: none; }
 .perf-table tbody tr:nth-child(even) td { background: #FAFAFA; }
@@ -232,8 +232,33 @@ body {
 .perf-table th.num, .perf-table td.num { text-align: right; }
 .perf-table th.center, .perf-table td.center { text-align: center; }
 .perf-table td.best { background: #E8F4F8; font-weight: 600; }
-/* Model cards on the models page need slightly tighter centered cells. */
-.model-card .perf-table th, .model-card .perf-table td { text-align: center; padding: 6px 10px; font-size: 12px; }
+.perf-table td .unit-name { font-weight: 600; color: #1F2937; }
+/* Pill-style status badges for "OK" / "over 90%" / "flagged" cells. */
+.status-pill {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+  text-transform: uppercase; line-height: 1.4; white-space: nowrap;
+}
+.status-pill.alert { background: #FDECEA; color: #C13B33; border: 1px solid #F5C7C2; }
+.status-pill.ok    { background: #E8F5E9; color: #2F7D31; border: 1px solid #C4E1C5; }
+.status-pill.warn  { background: #FEF3DC; color: #B26A00; border: 1px solid #F5DCA0; }
+.status-pill.info  { background: #E7EEF7; color: #2B5DA0; border: 1px solid #C2D3EB; }
+/* In-cell utilization fill: linear-gradient mask scaled to the percent value. */
+.util-cell { position: relative; }
+.util-cell .util-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: rgba(78, 121, 167, 0.10); border-right: 2px solid rgba(78, 121, 167, 0.35);
+  pointer-events: none;
+}
+.util-cell.warn .util-fill { background: rgba(242, 142, 43, 0.14); border-right-color: rgba(242, 142, 43, 0.55); }
+.util-cell.alert .util-fill { background: rgba(225, 87, 89, 0.16); border-right-color: rgba(225, 87, 89, 0.65); }
+.util-cell .util-value { position: relative; font-weight: 600; font-size: 16px; }
+.util-cell.alert .util-value { color: #C13B33; }
+.util-cell.warn  .util-value { color: #B26A00; }
+.util-cell.ok    .util-value { color: #2F7D31; }
+/* Model cards on the models page keep the older tighter centered styling. */
+.model-card .perf-table { font-size: 12px; box-shadow: none; border-radius: 2px; }
+.model-card .perf-table th, .model-card .perf-table td { text-align: center; padding: 6px 10px; }
 .model-card .perf-table tbody tr:nth-child(even) td { background: #FFFFFF; }
 
 /* ── Dashboards gallery ── */
@@ -2317,20 +2342,25 @@ function buildDashboard3() {
   const recommendedAcc = (best72 && best72.within_2_patients_pct != null)
     ? Number(best72.within_2_patients_pct).toFixed(1) + "%" : "—";
 
-  // Per-unit detail rows, sorted high-utilization first. Numeric cells are
-  // right-aligned via the .num class; alert state is centered.
+  // Per-unit detail rows, sorted high-utilization first. The utilization cell
+  // shows a tinted fill bar behind the number (proportional to the percent),
+  // and the alert state is a pill badge for visual weight.
   const detailRows = sorted.map(r => {
     const util = Number(r.utilization_pct) || 0;
-    const utilColor = util >= 90 ? "#E15759" : (util >= 75 ? "#F28E2B" : "#59A14F");
+    const utilCls = util >= 90 ? "alert" : (util >= 75 ? "warn" : "ok");
+    const fillPct = Math.min(100, Math.max(0, util));
     const alert = isAlert(r);
     return "<tr>"
-      + "<td>" + (r.unit_name || r.unit_id) + "</td>"
+      + '<td><span class="unit-name">' + (r.unit_name || r.unit_id) + "</span></td>"
       + '<td class="num">' + (r.latest_census != null ? Math.round(Number(r.latest_census)) : "—") + "</td>"
       + '<td class="num">' + (r.capacity != null ? Math.round(Number(r.capacity)) : "—") + "</td>"
-      + '<td class="num"><span style="color:' + utilColor + ';font-weight:600;">' + util.toFixed(1) + "%</span></td>"
+      + '<td class="num util-cell ' + utilCls + '">'
+        + '<div class="util-fill" style="width:' + fillPct + '%;"></div>'
+        + '<span class="util-value">' + util.toFixed(1) + "%</span>"
+      + "</td>"
       + '<td class="center">' + (alert
-          ? '<span style="color:#E15759;font-weight:600;">over 90%</span>'
-          : '<span style="color:#59A14F;font-weight:600;">OK</span>') + "</td>"
+          ? '<span class="status-pill alert">over 90%</span>'
+          : '<span class="status-pill ok">OK</span>') + "</td>"
       + '<td class="num">' + (r.forecast_72hr != null && r.forecast_72hr !== ""
           ? Number(r.forecast_72hr).toFixed(1) : "—") + "</td>"
       + "</tr>";
