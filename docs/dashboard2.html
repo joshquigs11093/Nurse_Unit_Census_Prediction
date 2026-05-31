@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Model Performance Analytics — Nurse Census Prediction</title>
+  <meta name="description" content="Model × horizon ±2 accuracy heatmap, best-model-per-horizon highlights, and per-unit model accuracy breakdown.">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    .bm-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-top:10px; }
+    .bm-card { background:#FFFFFF; border:1px solid var(--border); border-radius:3px; padding:10px 12px; text-align:center; }
+    .bm-h { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+    .bm-acc { font-size:22px; font-weight:700; color:#1F4E79; margin-top:2px; line-height:1.1; }
+    .bm-model { font-size:11px; color:var(--muted); margin-top:2px; }
+    @media (max-width: 800px) { .bm-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
 </head>
 <body>
 
@@ -20,64 +30,106 @@
     <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
-<div class="page-body wide">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Model Performance Analytics</h1>
-        <div class="subtitle">Process Improvement View</div>
-      </div>
-      <div class="meta">
-        <div>Live Tableau Public</div>
-        <div>Daily refresh from GitHub Actions cron</div>
-      </div>
+<div class="page-body">
+  <section class="hero">
+    <h1>Model Performance Analytics</h1>
+    <p class="tagline">
+      Process-improvement view: which model wins at each forecast horizon
+      (1, 2, 3, 4, 12, 24, 48, 72 hours), the full model × horizon accuracy
+      heatmap, and per-unit accuracy breakdown so a PI analyst can see where
+      individual units underperform the cohort.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Best model per horizon (±2 patient accuracy)</div>
+    <div class="bm-grid"><div class="bm-card"><div class="bm-h">1h</div><div class="bm-acc">99.7%</div><div class="bm-model">RandomForest</div></div><div class="bm-card"><div class="bm-h">2h</div><div class="bm-acc">97.8%</div><div class="bm-model">LightGBM</div></div><div class="bm-card"><div class="bm-h">3h</div><div class="bm-acc">95.8%</div><div class="bm-model">LightGBM</div></div><div class="bm-card"><div class="bm-h">4h</div><div class="bm-acc">94.5%</div><div class="bm-model">LightGBM</div></div><div class="bm-card"><div class="bm-h">12h</div><div class="bm-acc">90.5%</div><div class="bm-model">LSTM</div></div><div class="bm-card"><div class="bm-h">24h</div><div class="bm-acc">89.0%</div><div class="bm-model">LSTM</div></div><div class="bm-card"><div class="bm-h">48h</div><div class="bm-acc">87.5%</div><div class="bm-model">LSTM</div></div><div class="bm-card"><div class="bm-h">72h</div><div class="bm-acc">87.6%</div><div class="bm-model">LSTM</div></div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Accuracy heatmap — models × forecast horizons</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Mean ±2 patient accuracy across units, per model per horizon. Hotter colors
+      are better.
+    </p>
+    <div id="heatmap" style="height: 320px;"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Per-unit accuracy — pick a horizon</div>
+    <div style="margin:0 0 12px;">
+      <label for="horizon-select" style="font-size:13px;color:var(--muted);margin-right:8px;">Horizon</label>
+      <select id="horizon-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:80px;">
+        <option value="1">1h</option><option value="2">2h</option><option value="3">3h</option><option value="4">4h</option><option value="12">12h</option><option value="24">24h</option><option value="48">48h</option><option value="72">72h</option>
+      </select>
     </div>
-    <div class="dashboard-body">
-      
-<div class="tableau-frame">
-  <div class="tableauPlaceholder" id="viz_model_perf" style="position: relative; min-height: 950px;">
-    <noscript>
-      <a href="https://public.tableau.com/shared/DWG6QTPDZ" target="_blank" rel="noopener">
-        <img alt="Model Performance Analytics" src="https://public.tableau.com/static/images/DW/DWG6QTPDZ/1_rss.png" style="border: none; max-width: 100%;" />
-      </a>
-    </noscript>
-    <object class="tableauViz" style="display: none;">
-      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
-      <param name="embed_code_version" value="3" />
-      <param name="path" value="shared/DWG6QTPDZ" />
-      <param name="toolbar" value="yes" />
-      <param name="static_image" value="https://public.tableau.com/static/images/DW/DWG6QTPDZ/1.png" />
-      <param name="animate_transition" value="yes" />
-      <param name="display_static_image" value="yes" />
-      <param name="display_spinner" value="yes" />
-      <param name="display_overlay" value="yes" />
-      <param name="display_count" value="yes" />
-      <param name="language" value="en-US" />
-      <param name="filter" value="publish=yes" />
-    </object>
+    <div id="unit-bars" style="height: 360px;"></div>
+  </section>
+
+  <div class="footer-note">
+    Data: model_performance.csv · model_performance_aggregated.csv · best_model_per_horizon.csv
+    · forecast horizons 1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h
   </div>
-  <script type="text/javascript">
-    (function() {
-      var divElement = document.getElementById("viz_model_perf");
-      var vizElement = divElement.getElementsByTagName("object")[0];
-      // The published workbook is authored at a fixed 1400 × 950 size in
-      // Tableau Desktop, so always render the embed at exactly that size.
-      // The outer .tableau-frame allows horizontal scroll on viewports
-      // narrower than ~1450px instead of producing internal scrollbars.
-      vizElement.style.width = "1400px";
-      vizElement.style.height = "950px";
-      var scriptElement = document.createElement("script");
-      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
-      vizElement.parentNode.insertBefore(scriptElement, vizElement);
-    })();
+
+  <script>
+    const layoutBase = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
+    const palette = ["#4E79A7","#F28E2B","#E15759","#76B7B2","#59A14F","#EDC948"];
+    const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+    const models = ["RandomForest","LightGBM","LSTM","ARIMA","Prophet","Ensemble"];
+    const matrix = [[99.7,97.39,95.25,93.84,88.14,85.87,82.43,82.1],[99.69,97.79,95.75,94.46,89.63,88.55,86.5,86.37],[98.11,95.63,88.88,94.15,90.52,89.02,87.46,87.58],[81.98,82,82,82,81.98,82.06,82.2,82.08],[86.32,86.32,86.31,86.3,86.31,86.25,86.22,86.11],[97.05,94.12,91.57,91.32,87.65,86.6,85.3,85.15]];
+    const perUnitByHorizon = {"1":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":99.46,"LightGBM":99.5,"LSTM":97.7,"Ensemble":96.12},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":99.91,"LightGBM":99.86,"LSTM":99.36,"Ensemble":98.83},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":100,"LightGBM":99.95,"LSTM":99.66,"Ensemble":99.22},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":99.46,"LightGBM":99.55,"LSTM":98.04,"Ensemble":96.53},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":99.77,"LightGBM":99.77,"LSTM":98.48,"Ensemble":97.18},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":99,"LightGBM":98.91,"LSTM":93.19,"Ensemble":91.02},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":99.91,"LightGBM":99.86,"LSTM":98.53,"Ensemble":97.98},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":99.86,"LightGBM":99.91,"LSTM":98.38,"Ensemble":97.26},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":99.95,"LightGBM":99.91,"LSTM":99.66,"Ensemble":99.32}],"2":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":96.65,"LightGBM":97.33,"LSTM":87.94,"Ensemble":91.56},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":99.18,"LightGBM":99.23,"LSTM":98.43,"Ensemble":97.77},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":99.55,"LightGBM":99.59,"LSTM":99.26,"Ensemble":98.47},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":97.42,"LightGBM":97.6,"LSTM":96.47,"Ensemble":93.72},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":98.1,"LightGBM":98.14,"LSTM":96.47,"Ensemble":94.68},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":89.67,"LightGBM":91.8,"LSTM":87.5,"Ensemble":81.42},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":98.28,"LightGBM":98.51,"LSTM":97.5,"Ensemble":96.13},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":98.28,"LightGBM":98.37,"LSTM":97.55,"Ensemble":94.67},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":99.37,"LightGBM":99.5,"LSTM":99.51,"Ensemble":98.69}],"3":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":94.25,"LightGBM":95.47,"LSTM":94.56,"Ensemble":91.14},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":98.05,"LightGBM":98.19,"LSTM":97.7,"Ensemble":96.9},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":98.82,"LightGBM":98.91,"LSTM":98.73,"Ensemble":97.86},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":95.7,"LightGBM":95.65,"LSTM":94.71,"Ensemble":91.92},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":95.74,"LightGBM":96.24,"LSTM":95.1,"Ensemble":92.91},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":82.07,"LightGBM":83.83,"LSTM":26.23,"Ensemble":66.75},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":96.88,"LightGBM":97.24,"LSTM":96.67,"Ensemble":95.06},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":96.42,"LightGBM":96.88,"LSTM":97.01,"Ensemble":93.19},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":99.28,"LightGBM":99.37,"LSTM":99.22,"Ensemble":98.44}],"4":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":92.66,"LightGBM":93.61,"LSTM":94.17,"Ensemble":90.08},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":97.51,"LightGBM":98.1,"LSTM":97.55,"Ensemble":96.63},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":98.64,"LightGBM":98.64,"LSTM":98.14,"Ensemble":97.56},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":93.61,"LightGBM":94.02,"LSTM":93.53,"Ensemble":90.52},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":94.2,"LightGBM":94.66,"LSTM":94.31,"Ensemble":91.79},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":77.17,"LightGBM":78.8,"LSTM":77.7,"Ensemble":70.02},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":96.01,"LightGBM":96.42,"LSTM":96.23,"Ensemble":94.46},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":95.83,"LightGBM":96.97,"LSTM":96.72,"Ensemble":92.69},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":98.91,"LightGBM":98.96,"LSTM":99.02,"Ensemble":98.16}],"12":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":86.73,"LightGBM":91.35,"LSTM":92.79,"Ensemble":87.53},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.56,"LightGBM":96.78,"LSTM":92.55,"Ensemble":95.03},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.69,"LightGBM":98.05,"LSTM":95.44,"Ensemble":96.56},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":89.54,"LightGBM":91.21,"LSTM":91.03,"Ensemble":87.9},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":86.23,"LightGBM":90.17,"LSTM":91.13,"Ensemble":88.12},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":52.63,"LightGBM":51.18,"LSTM":61.08,"Ensemble":52.34},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":92.07,"LightGBM":95.15,"LSTM":95,"Ensemble":92.94},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":93.84,"LightGBM":95.06,"LSTM":96.91,"Ensemble":90.87},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.96,"LightGBM":97.74,"LSTM":98.77,"Ensemble":97.53}],"24":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":82.25,"LightGBM":91.53,"LSTM":91.37,"Ensemble":86.41},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.51,"LightGBM":97.33,"LSTM":92.45,"Ensemble":95.1},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.24,"LightGBM":97.83,"LSTM":97.6,"Ensemble":96.83},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":88.27,"LightGBM":92.35,"LSTM":92.25,"Ensemble":88.08},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":84.56,"LightGBM":89.13,"LSTM":91.52,"Ensemble":87.64},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":43.93,"LightGBM":41.89,"LSTM":48.24,"Ensemble":45.54},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":89.72,"LightGBM":95.11,"LSTM":94.8,"Ensemble":92.45},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":92.75,"LightGBM":93.93,"LSTM":94.12,"Ensemble":89.91},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.64,"LightGBM":97.83,"LSTM":98.82,"Ensemble":97.48}],"48":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":73.46,"LightGBM":85.78,"LSTM":89.66,"Ensemble":83.38},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.38,"LightGBM":97.33,"LSTM":92.4,"Ensemble":95.1},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.19,"LightGBM":97.69,"LSTM":97.7,"Ensemble":96.83},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":85.78,"LightGBM":91.76,"LSTM":89.46,"Ensemble":86.74},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":84.15,"LightGBM":89.49,"LSTM":90.05,"Ensemble":87.28},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":25.59,"LightGBM":29.48,"LSTM":41.37,"Ensemble":38.99},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":88.59,"LightGBM":94.84,"LSTM":95.29,"Ensemble":92.34},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":92.75,"LightGBM":94.43,"LSTM":93.43,"Ensemble":89.78},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.96,"LightGBM":97.74,"LSTM":97.75,"Ensemble":97.29}],"72":[{"unit_id":1775257343,"unit_name":"Neuro Stepdown","RandomForest":68.61,"LightGBM":83.38,"LSTM":88.04,"Ensemble":81.52},{"unit_id":21334825,"unit_name":"Surgical 2 West","RandomForest":96.83,"LightGBM":97.24,"LSTM":96.96,"Ensemble":96.05},{"unit_id":21336305,"unit_name":"Orthopedic 6 North","RandomForest":97.87,"LightGBM":98.05,"LSTM":95.69,"Ensemble":96.62},{"unit_id":4452986337,"unit_name":"Medical-Surgical 4 South","RandomForest":85.28,"LightGBM":92.39,"LSTM":91.52,"Ensemble":87.2},{"unit_id":705089,"unit_name":"Medical-Surgical 3 North","RandomForest":86.1,"LightGBM":88.41,"LSTM":93.09,"Ensemble":87.86},{"unit_id":705090,"unit_name":"Telemetry 4 East","RandomForest":27.04,"LightGBM":32.16,"LSTM":33.87,"Ensemble":38.01},{"unit_id":705091,"unit_name":"Cardiac Stepdown","RandomForest":87.18,"LightGBM":94.2,"LSTM":95.64,"Ensemble":91.8},{"unit_id":705092,"unit_name":"Oncology 5 South","RandomForest":92.3,"LightGBM":93.8,"LSTM":95.2,"Ensemble":89.91},{"unit_id":97635816,"unit_name":"Progressive Care","RandomForest":97.69,"LightGBM":97.69,"LSTM":98.19,"Ensemble":97.34}]};
+    const FOCUS_MODELS = ["RandomForest", "LightGBM", "LSTM", "Ensemble"];
+
+    // Heatmap.
+    const heatLayout = JSON.parse(JSON.stringify(layoutBase));
+    heatLayout.margin = { t: 20, r: 20, b: 50, l: 140 };
+    heatLayout.xaxis = { ...heatLayout.xaxis, type: "category",
+                         title: { text: "Forecast horizon", font: { size: 11 } } };
+    heatLayout.yaxis = { ...heatLayout.yaxis, automargin: true, type: "category" };
+    Plotly.newPlot("heatmap", [{
+      type: "heatmap",
+      x: HORIZONS.map(h => h + "h"),
+      y: models,
+      z: matrix,
+      colorscale: [[0, "#FBE4E2"], [0.5, "#F4D03F"], [0.85, "#76B7B2"], [1, "#1F4E79"]],
+      zmin: 50, zmax: 100,
+      colorbar: { title: { text: "± 2 acc %", font: { size: 11 } }, thickness: 12, len: 0.8 },
+      text: matrix.map(row => row.map(v => v != null ? v.toFixed(1) + "%" : "")),
+      texttemplate: "%{text}",
+      textfont: { size: 11, color: "white" },
+      hoverinfo: "skip",
+    }], heatLayout, { displayModeBar: false }).then(() => { window.RENDERED = true; });
+
+    // Per-unit grouped bar chart, updates with horizon selector.
+    const barLayout = JSON.parse(JSON.stringify(layoutBase));
+    barLayout.barmode = "group";
+    barLayout.margin = { t: 20, r: 20, b: 70, l: 55 };
+    barLayout.xaxis = { ...barLayout.xaxis, type: "category", tickangle: -25,
+                        title: { text: "Nurse unit", font: { size: 11 } } };
+    barLayout.yaxis = { ...barLayout.yaxis, title: { text: "± 2 patient accuracy (%)", font: { size: 11 } },
+                        range: [0, 100] };
+    barLayout.legend = { orientation: "h", y: -0.28, x: 0, font: { size: 10 } };
+
+    function renderBars(h) {
+      const rows = perUnitByHorizon[h] || [];
+      if (!rows.length) {
+        document.getElementById("unit-bars").innerHTML = '<p style="color:#999;text-align:center;padding-top:60px;">No per-unit data for this horizon.</p>';
+        return;
+      }
+      const labels = rows.map(r => r.unit_name);
+      const traces = FOCUS_MODELS.map((m, i) => ({
+        x: labels,
+        y: rows.map(r => r[m]),
+        name: m,
+        type: "bar",
+        marker: { color: palette[i % palette.length] },
+      }));
+      Plotly.react("unit-bars", traces, barLayout, { displayModeBar: false });
+    }
+    renderBars(1);
+    const hsel = document.getElementById("horizon-select");
+    if (hsel) hsel.addEventListener("change", () => renderBars(parseInt(hsel.value, 10)));
   </script>
-  <p class="tableau-caption">
-    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
-    <a href="https://public.tableau.com/shared/DWG6QTPDZ" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
-  </p>
-</div>
-    </div>
-  </div>
 </div>
 </body>
 </html>

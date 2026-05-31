@@ -54,6 +54,7 @@ const data = {
   driftHistory: safeReadCSV("drift_history.csv"),
   featureImportance: safeReadCSV("feature_importance.csv"),
   timeline: safeReadCSV("forecast_timeline.csv"),
+  perfUnit: safeReadCSV("model_performance.csv"),
 };
 
 // ── Shared CSS ──
@@ -2622,6 +2623,188 @@ ${emptyNote}
 </html>`;
 }
 
+// ── Dashboard 2 (current): self-contained Model Performance Analytics page ──
+function buildDashboard2() {
+  const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+  const agg = data.perfAgg || [];
+  const best = data.best || [];
+  const perUnit = data.perfUnit || [];
+
+  // Stable model order: tabular first, then deep, then statistical, then ensemble.
+  const MODEL_ORDER = ["RandomForest", "LightGBM", "LSTM", "ARIMA", "Prophet", "Ensemble"];
+  const presentModels = [...new Set(agg.map(r => r.model))];
+  const models = MODEL_ORDER.filter(m => presentModels.includes(m))
+                            .concat(presentModels.filter(m => !MODEL_ORDER.includes(m)));
+
+  // Heatmap matrix: models × horizons of mean within-2 accuracy.
+  const matrix = models.map(m => HORIZONS.map(h => {
+    const r = agg.find(x => x.model === m && Number(x.horizon) === h);
+    return (r && r.within_2_patients_pct != null) ? Number(r.within_2_patients_pct) : null;
+  }));
+
+  // Best model per horizon (one card per horizon).
+  const bestByH = HORIZONS.map(h => {
+    const r = best.find(x => Number(x.horizon) === h);
+    return r
+      ? { horizon: h, model: r.model, acc: Number(r.within_2_patients_pct) }
+      : { horizon: h, model: "—", acc: null };
+  });
+
+  // Per-unit accuracy grouped by horizon: {horizon: [{unit_id, unit_name, RandomForest, LightGBM, LSTM, Ensemble}]}.
+  const unitNameById = {};
+  (data.unitMeta || []).forEach(r => { unitNameById[r.unit_id] = r.unit_name; });
+  const FOCUS_MODELS = ["RandomForest", "LightGBM", "LSTM", "Ensemble"];
+  const perUnitByHorizon = {};
+  HORIZONS.forEach(h => {
+    const rowsAtH = perUnit.filter(r => Number(r.horizon) === h);
+    const units = [...new Set(rowsAtH.map(r => r.unit_id))].sort();
+    perUnitByHorizon[h] = units.map(uid => {
+      const entry = { unit_id: uid, unit_name: unitNameById[uid] || ("Unit " + uid) };
+      FOCUS_MODELS.forEach(m => {
+        const r = rowsAtH.find(x => x.unit_id === uid && x.model === m);
+        entry[m] = (r && r.within_2_patients_pct != null) ? Number(r.within_2_patients_pct) : null;
+      });
+      return entry;
+    });
+  });
+
+  const hasData = agg.length > 0;
+  const emptyNote = hasData ? "" : `
+    <div class="section" style="text-align:center;color:var(--muted);">
+      Model performance data not found. Run
+      <code>python run_pipeline.py --phase train</code> and
+      <code>--phase export</code> to populate model_performance.csv.
+    </div>`;
+
+  const bestCards = bestByH.map(b =>
+    '<div class="bm-card"><div class="bm-h">' + b.horizon + 'h</div>'
+    + '<div class="bm-acc">' + (b.acc == null ? "—" : b.acc.toFixed(1) + "%") + '</div>'
+    + '<div class="bm-model">' + b.model + '</div></div>').join("");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Model Performance Analytics — Nurse Census Prediction</title>
+  <meta name="description" content="Model × horizon ±2 accuracy heatmap, best-model-per-horizon highlights, and per-unit model accuracy breakdown.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    .bm-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-top:10px; }
+    .bm-card { background:#FFFFFF; border:1px solid var(--border); border-radius:3px; padding:10px 12px; text-align:center; }
+    .bm-h { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+    .bm-acc { font-size:22px; font-weight:700; color:#1F4E79; margin-top:2px; line-height:1.1; }
+    .bm-model { font-size:11px; color:var(--muted); margin-top:2px; }
+    @media (max-width: 800px) { .bm-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+${navBar("dashboards")}
+<div class="page-body">
+  <section class="hero">
+    <h1>Model Performance Analytics</h1>
+    <p class="tagline">
+      Process-improvement view: which model wins at each forecast horizon
+      (1, 2, 3, 4, 12, 24, 48, 72 hours), the full model × horizon accuracy
+      heatmap, and per-unit accuracy breakdown so a PI analyst can see where
+      individual units underperform the cohort.
+    </p>
+  </section>
+${emptyNote}
+  <section class="section">
+    <div class="section-title">Best model per horizon (±2 patient accuracy)</div>
+    <div class="bm-grid">${bestCards}</div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Accuracy heatmap — models × forecast horizons</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Mean ±2 patient accuracy across units, per model per horizon. Hotter colors
+      are better.
+    </p>
+    <div id="heatmap" style="height: 320px;"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Per-unit accuracy — pick a horizon</div>
+    <div style="margin:0 0 12px;">
+      <label for="horizon-select" style="font-size:13px;color:var(--muted);margin-right:8px;">Horizon</label>
+      <select id="horizon-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:80px;">
+        ${HORIZONS.map(h => '<option value="' + h + '">' + h + 'h</option>').join("")}
+      </select>
+    </div>
+    <div id="unit-bars" style="height: 360px;"></div>
+  </section>
+
+  <div class="footer-note">
+    Data: model_performance.csv · model_performance_aggregated.csv · best_model_per_horizon.csv
+    · forecast horizons 1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h
+  </div>
+
+  <script>
+    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
+    const palette = ${JSON.stringify(TABLEAU_PALETTE)};
+    const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+    const models = ${JSON.stringify(models)};
+    const matrix = ${JSON.stringify(matrix)};
+    const perUnitByHorizon = ${JSON.stringify(perUnitByHorizon)};
+    const FOCUS_MODELS = ["RandomForest", "LightGBM", "LSTM", "Ensemble"];
+
+    // Heatmap.
+    const heatLayout = JSON.parse(JSON.stringify(layoutBase));
+    heatLayout.margin = { t: 20, r: 20, b: 50, l: 140 };
+    heatLayout.xaxis = { ...heatLayout.xaxis, type: "category",
+                         title: { text: "Forecast horizon", font: { size: 11 } } };
+    heatLayout.yaxis = { ...heatLayout.yaxis, automargin: true, type: "category" };
+    Plotly.newPlot("heatmap", [{
+      type: "heatmap",
+      x: HORIZONS.map(h => h + "h"),
+      y: models,
+      z: matrix,
+      colorscale: [[0, "#FBE4E2"], [0.5, "#F4D03F"], [0.85, "#76B7B2"], [1, "#1F4E79"]],
+      zmin: 50, zmax: 100,
+      colorbar: { title: { text: "± 2 acc %", font: { size: 11 } }, thickness: 12, len: 0.8 },
+      text: matrix.map(row => row.map(v => v != null ? v.toFixed(1) + "%" : "")),
+      texttemplate: "%{text}",
+      textfont: { size: 11, color: "white" },
+      hoverinfo: "skip",
+    }], heatLayout, { displayModeBar: false }).then(() => { window.RENDERED = true; });
+
+    // Per-unit grouped bar chart, updates with horizon selector.
+    const barLayout = JSON.parse(JSON.stringify(layoutBase));
+    barLayout.barmode = "group";
+    barLayout.margin = { t: 20, r: 20, b: 70, l: 55 };
+    barLayout.xaxis = { ...barLayout.xaxis, type: "category", tickangle: -25,
+                        title: { text: "Nurse unit", font: { size: 11 } } };
+    barLayout.yaxis = { ...barLayout.yaxis, title: { text: "± 2 patient accuracy (%)", font: { size: 11 } },
+                        range: [0, 100] };
+    barLayout.legend = { orientation: "h", y: -0.28, x: 0, font: { size: 10 } };
+
+    function renderBars(h) {
+      const rows = perUnitByHorizon[h] || [];
+      if (!rows.length) {
+        document.getElementById("unit-bars").innerHTML = '<p style="color:#999;text-align:center;padding-top:60px;">No per-unit data for this horizon.</p>';
+        return;
+      }
+      const labels = rows.map(r => r.unit_name);
+      const traces = FOCUS_MODELS.map((m, i) => ({
+        x: labels,
+        y: rows.map(r => r[m]),
+        name: m,
+        type: "bar",
+        marker: { color: palette[i % palette.length] },
+      }));
+      Plotly.react("unit-bars", traces, barLayout, { displayModeBar: false });
+    }
+    renderBars(1);
+    const hsel = document.getElementById("horizon-select");
+    if (hsel) hsel.addEventListener("change", () => renderBars(parseInt(hsel.value, 10)));
+  </script>
+</div>
+</body>
+</html>`;
+}
+
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
@@ -2631,7 +2814,7 @@ fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGall
 fs.writeFileSync(path.join(OUT_HTML_DIR, "monitoring.html"), buildMonitoring());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "explainability.html"), buildExplainability());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboard1());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboard2());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));
 console.log("Wrote HTML to", OUT_HTML_DIR);
 
