@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Executive Census Summary — Nurse Census Prediction</title>
+  <meta name="description" content="House-wide census, capacity, utilization, alerts, and 72-hour forecasts per unit, with the best-model recommendation.">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
 
@@ -20,64 +22,96 @@
     <a href="https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction" target="_blank" rel="noopener">GitHub</a>
   </div>
 </nav>
-<div class="page-body wide">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <div>
-        <h1>Executive Census Summary</h1>
-        <div class="subtitle">Leadership View</div>
+<div class="page-body">
+  <section class="hero">
+    <h1>Executive Census Summary</h1>
+    <p class="tagline">
+      Leadership view: house-wide census and capacity, utilization ranked by
+      unit, alerts at a glance, and the 72-hour look-ahead per unit. The
+      ±2-patient accuracy at the 72-hour horizon and the recommended model
+      come from the trained model comparison.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num">139</div>
+        <div class="label">House-wide census</div>
       </div>
-      <div class="meta">
-        <div>Live Tableau Public</div>
-        <div>Daily refresh from GitHub Actions cron</div>
+      <div class="stat-card">
+        <div class="num">154</div>
+        <div class="label">House-wide capacity</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color:#E15759;">90.3%</div>
+        <div class="label">House-wide utilization</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color:#E15759;">6</div>
+        <div class="label">Units in alert (≥ 90%)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">87.6%</div>
+        <div class="label">72h ±2 accuracy · LSTM</div>
       </div>
     </div>
-    <div class="dashboard-body">
-      
-<div class="tableau-frame">
-  <div class="tableauPlaceholder" id="viz_exec_summary" style="position: relative; min-height: 950px;">
-    <noscript>
-      <a href="https://public.tableau.com/shared/M8QMRYP65" target="_blank" rel="noopener">
-        <img alt="Executive Census Summary" src="https://public.tableau.com/static/images/M8/M8QMRYP65/1_rss.png" style="border: none; max-width: 100%;" />
-      </a>
-    </noscript>
-    <object class="tableauViz" style="display: none;">
-      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
-      <param name="embed_code_version" value="3" />
-      <param name="path" value="shared/M8QMRYP65" />
-      <param name="toolbar" value="yes" />
-      <param name="static_image" value="https://public.tableau.com/static/images/M8/M8QMRYP65/1.png" />
-      <param name="animate_transition" value="yes" />
-      <param name="display_static_image" value="yes" />
-      <param name="display_spinner" value="yes" />
-      <param name="display_overlay" value="yes" />
-      <param name="display_count" value="yes" />
-      <param name="language" value="en-US" />
-      <param name="filter" value="publish=yes" />
-    </object>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Utilization by unit</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Sorted highest to lowest. Bars turn orange at ≥ 75% utilization and red
+      at ≥ 90%; the reference line marks the alert threshold.
+    </p>
+    <div id="util-bar" style="height: 320px;"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Per-unit detail</div>
+    <table class="perf-table">
+      <thead><tr><th>Unit</th><th>Current</th><th>Capacity</th><th>Utilization</th><th>Alert</th><th>72h forecast</th></tr></thead>
+      <tbody><tr><td>Cardiac Stepdown</td><td>20</td><td>20</td><td><span style="color:#E15759;font-weight:600;">100.0%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>18.7</td></tr><tr><td>Progressive Care</td><td>11</td><td>11</td><td><span style="color:#E15759;font-weight:600;">100.0%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>10.3</td></tr><tr><td>Neuro Stepdown</td><td>19</td><td>20</td><td><span style="color:#E15759;font-weight:600;">95.0%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>17.9</td></tr><tr><td>Medical-Surgical 3 North</td><td>16</td><td>17</td><td><span style="color:#E15759;font-weight:600;">94.1%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>15.2</td></tr><tr><td>Medical-Surgical 4 South</td><td>13</td><td>14</td><td><span style="color:#E15759;font-weight:600;">92.9%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>13.0</td></tr><tr><td>Surgical 2 West</td><td>12</td><td>13</td><td><span style="color:#E15759;font-weight:600;">92.3%</span></td><td><span style="color:#E15759;font-weight:600;">over 90%</span></td><td>12.2</td></tr><tr><td>Oncology 5 South</td><td>10</td><td>12</td><td><span style="color:#F28E2B;font-weight:600;">83.3%</span></td><td><span style="color:#59A14F;">OK</span></td><td>10.9</td></tr><tr><td>Telemetry 4 East</td><td>28</td><td>34</td><td><span style="color:#F28E2B;font-weight:600;">82.4%</span></td><td><span style="color:#59A14F;">OK</span></td><td>27.6</td></tr><tr><td>Orthopedic 6 North</td><td>10</td><td>13</td><td><span style="color:#F28E2B;font-weight:600;">76.9%</span></td><td><span style="color:#59A14F;">OK</span></td><td>12.1</td></tr></tbody>
+    </table>
+  </section>
+
+  <div class="footer-note">
+    Data: executive_summary.csv · best_model_per_horizon.csv · unit_metadata.csv
   </div>
-  <script type="text/javascript">
-    (function() {
-      var divElement = document.getElementById("viz_exec_summary");
-      var vizElement = divElement.getElementsByTagName("object")[0];
-      // The published workbook is authored at a fixed 1400 × 950 size in
-      // Tableau Desktop, so always render the embed at exactly that size.
-      // The outer .tableau-frame allows horizontal scroll on viewports
-      // narrower than ~1450px instead of producing internal scrollbars.
-      vizElement.style.width = "1400px";
-      vizElement.style.height = "950px";
-      var scriptElement = document.createElement("script");
-      scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
-      vizElement.parentNode.insertBefore(scriptElement, vizElement);
-    })();
+
+  <script>
+    const layoutBase = {"font":{"family":"Segoe UI, Helvetica Neue, Arial, sans-serif","size":11,"color":"#2A2A2A"},"paper_bgcolor":"#FFFFFF","plot_bgcolor":"#FFFFFF","margin":{"t":30,"r":20,"b":50,"l":60},"hovermode":false,"xaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}},"yaxis":{"gridcolor":"#EEEEEE","linecolor":"#CCCCCC","tickfont":{"size":11}}};
+    const labels = ["Cardiac Stepdown","Progressive Care","Neuro Stepdown","Medical-Surgical 3 North","Medical-Surgical 4 South","Surgical 2 West","Oncology 5 South","Telemetry 4 East","Orthopedic 6 North"];
+    const values = [100,100,95,94.1,92.9,92.3,83.3,82.4,76.9];
+    const colors = ["#E15759","#E15759","#E15759","#E15759","#E15759","#E15759","#F28E2B","#F28E2B","#F28E2B"];
+
+    if (labels.length) {
+      const layout = JSON.parse(JSON.stringify(layoutBase));
+      layout.margin = { t: 20, r: 20, b: 70, l: 55 };
+      layout.xaxis = { ...layout.xaxis, type: "category", tickangle: -25,
+                       title: { text: "Nurse unit", font: { size: 11 } } };
+      layout.yaxis = { ...layout.yaxis, title: { text: "Utilization (%)", font: { size: 11 } },
+                       range: [0, Math.max(100, Math.ceil(Math.max(...values) / 10) * 10)] };
+      layout.shapes = [
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 90, y1: 90,
+          line: { color: "#E15759", width: 1, dash: "dash" } },
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 75, y1: 75,
+          line: { color: "#F28E2B", width: 1, dash: "dot" } }
+      ];
+      layout.annotations = [
+        { xref: "paper", x: 1, y: 90, xanchor: "right", yanchor: "bottom",
+          text: "alert (90%)", showarrow: false, font: { size: 9, color: "#E15759" } },
+        { xref: "paper", x: 1, y: 75, xanchor: "right", yanchor: "bottom",
+          text: "watch (75%)", showarrow: false, font: { size: 9, color: "#F28E2B" } }
+      ];
+      Plotly.newPlot("util-bar", [{
+        x: labels, y: values, type: "bar",
+        marker: { color: colors },
+        hovertemplate: "%{x}: %{y:.1f}%<extra></extra>",
+      }], layout, { displayModeBar: false })
+        .then(() => { window.RENDERED = true; });
+    }
   </script>
-  <p class="tableau-caption">
-    Live Tableau Public workbook · daily refresh via GitHub Actions cron + Google Sheets bridge ·
-    <a href="https://public.tableau.com/shared/M8QMRYP65" target="_blank" rel="noopener">Open in Tableau Public ↗</a>
-  </p>
-</div>
-    </div>
-  </div>
 </div>
 </body>
 </html>

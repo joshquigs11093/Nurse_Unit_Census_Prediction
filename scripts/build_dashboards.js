@@ -2805,6 +2805,164 @@ ${emptyNote}
 </html>`;
 }
 
+// ── Dashboard 3 (current): self-contained Executive Census Summary page ──
+function buildDashboard3() {
+  const execRows = (data.exec || []).slice();
+  const bestRows = data.best || [];
+
+  // House-wide rollups.
+  const totalCensus = execRows.reduce((s, r) => s + (Number(r.latest_census) || 0), 0);
+  const totalCapacity = execRows.reduce((s, r) => s + (Number(r.capacity) || 0), 0);
+  const houseUtil = totalCapacity > 0 ? (totalCensus / totalCapacity * 100) : null;
+  const isAlert = r => (r.alert_over_90pct === true || r.alert_over_90pct === "True"
+                        || Number(r.utilization_pct) >= 90);
+  const alertCount = execRows.filter(isAlert).length;
+  const okCount = execRows.length - alertCount;
+
+  // Utilization bar chart: sorted descending so high-utilization units land at top.
+  const sorted = execRows.slice().sort(
+    (a, b) => (Number(b.utilization_pct) || 0) - (Number(a.utilization_pct) || 0));
+  const barLabels = sorted.map(r => r.unit_name || ("Unit " + r.unit_id));
+  const barValues = sorted.map(r => Number(r.utilization_pct) || 0);
+  const barColors = barValues.map(v => v >= 90 ? "#E15759" : (v >= 75 ? "#F28E2B" : "#59A14F"));
+
+  // Best model for the 72h horizon (the "look-ahead" the executive view leans on).
+  const best72 = bestRows.find(r => Number(r.horizon) === 72);
+  const recommendedLong = best72 ? best72.model : "—";
+  const recommendedAcc = (best72 && best72.within_2_patients_pct != null)
+    ? Number(best72.within_2_patients_pct).toFixed(1) + "%" : "—";
+
+  // Per-unit detail rows, sorted high-utilization first.
+  const detailRows = sorted.map(r => {
+    const util = Number(r.utilization_pct) || 0;
+    const utilColor = util >= 90 ? "#E15759" : (util >= 75 ? "#F28E2B" : "#59A14F");
+    const alert = isAlert(r);
+    return "<tr>"
+      + "<td>" + (r.unit_name || r.unit_id) + "</td>"
+      + "<td>" + (r.latest_census != null ? Math.round(Number(r.latest_census)) : "—") + "</td>"
+      + "<td>" + (r.capacity != null ? Math.round(Number(r.capacity)) : "—") + "</td>"
+      + '<td><span style="color:' + utilColor + ';font-weight:600;">' + util.toFixed(1) + "%</span></td>"
+      + "<td>" + (alert
+          ? '<span style="color:#E15759;font-weight:600;">over 90%</span>'
+          : '<span style="color:#59A14F;">OK</span>') + "</td>"
+      + "<td>" + (r.forecast_72hr != null && r.forecast_72hr !== ""
+          ? Number(r.forecast_72hr).toFixed(1) : "—") + "</td>"
+      + "</tr>";
+  }).join("");
+
+  const hasData = execRows.length > 0;
+  const emptyNote = hasData ? "" : `
+    <div class="section" style="text-align:center;color:var(--muted);">
+      Executive summary data not found. Run the daily refresh to populate
+      <code>outputs/tableau/executive_summary.csv</code>.
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Executive Census Summary — Nurse Census Prediction</title>
+  <meta name="description" content="House-wide census, capacity, utilization, alerts, and 72-hour forecasts per unit, with the best-model recommendation.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+${navBar("dashboards")}
+<div class="page-body">
+  <section class="hero">
+    <h1>Executive Census Summary</h1>
+    <p class="tagline">
+      Leadership view: house-wide census and capacity, utilization ranked by
+      unit, alerts at a glance, and the 72-hour look-ahead per unit. The
+      ±2-patient accuracy at the 72-hour horizon and the recommended model
+      come from the trained model comparison.
+    </p>
+  </section>
+${emptyNote}
+  <section class="section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num">${Math.round(totalCensus)}</div>
+        <div class="label">House-wide census</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">${Math.round(totalCapacity)}</div>
+        <div class="label">House-wide capacity</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color:${houseUtil != null && houseUtil >= 90 ? "#E15759" : (houseUtil != null && houseUtil >= 75 ? "#F28E2B" : "#59A14F")};">${houseUtil != null ? houseUtil.toFixed(1) + "%" : "—"}</div>
+        <div class="label">House-wide utilization</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color:${alertCount > 0 ? "#E15759" : "#59A14F"};">${alertCount}</div>
+        <div class="label">Units in alert (≥ 90%)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">${recommendedAcc}</div>
+        <div class="label">72h ±2 accuracy · ${recommendedLong}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Utilization by unit</div>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
+      Sorted highest to lowest. Bars turn orange at ≥ 75% utilization and red
+      at ≥ 90%; the reference line marks the alert threshold.
+    </p>
+    <div id="util-bar" style="height: 320px;"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Per-unit detail</div>
+    <table class="perf-table">
+      <thead><tr><th>Unit</th><th>Current</th><th>Capacity</th><th>Utilization</th><th>Alert</th><th>72h forecast</th></tr></thead>
+      <tbody>${detailRows || '<tr><td colspan="6">No data available.</td></tr>'}</tbody>
+    </table>
+  </section>
+
+  <div class="footer-note">
+    Data: executive_summary.csv · best_model_per_horizon.csv · unit_metadata.csv
+  </div>
+
+  <script>
+    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
+    const labels = ${JSON.stringify(barLabels)};
+    const values = ${JSON.stringify(barValues)};
+    const colors = ${JSON.stringify(barColors)};
+
+    if (labels.length) {
+      const layout = JSON.parse(JSON.stringify(layoutBase));
+      layout.margin = { t: 20, r: 20, b: 70, l: 55 };
+      layout.xaxis = { ...layout.xaxis, type: "category", tickangle: -25,
+                       title: { text: "Nurse unit", font: { size: 11 } } };
+      layout.yaxis = { ...layout.yaxis, title: { text: "Utilization (%)", font: { size: 11 } },
+                       range: [0, Math.max(100, Math.ceil(Math.max(...values) / 10) * 10)] };
+      layout.shapes = [
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 90, y1: 90,
+          line: { color: "#E15759", width: 1, dash: "dash" } },
+        { type: "line", xref: "paper", x0: 0, x1: 1, y0: 75, y1: 75,
+          line: { color: "#F28E2B", width: 1, dash: "dot" } }
+      ];
+      layout.annotations = [
+        { xref: "paper", x: 1, y: 90, xanchor: "right", yanchor: "bottom",
+          text: "alert (90%)", showarrow: false, font: { size: 9, color: "#E15759" } },
+        { xref: "paper", x: 1, y: 75, xanchor: "right", yanchor: "bottom",
+          text: "watch (75%)", showarrow: false, font: { size: 9, color: "#F28E2B" } }
+      ];
+      Plotly.newPlot("util-bar", [{
+        x: labels, y: values, type: "bar",
+        marker: { color: colors },
+        hovertemplate: "%{x}: %{y:.1f}%<extra></extra>",
+      }], layout, { displayModeBar: false })
+        .then(() => { window.RENDERED = true; });
+    }
+  </script>
+</div>
+</body>
+</html>`;
+}
+
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
@@ -2815,7 +2973,7 @@ fs.writeFileSync(path.join(OUT_HTML_DIR, "monitoring.html"), buildMonitoring());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "explainability.html"), buildExplainability());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboard1());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboard2());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboard3());
 console.log("Wrote HTML to", OUT_HTML_DIR);
 
 // ── Screenshot via puppeteer (skipped in --no-screenshots / cron mode) ──
