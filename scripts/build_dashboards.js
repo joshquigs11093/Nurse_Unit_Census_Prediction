@@ -53,6 +53,7 @@ const data = {
   driftReport: safeReadCSV("drift_report.csv"),
   driftHistory: safeReadCSV("drift_history.csv"),
   featureImportance: safeReadCSV("feature_importance.csv"),
+  timeline: safeReadCSV("forecast_timeline.csv"),
 };
 
 // ── Shared CSS ──
@@ -2395,6 +2396,232 @@ ${emptyNote}
 </html>`;
 }
 
+// ── Dashboard 1 (current): self-contained Operational Census Forecast page ──
+// Replaces the Tableau embed. Reads executive_summary.csv + forecast_predictions.csv +
+// forecast_timeline.csv and renders a unit selector, current-state panel, eight-horizon
+// forecast cards (1/2/3/4/12/24/48/72h), and a seven-day actuals + forecast timeline with
+// the 90% conformal band shaded forward. This function declaration shadows the legacy
+// `buildDashboard1` defined earlier in the file (last function-declaration wins in JS).
+function buildDashboard1() {
+  const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+  const execRows = data.exec || [];
+
+  const unitData = {};
+  execRows.forEach(e => {
+    const uid = e.unit_id;
+    const name = e.unit_name || ("Unit " + uid);
+
+    // Latest row per unit in forecast_predictions has the pred_* columns populated.
+    const predRows = (data.forecast || []).filter(
+      r => r.unit_id === uid && r.pred_1hr !== null && r.pred_1hr !== "");
+    const latestPred = predRows.length ? predRows[predRows.length - 1] : null;
+
+    // Eight forecast cards, one per horizon. We iterate HORIZONS explicitly so the
+    // page always renders a card in the right slot even if a value is missing.
+    const cards = [];
+    if (latestPred) {
+      HORIZONS.forEach(h => {
+        const point = latestPred["pred_" + h + "hr"];
+        if (point === null || point === "" || point === undefined) return;
+        const lower = latestPred["pred_" + h + "hr_lower"];
+        const upper = latestPred["pred_" + h + "hr_upper"];
+        cards.push({
+          horizon: h,
+          point: Number(point),
+          lower: (lower === null || lower === "" || lower === undefined) ? null : Number(lower),
+          upper: (upper === null || upper === "" || upper === undefined) ? null : Number(upper),
+          overCapacity: e.capacity != null && Number(point) >= Number(e.capacity),
+        });
+      });
+    }
+
+    // Time-series data from forecast_timeline.csv (actuals + forward forecasts with bands).
+    const tlRows = (data.timeline || []).filter(r => r.unit_id === uid);
+    const actuals = tlRows.filter(r => r.series === "Actual")
+                          .sort((a, b) => String(a.timestamp).localeCompare(String(b.timestamp)));
+    const forecasts = tlRows.filter(r => r.series === "Forecast")
+                            .sort((a, b) => Number(a.horizon_h) - Number(b.horizon_h));
+
+    unitData[name] = {
+      uid: uid,
+      capacity: e.capacity == null ? null : Number(e.capacity),
+      current: e.latest_census == null ? null : Number(e.latest_census),
+      utilization: e.utilization_pct == null ? null : Number(e.utilization_pct),
+      alert: e.alert_over_90pct === true || e.alert_over_90pct === "True",
+      cards: cards,
+      actualsX: actuals.map(r => r.timestamp),
+      actualsY: actuals.map(r => Number(r.value)),
+      forecastX: forecasts.map(r => r.timestamp),
+      forecastY: forecasts.map(r => Number(r.value)),
+      forecastLower: forecasts.map(r => Number(r.value_lower)),
+      forecastUpper: forecasts.map(r => Number(r.value_upper)),
+    };
+  });
+
+  // Sort units by utilization desc so the highest-utilization unit (often the alert one)
+  // is the default focus when the page loads.
+  const unitNames = Object.keys(unitData).sort(
+    (a, b) => (unitData[b].utilization || 0) - (unitData[a].utilization || 0));
+  const defaultUnit = unitNames[0] || null;
+  const hasData = !!defaultUnit;
+
+  const unitOptions = unitNames.map(u =>
+    '<option value="' + u.replace(/"/g, "&quot;") + '">' + u + '</option>').join("");
+
+  const emptyNote = hasData ? "" : `
+    <div class="section" style="text-align:center;color:var(--muted);">
+      Operational data not found. Run the daily refresh to populate the operational CSV exports.
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Operational Census Forecast — Nurse Census Prediction</title>
+  <meta name="description" content="In-repo operational forecast dashboard: current census per unit, eight-horizon forecasts with 90% prediction intervals, and a seven-day actual-vs-forecast timeline.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    .op-state { display:flex; gap:14px; flex-wrap:wrap; margin: 8px 0 0; }
+    .op-state .stat-card { flex: 1 1 150px; min-width:140px; }
+    .fc-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-top:10px; }
+    .fc-card { background:#FFFFFF; border:1px solid var(--border); border-radius:3px; padding:10px 12px; text-align:center; }
+    .fc-card.alert { border-color:#E15759; background:#FFF5F5; }
+    .fc-h { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+    .fc-pt { font-size:22px; font-weight:700; color:#1F4E79; margin-top:2px; line-height:1.1; }
+    .fc-card.alert .fc-pt { color:#E15759; }
+    .fc-band { font-size:11px; color:var(--muted); margin-top:2px; }
+    @media (max-width: 800px) { .fc-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+${navBar("dashboards")}
+<div class="page-body">
+  <section class="hero">
+    <h1>Operational Census Forecast</h1>
+    <p class="tagline">
+      House-supervisor view: current census per unit, eight-horizon forecasts
+      (1, 2, 3, 4, 12, 24, 48, and 72 hours ahead) with their 90% prediction
+      intervals, and a seven-day actuals + forward forecast timeline showing
+      the band ahead of the latest reading.
+    </p>
+  </section>
+${emptyNote}
+  <section class="section">
+    <div style="margin:0 0 12px;">
+      <label for="unit-select" style="font-size:13px;color:var(--muted);margin-right:8px;">Unit</label>
+      <select id="unit-select" style="font-size:13px;padding:5px 10px;border:1px solid var(--border);border-radius:3px;background:#fff;min-width:240px;">${unitOptions}</select>
+    </div>
+
+    <div class="section-title">Current state</div>
+    <div class="op-state" id="op-state"></div>
+
+    <div class="section-title" style="margin-top:18px;">Forecast (next 1h through 72h)</div>
+    <div class="fc-grid" id="fc-grid"></div>
+
+    <div class="section-title" style="margin-top:18px;">Seven-day actuals + forecast with 90% band</div>
+    <div id="ts-chart" style="height: 360px;"></div>
+  </section>
+
+  <div class="footer-note">
+    Data: executive_summary.csv · forecast_predictions.csv · forecast_timeline.csv
+    · forecast horizons 1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h
+  </div>
+
+  <script>
+    const layoutBase = ${JSON.stringify(PLOTLY_LAYOUT_BASE)};
+    const unitData = ${JSON.stringify(unitData)};
+    const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
+
+    function fmtCensus(n) { return (n == null || Number.isNaN(n)) ? "—" : String(Math.round(n)); }
+    function fmtBand(lo, hi) {
+      if (lo == null || hi == null || Number.isNaN(lo) || Number.isNaN(hi)) return "—";
+      return Math.round(lo) + " – " + Math.round(hi);
+    }
+
+    function renderState(name) {
+      const u = unitData[name];
+      const el = document.getElementById("op-state");
+      if (!u) { el.innerHTML = ""; return; }
+      const utilColor = (u.utilization == null) ? "#1F4E79"
+        : (u.utilization >= 90 ? "#E15759" : (u.utilization >= 75 ? "#F28E2B" : "#59A14F"));
+      const alertBadge = u.alert
+        ? '<span style="color:#E15759;font-weight:600;font-size:14px;">over 90%</span>'
+        : '<span style="color:#59A14F;font-weight:600;font-size:14px;">OK</span>';
+      el.innerHTML =
+        '<div class="stat-card"><div class="num">' + fmtCensus(u.current) + '</div><div class="label">Current census</div></div>' +
+        '<div class="stat-card"><div class="num">' + fmtCensus(u.capacity) + '</div><div class="label">Capacity</div></div>' +
+        '<div class="stat-card"><div class="num" style="color:' + utilColor + ';">' + (u.utilization == null ? "—" : u.utilization.toFixed(1) + "%") + '</div><div class="label">Utilization</div></div>' +
+        '<div class="stat-card"><div class="num">' + alertBadge + '</div><div class="label">Alert</div></div>';
+    }
+
+    function renderCards(name) {
+      const u = unitData[name];
+      const el = document.getElementById("fc-grid");
+      if (!u || !u.cards.length) {
+        el.innerHTML = '<p style="color:#999;padding:10px 0;">No forecast available for this unit.</p>';
+        return;
+      }
+      // Always render exactly 8 slots in horizon order, missing values show as em-dash.
+      const byH = {};
+      u.cards.forEach(c => { byH[c.horizon] = c; });
+      el.innerHTML = HORIZONS.map(h => {
+        const c = byH[h];
+        if (!c) {
+          return '<div class="fc-card"><div class="fc-h">' + h + 'h ahead</div>'
+               + '<div class="fc-pt">—</div><div class="fc-band">—</div></div>';
+        }
+        const cls = c.overCapacity ? "fc-card alert" : "fc-card";
+        return '<div class="' + cls + '"><div class="fc-h">' + h + 'h ahead</div>'
+             + '<div class="fc-pt">' + fmtCensus(c.point) + '</div>'
+             + '<div class="fc-band">90%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
+      }).join("");
+    }
+
+    function renderChart(name) {
+      const u = unitData[name];
+      const el = document.getElementById("ts-chart");
+      if (!u) { el.innerHTML = ""; return; }
+      const layout = JSON.parse(JSON.stringify(layoutBase));
+      layout.hovermode = "x unified";
+      layout.margin = { t: 20, r: 30, b: 50, l: 55 };
+      layout.xaxis = { ...layout.xaxis, type: "date", title: { text: "Timestamp", font: { size: 11 } } };
+      layout.yaxis = { ...layout.yaxis, title: { text: "Census (patients)", font: { size: 11 } }, rangemode: "tozero" };
+      layout.legend = { orientation: "h", y: -0.22, x: 0, font: { size: 10 } };
+      if (u.capacity) {
+        layout.shapes = [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: u.capacity, y1: u.capacity,
+                           line: { color: "#E15759", width: 1, dash: "dash" } }];
+        layout.annotations = [{ xref: "paper", x: 1, y: u.capacity, xanchor: "right", yanchor: "bottom",
+                                text: "capacity " + u.capacity, showarrow: false,
+                                font: { size: 9, color: "#E15759" } }];
+      }
+      // Band is drawn as two invisible traces with fill between them.
+      const traces = [
+        { x: u.actualsX, y: u.actualsY, name: "Actual", type: "scatter", mode: "lines+markers",
+          line: { color: "#1F4E79", width: 2 }, marker: { size: 4 } },
+        { x: u.forecastX, y: u.forecastUpper, type: "scatter", mode: "lines",
+          line: { width: 0 }, hoverinfo: "skip", showlegend: false },
+        { x: u.forecastX, y: u.forecastLower, name: "90% band", type: "scatter", mode: "lines",
+          fill: "tonexty", fillcolor: "rgba(78,121,167,0.20)", line: { width: 0 }, hoverinfo: "skip" },
+        { x: u.forecastX, y: u.forecastY, name: "Forecast", type: "scatter", mode: "lines+markers",
+          line: { color: "#4E79A7", width: 2, dash: "dot" }, marker: { size: 6 } }
+      ];
+      Plotly.react(el, traces, layout, { displayModeBar: false })
+        .then(() => { window.RENDERED = true; });
+    }
+
+    function renderAll(name) { renderState(name); renderCards(name); renderChart(name); }
+    const sel = document.getElementById("unit-select");
+    if (sel) {
+      sel.addEventListener("change", () => renderAll(sel.value));
+      renderAll(sel.value);
+    }
+  </script>
+</div>
+</body>
+</html>`;
+}
+
 fs.writeFileSync(path.join(OUT_HTML_DIR, "style.css"), STYLES);
 fs.writeFileSync(path.join(OUT_HTML_DIR, "index.html"), buildIndex());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "models.html"), buildModels());
@@ -2403,7 +2630,7 @@ fs.writeFileSync(path.join(OUT_HTML_DIR, "tests.html"), buildTests());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboards.html"), buildDashboardsGallery());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "monitoring.html"), buildMonitoring());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "explainability.html"), buildExplainability());
-fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboardEmbed(TABLEAU_VIZZES[1]));
+fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard1.html"), buildDashboard1());
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard2.html"), buildDashboardEmbed(TABLEAU_VIZZES[2]));
 fs.writeFileSync(path.join(OUT_HTML_DIR, "dashboard3.html"), buildDashboardEmbed(TABLEAU_VIZZES[3]));
 console.log("Wrote HTML to", OUT_HTML_DIR);
