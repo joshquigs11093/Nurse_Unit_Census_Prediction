@@ -15,7 +15,7 @@ const SKIP_SCREENSHOTS = process.argv.includes("--no-screenshots");
 const REPO_ROOT = path.resolve(__dirname, "..");
 const TABLEAU_DIR = path.join(REPO_ROOT, "outputs", "tableau");
 const OUT_HTML_DIR = path.join(REPO_ROOT, "docs");  // GitHub Pages serves from /docs
-const OUT_PNG_DIR = path.join(REPO_ROOT, "outputs", "figures", "dashboards");
+const OUT_PNG_DIR = path.join(OUT_HTML_DIR, "img", "dashboards");  // served from /docs/img
 
 fs.mkdirSync(OUT_HTML_DIR, { recursive: true });
 fs.mkdirSync(OUT_PNG_DIR, { recursive: true });
@@ -1047,6 +1047,7 @@ ${navBar("dashboards")}
 
   <div class="gallery">
     <a class="gallery-card" href="dashboard1.html">
+      <img src="img/dashboards/dashboard1.png" alt="Operational Census Forecast preview">
       <div class="meta">
         <h3>Operational Census Forecast</h3>
         <div class="audience">House supervisors</div>
@@ -1054,6 +1055,7 @@ ${navBar("dashboards")}
       </div>
     </a>
     <a class="gallery-card" href="dashboard2.html">
+      <img src="img/dashboards/dashboard2.png" alt="Model Performance Analytics preview">
       <div class="meta">
         <h3>Model Performance Analytics</h3>
         <div class="audience">Process improvement</div>
@@ -1061,6 +1063,7 @@ ${navBar("dashboards")}
       </div>
     </a>
     <a class="gallery-card" href="dashboard3.html">
+      <img src="img/dashboards/dashboard3.png" alt="Executive Census Summary preview">
       <div class="meta">
         <h3>Executive Census Summary</h3>
         <div class="audience">Leadership</div>
