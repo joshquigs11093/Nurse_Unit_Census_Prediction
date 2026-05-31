@@ -2456,6 +2456,7 @@ function buildDashboard1() {
       forecastY: forecasts.map(r => Number(r.value)),
       forecastLower: forecasts.map(r => Number(r.value_lower)),
       forecastUpper: forecasts.map(r => Number(r.value_upper)),
+      forecastHorizons: forecasts.map(r => Number(r.horizon_h)),
     };
   });
 
@@ -2569,11 +2570,18 @@ ${emptyNote}
       el.innerHTML = HORIZONS.map(h => {
         const c = byH[h];
         if (!c) {
-          return '<div class="fc-card"><div class="fc-h">' + h + 'h ahead</div>'
+          return '<div class="fc-card" title="No forecast available for +' + h + 'h">'
+               + '<div class="fc-h">' + h + 'h ahead</div>'
                + '<div class="fc-pt">—</div><div class="fc-band">—</div></div>';
         }
         const cls = c.overCapacity ? "fc-card alert" : "fc-card";
-        return '<div class="' + cls + '"><div class="fc-h">' + h + 'h ahead</div>'
+        const capInfo = (u.capacity != null) ? " (capacity " + u.capacity + ")" : "";
+        const alertLine = c.overCapacity ? "; predicted at or over capacity" : "";
+        const title = "Forecast +" + h + "h ahead\\n"
+                    + "Predicted: " + fmtCensus(c.point) + " patients" + capInfo + alertLine + "\\n"
+                    + "90% interval: " + fmtBand(c.lower, c.upper);
+        return '<div class="' + cls + '" title="' + title + '">'
+             + '<div class="fc-h">' + h + 'h ahead</div>'
              + '<div class="fc-pt">' + fmtCensus(c.point) + '</div>'
              + '<div class="fc-band">90%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
       }).join("");
@@ -2596,16 +2604,26 @@ ${emptyNote}
                                 text: "capacity " + u.capacity, showarrow: false,
                                 font: { size: 9, color: "#E15759" } }];
       }
-      // Band is drawn as two invisible traces with fill between them.
+      // Band is drawn as two invisible traces with fill between them. The forecast
+      // line carries customdata so its tooltip can show the 90% interval and the
+      // horizon (e.g. "+12h ahead") in addition to the point value.
+      const fcCustom = u.forecastY.map((_, i) =>
+        [u.forecastLower[i], u.forecastUpper[i], u.forecastHorizons[i]]);
       const traces = [
         { x: u.actualsX, y: u.actualsY, name: "Actual", type: "scatter", mode: "lines+markers",
-          line: { color: "#1F4E79", width: 2 }, marker: { size: 4 } },
+          line: { color: "#1F4E79", width: 2 }, marker: { size: 4 },
+          hovertemplate: "<b>%{x}</b><br>Actual census: %{y} patients<extra></extra>" },
         { x: u.forecastX, y: u.forecastUpper, type: "scatter", mode: "lines",
           line: { width: 0 }, hoverinfo: "skip", showlegend: false },
         { x: u.forecastX, y: u.forecastLower, name: "90% band", type: "scatter", mode: "lines",
           fill: "tonexty", fillcolor: "rgba(78,121,167,0.20)", line: { width: 0 }, hoverinfo: "skip" },
         { x: u.forecastX, y: u.forecastY, name: "Forecast", type: "scatter", mode: "lines+markers",
-          line: { color: "#4E79A7", width: 2, dash: "dot" }, marker: { size: 6 } }
+          line: { color: "#4E79A7", width: 2, dash: "dot" }, marker: { size: 6 },
+          customdata: fcCustom,
+          hovertemplate: "<b>Forecast at %{x}</b><br>"
+                       + "Predicted: %{y:.1f} patients<br>"
+                       + "90% interval: %{customdata[0]:.1f} – %{customdata[1]:.1f}<br>"
+                       + "Horizon: +%{customdata[2]}h<extra></extra>" }
       ];
       Plotly.react(el, traces, layout, { displayModeBar: false })
         .then(() => { window.RENDERED = true; });
@@ -2767,7 +2785,8 @@ ${emptyNote}
       text: matrix.map(row => row.map(v => v != null ? v.toFixed(1) + "%" : "")),
       texttemplate: "%{text}",
       textfont: { size: 11, color: "white" },
-      hoverinfo: "skip",
+      hovertemplate: "<b>%{y}</b> @ <b>%{x}</b><br>"
+                   + "±2 patient accuracy: %{z:.1f}%<extra></extra>",
     }], heatLayout, { displayModeBar: false }).then(() => { window.RENDERED = true; });
 
     // Per-unit grouped bar chart, updates with horizon selector.
@@ -2793,6 +2812,7 @@ ${emptyNote}
         name: m,
         type: "bar",
         marker: { color: palette[i % palette.length] },
+        hovertemplate: "<b>%{x}</b><br>" + m + " @ " + h + "h: %{y:.1f}%<extra></extra>",
       }));
       Plotly.react("unit-bars", traces, barLayout, { displayModeBar: false });
     }
@@ -2825,6 +2845,13 @@ function buildDashboard3() {
   const barLabels = sorted.map(r => r.unit_name || ("Unit " + r.unit_id));
   const barValues = sorted.map(r => Number(r.utilization_pct) || 0);
   const barColors = barValues.map(v => v >= 90 ? "#E15759" : (v >= 75 ? "#F28E2B" : "#59A14F"));
+  // customdata gives the tooltip current / capacity / status without re-deriving on hover.
+  const barCustom = sorted.map(r => [
+    r.latest_census != null ? Math.round(Number(r.latest_census)) : "—",
+    r.capacity != null ? Math.round(Number(r.capacity)) : "—",
+    isAlert(r) ? "over 90%" : "OK",
+    r.forecast_72hr != null && r.forecast_72hr !== "" ? Number(r.forecast_72hr).toFixed(1) : "—",
+  ]);
 
   // Best model for the 72h horizon (the "look-ahead" the executive view leans on).
   const best72 = bestRows.find(r => Number(r.horizon) === 72);
@@ -2930,6 +2957,7 @@ ${emptyNote}
     const labels = ${JSON.stringify(barLabels)};
     const values = ${JSON.stringify(barValues)};
     const colors = ${JSON.stringify(barColors)};
+    const custom = ${JSON.stringify(barCustom)};
 
     if (labels.length) {
       const layout = JSON.parse(JSON.stringify(layoutBase));
@@ -2953,7 +2981,12 @@ ${emptyNote}
       Plotly.newPlot("util-bar", [{
         x: labels, y: values, type: "bar",
         marker: { color: colors },
-        hovertemplate: "%{x}: %{y:.1f}%<extra></extra>",
+        customdata: custom,
+        hovertemplate: "<b>%{x}</b><br>"
+                     + "Utilization: %{y:.1f}%<br>"
+                     + "Current: %{customdata[0]} / %{customdata[1]}<br>"
+                     + "Status: %{customdata[2]}<br>"
+                     + "72h forecast: %{customdata[3]}<extra></extra>",
       }], layout, { displayModeBar: false })
         .then(() => { window.RENDERED = true; });
     }

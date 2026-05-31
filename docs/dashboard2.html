@@ -97,7 +97,8 @@
       text: matrix.map(row => row.map(v => v != null ? v.toFixed(1) + "%" : "")),
       texttemplate: "%{text}",
       textfont: { size: 11, color: "white" },
-      hoverinfo: "skip",
+      hovertemplate: "<b>%{y}</b> @ <b>%{x}</b><br>"
+                   + "±2 patient accuracy: %{z:.1f}%<extra></extra>",
     }], heatLayout, { displayModeBar: false }).then(() => { window.RENDERED = true; });
 
     // Per-unit grouped bar chart, updates with horizon selector.
@@ -123,6 +124,7 @@
         name: m,
         type: "bar",
         marker: { color: palette[i % palette.length] },
+        hovertemplate: "<b>%{x}</b><br>" + m + " @ " + h + "h: %{y:.1f}%<extra></extra>",
       }));
       Plotly.react("unit-bars", traces, barLayout, { displayModeBar: false });
     }

@@ -84,6 +84,7 @@
     const labels = ["Cardiac Stepdown","Progressive Care","Neuro Stepdown","Medical-Surgical 3 North","Medical-Surgical 4 South","Surgical 2 West","Oncology 5 South","Telemetry 4 East","Orthopedic 6 North"];
     const values = [100,100,95,94.1,92.9,92.3,83.3,82.4,76.9];
     const colors = ["#E15759","#E15759","#E15759","#E15759","#E15759","#E15759","#F28E2B","#F28E2B","#F28E2B"];
+    const custom = [[20,20,"over 90%","18.7"],[11,11,"over 90%","10.3"],[19,20,"over 90%","17.9"],[16,17,"over 90%","15.2"],[13,14,"over 90%","13.0"],[12,13,"over 90%","12.2"],[10,12,"OK","10.9"],[28,34,"OK","27.6"],[10,13,"OK","12.1"]];
 
     if (labels.length) {
       const layout = JSON.parse(JSON.stringify(layoutBase));
@@ -107,7 +108,12 @@
       Plotly.newPlot("util-bar", [{
         x: labels, y: values, type: "bar",
         marker: { color: colors },
-        hovertemplate: "%{x}: %{y:.1f}%<extra></extra>",
+        customdata: custom,
+        hovertemplate: "<b>%{x}</b><br>"
+                     + "Utilization: %{y:.1f}%<br>"
+                     + "Current: %{customdata[0]} / %{customdata[1]}<br>"
+                     + "Status: %{customdata[2]}<br>"
+                     + "72h forecast: %{customdata[3]}<extra></extra>",
       }], layout, { displayModeBar: false })
         .then(() => { window.RENDERED = true; });
     }
