@@ -29,14 +29,14 @@ data/external/*
 # Notebooks (development; not part of deployed application)
 /notebooks/
 
-# Documentation tooling (not part of application)
-docs/*.md
-docs/*.js
-docs/requirements/
-docs/dashboards/
-docs/node_modules/
-docs/package*.json
-docs/data/
+# Documentation — ignore everything not already tracked
+docs/*
+
+# Node / build tooling
+node_modules/
+/package.json
+/package-lock.json
+scripts/*
 
 # Cache
 .cache/
