@@ -298,3 +298,12 @@ as_of,unit_id,unit_name,psi,psi_residual,drift_status,source,systemic_fraction,c
 2026-05-05,4452986337,Medical-Surgical 4 South,0.184,0.1429,moderate,test,0.333,0,stable
 2026-05-12,4452986337,Medical-Surgical 4 South,1.6751,0.3604,major,test,0.333,1,transient
 2026-05-19,4452986337,Medical-Surgical 4 South,0.217,0.3132,moderate,test,0.556,2,transient
+2026-06-19,705089,Medical-Surgical 3 North,0.0647,,stable,live,,,
+2026-06-19,705090,Telemetry 4 East,0.1289,,moderate,live,,,
+2026-06-19,705091,Cardiac Stepdown,0.0224,,stable,live,,,
+2026-06-19,705092,Oncology 5 South,0.0171,,stable,live,,,
+2026-06-19,21334825,Surgical 2 West,0.1279,,moderate,live,,,
+2026-06-19,21336305,Orthopedic 6 North,0.135,,moderate,live,,,
+2026-06-19,97635816,Progressive Care,0.018,,stable,live,,,
+2026-06-19,1775257343,Neuro Stepdown,0.0162,,stable,live,,,
+2026-06-19,4452986337,Medical-Surgical 4 South,0.0687,,stable,live,,,
