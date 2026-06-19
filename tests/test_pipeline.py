@@ -15,6 +15,7 @@ from src.features import (
 )
 from src.evaluation import (
     compute_mae, compute_rmse, compute_mape, compute_within_n, evaluate_model,
+    residual_diagnostics, diebold_mariano,
 )
 
 
@@ -146,6 +147,80 @@ class TestMetrics:
     def test_evaluate_model_keys(self):
         result = evaluate_model(np.array([10, 20, 30]), np.array([11, 19, 32]))
         assert set(result.keys()) == {"mae", "rmse", "mape", "within_2_patients_pct"}
+
+
+# ---------- Diebold-Mariano significance test ----------
+
+class TestDieboldMariano:
+    def test_better_model_is_significant(self):
+        rng = np.random.RandomState(0)
+        errors_a = rng.normal(0, 1, 200)    # tight errors
+        errors_b = rng.normal(0, 3, 200)    # loose errors
+        res = diebold_mariano(errors_a, errors_b, horizon=1)
+        # A has lower loss -> negative differential, significant
+        assert res["mean_loss_diff"] < 0
+        assert res["p_value"] < 0.05
+
+    def test_symmetry_of_sign(self):
+        rng = np.random.RandomState(1)
+        ea = rng.normal(0, 1, 150)
+        eb = rng.normal(0, 2.5, 150)
+        ab = diebold_mariano(ea, eb)
+        ba = diebold_mariano(eb, ea)
+        assert ab["mean_loss_diff"] == pytest.approx(-ba["mean_loss_diff"], rel=1e-6)
+
+    def test_identical_forecasts_not_significant(self):
+        rng = np.random.RandomState(2)
+        e = rng.normal(0, 1, 100)
+        res = diebold_mariano(e, e)
+        # zero loss differential -> undefined statistic, never flagged significant
+        assert np.isnan(res["dm_stat"])
+        assert not (res["p_value"] < 0.05)
+
+    def test_too_few_points_returns_nan(self):
+        res = diebold_mariano(np.zeros(5), np.ones(5))
+        assert np.isnan(res["dm_stat"]) and np.isnan(res["p_value"])
+
+    def test_length_mismatch_raises(self):
+        with pytest.raises(ValueError):
+            diebold_mariano(np.zeros(10), np.zeros(8))
+
+    def test_invalid_loss_raises(self):
+        with pytest.raises(ValueError):
+            diebold_mariano(np.zeros(20), np.ones(20), loss="huber")
+
+    def test_horizon_correction_changes_statistic(self):
+        rng = np.random.RandomState(3)
+        ea = rng.normal(0, 1, 300)
+        eb = rng.normal(0, 1.5, 300)
+        h1 = diebold_mariano(ea, eb, horizon=1)["dm_stat"]
+        h24 = diebold_mariano(ea, eb, horizon=24)["dm_stat"]
+        # HLN correction + autocovariance terms shift the statistic at longer horizons
+        assert h1 != pytest.approx(h24)
+
+
+# ---------- Residual diagnostics ----------
+
+class TestResidualDiagnostics:
+    def test_keys_present(self):
+        rng = np.random.RandomState(0)
+        res = residual_diagnostics(rng.normal(0, 1, 200))
+        assert {"n", "mean_residual", "std_residual",
+                "shapiro_stat", "shapiro_p", "ljung_box_p"} <= set(res.keys())
+
+    def test_normal_residuals_pass_shapiro(self):
+        rng = np.random.RandomState(5)
+        res = residual_diagnostics(rng.normal(0, 1, 2000))
+        assert res["shapiro_p"] > 0.01          # fails to reject normality
+
+    def test_short_series_returns_nan(self):
+        res = residual_diagnostics(np.array([1.0, 2.0, 3.0]))
+        assert res["n"] == 3
+        assert np.isnan(res["shapiro_p"]) and np.isnan(res["ljung_box_p"])
+
+    def test_nans_are_dropped(self):
+        res = residual_diagnostics(np.array([1.0, np.nan, 2.0, np.nan, 3.0]))
+        assert res["n"] == 3
 
 
 # ---------- Test 5: Per-unit model train/predict ----------

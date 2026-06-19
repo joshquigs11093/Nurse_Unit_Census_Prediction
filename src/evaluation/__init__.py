@@ -5,6 +5,8 @@ from .metrics import (
     compute_within_n,
     evaluate_model,
     compute_residual_diagnostics,
+    residual_diagnostics,
+    diebold_mariano,
     generate_comparison_table,
 )
 from .intervals import (

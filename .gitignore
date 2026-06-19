@@ -24,6 +24,7 @@ data/external/*
 /models/
 /outputs/figures/*
 /outputs/reports/
+/outputs/*.log
 !/outputs/figures/dashboards/
 
 # Notebooks (development; not part of deployed application)

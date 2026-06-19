@@ -15,7 +15,11 @@ import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
-from src.evaluation import evaluate_model
+from src.evaluation import (
+    diebold_mariano,
+    evaluate_model,
+    residual_diagnostics,
+)
 from src.features import (
     add_cyclical_features,
     filter_unit,
@@ -41,10 +45,31 @@ N_JOBS = -1  # use all cores
 # ======================================================================
 # Standalone functions for joblib (must be top-level for pickling)
 # ======================================================================
+#
+# Each trainer returns (uid, results, preds), where preds maps a horizon to
+# {"timestamp", "residual"} validation residuals keyed by the forecast's base
+# timestamp. These feed the residual-diagnostic and Diebold-Mariano exports;
+# keying on timestamp lets any two models be paired on their common targets.
+
+
+def _val_timestamps(u_val, config, h):
+    """Timestamps of the validation rows that survive tabular feature prep.
+
+    Mirrors prepare_ml_features' dropna over the same columns so the result
+    aligns one-to-one with its returned X/y (the datetime column has no NaNs,
+    so including it does not change which rows drop).
+    """
+    dt_col = config["data"]["datetime_col"]
+    target_col = config["target_columns"][h]
+    fcols = [c for c in get_feature_columns(config, h) if c in u_val.columns]
+    sub = u_val[[dt_col] + fcols + [target_col]].dropna()
+    return sub[dt_col].values
+
 
 def _train_tabular_unit(ModelClass, name, uid, u_train, u_val, horizons, config):
     """Train one tabular model (RF or LightGBM) for all horizons on one unit."""
     results = {}
+    preds_out = {}
     for h in horizons:
         X_tr, y_tr, _ = prepare_ml_features(u_train, config, h)
         X_va, y_va, _ = prepare_ml_features(u_val, config, h)
@@ -57,21 +82,30 @@ def _train_tabular_unit(ModelClass, name, uid, u_train, u_val, horizons, config)
         preds = model.predict(X_va)
         results[h] = evaluate_model(y_va, preds)
 
+        ts = _val_timestamps(u_val, config, h)
+        if len(ts) == len(y_va):
+            preds_out[h] = {
+                "timestamp": ts,
+                "residual": np.asarray(y_va, dtype=float) - np.asarray(preds, dtype=float),
+            }
+
         model_dir = Path(config["output"]["models_dir"]) / str(uid)
         model.save(model_dir / f"{name.lower()}_{h}h.joblib")
 
-    return uid, results
+    return uid, results, preds_out
 
 
 def _train_arima_unit(uid, u_train, u_val, horizons, config):
     """Train ARIMA once for one unit, forecast at all horizons."""
     results = {}
+    preds_out = {}
+    dt_col = config["data"]["datetime_col"]
 
     # Train once (horizon doesn't affect the fitted model)
     model = ARIMAModel(config, horizon=1)
     model.train(u_train)
     if not model.is_fitted:
-        return uid, results
+        return uid, results, preds_out
 
     # Forecast at max horizon length, slice for each
     max_h = max(horizons)
@@ -87,19 +121,23 @@ def _train_arima_unit(uid, u_train, u_val, horizons, config):
         all_fc = np.asarray(all_fc, dtype=float)
     except Exception as e:
         logger.warning("ARIMA forecast failed for unit %s: %s", uid, e)
-        return uid, results
+        return uid, results, preds_out
 
     for h in horizons:
         target_col = config["target_columns"][h]
-        actuals = u_val[target_col].dropna().values
+        notna = u_val[target_col].notna()
+        actuals = u_val.loc[notna, target_col].values
+        ts_all = u_val.loc[notna, dt_col].values
         preds = all_fc[h: h + len(actuals)]
         n = min(len(preds), len(actuals))
         if n == 0:
             continue
-        preds, actuals = preds[:n], actuals[:n]
+        preds, actuals, ts_h = preds[:n], actuals[:n], ts_all[:n]
         mask = ~np.isnan(preds)
         if mask.sum() > 0:
             results[h] = evaluate_model(actuals[mask], preds[mask])
+            preds_out[h] = {"timestamp": ts_h[mask],
+                            "residual": actuals[mask] - preds[mask]}
 
     # Save params
     model_dir = Path(config["output"]["models_dir"]) / str(uid)
@@ -107,12 +145,14 @@ def _train_arima_unit(uid, u_train, u_val, horizons, config):
 
     del model
     gc.collect()
-    return uid, results
+    return uid, results, preds_out
 
 
 def _train_prophet_unit(uid, u_train, u_val, horizons, config):
     """Train Prophet once for one unit, forecast at all horizons."""
     results = {}
+    preds_out = {}
+    dt_col = config["data"]["datetime_col"]
     prophet_train = prepare_prophet_data(u_train, config)
     prophet_val = prepare_prophet_data(u_val, config)
 
@@ -120,11 +160,13 @@ def _train_prophet_unit(uid, u_train, u_val, horizons, config):
     model = ProphetModel(config, horizon=0)
     model.train(prophet_train)
     if not model.is_fitted:
-        return uid, results
+        return uid, results, preds_out
 
     for h in horizons:
         target_col = config["target_columns"][h]
-        actuals = u_val[target_col].dropna().values
+        notna = u_val[target_col].notna()
+        actuals = u_val.loc[notna, target_col].values
+        ts_all = u_val.loc[notna, dt_col].values
 
         # Forecast at this horizon
         future = pd.DataFrame({"ds": prophet_val["ds"].values})
@@ -140,10 +182,12 @@ def _train_prophet_unit(uid, u_train, u_val, horizons, config):
         n = min(len(preds), len(actuals))
         if n == 0:
             continue
-        preds, actuals = preds[:n], actuals[:n]
+        preds, actuals, ts_h = preds[:n], actuals[:n], ts_all[:n]
         mask = ~np.isnan(preds)
         if mask.sum() > 0:
             results[h] = evaluate_model(actuals[mask], preds[mask])
+            preds_out[h] = {"timestamp": ts_h[mask],
+                            "residual": actuals[mask] - preds[mask]}
 
     # Save
     model_dir = Path(config["output"]["models_dir"]) / str(uid)
@@ -151,12 +195,13 @@ def _train_prophet_unit(uid, u_train, u_val, horizons, config):
 
     del model
     gc.collect()
-    return uid, results
+    return uid, results, preds_out
 
 
 def _train_lstm_unit(uid, u_train, u_val, horizons, config):
     """Train LSTM per horizon for one unit."""
     results = {}
+    preds_out = {}
     for h in horizons:
         lstm_data = prepare_lstm_sequences(u_train, u_val, u_val, config, h)
 
@@ -169,7 +214,15 @@ def _train_lstm_unit(uid, u_train, u_val, horizons, config):
             lstm_data["X_val"], lstm_data["y_val"],
         )
         preds = model.predict(lstm_data["X_val"])
-        results[h] = evaluate_model(lstm_data["y_val"], preds)
+        y_val = lstm_data["y_val"]
+        results[h] = evaluate_model(y_val, preds)
+
+        ts = lstm_data.get("ts_val", np.array([]))
+        if len(ts) == len(preds):
+            preds_out[h] = {
+                "timestamp": ts,
+                "residual": np.asarray(y_val, dtype=float) - np.asarray(preds, dtype=float),
+            }
 
         model_dir = Path(config["output"]["models_dir"]) / str(uid)
         model.save(model_dir / f"lstm_{h}h")
@@ -178,7 +231,7 @@ def _train_lstm_unit(uid, u_train, u_val, horizons, config):
         del model, lstm_data
         gc.collect()
 
-    return uid, results
+    return uid, results, preds_out
 
 
 # ======================================================================
@@ -193,6 +246,9 @@ class ModelRegistry:
         self.horizons = config["forecast_horizons"]
         # results[model_name][unit_id][horizon] = metrics_dict
         self.results: dict[str, dict[int, dict[int, dict]]] = {}
+        # prediction_records[model_name][unit_id][horizon] =
+        #   {"timestamp": np.ndarray, "residual": np.ndarray}
+        self.prediction_records: dict[str, dict[int, dict[int, dict]]] = {}
 
     def train_all(
         self,
@@ -238,7 +294,8 @@ class ModelRegistry:
                 )
                 for uid in units
             )
-            self.results[name] = {uid: res for uid, res in results_list}
+            self.results[name] = {uid: res for uid, res, _ in results_list}
+            self.prediction_records[name] = {uid: pr for uid, _, pr in results_list}
             self._log_model_summary(name)
 
         # --- ARIMA — train once per unit, parallel across units ---
@@ -252,7 +309,8 @@ class ModelRegistry:
                 )
                 for uid in units
             )
-            self.results["ARIMA"] = {uid: res for uid, res in results_list}
+            self.results["ARIMA"] = {uid: res for uid, res, _ in results_list}
+            self.prediction_records["ARIMA"] = {uid: pr for uid, _, pr in results_list}
             self._log_model_summary("ARIMA")
 
         # --- Prophet — train once per unit, parallel across units ---
@@ -266,7 +324,8 @@ class ModelRegistry:
                 )
                 for uid in units
             )
-            self.results["Prophet"] = {uid: res for uid, res in results_list}
+            self.results["Prophet"] = {uid: res for uid, res, _ in results_list}
+            self.prediction_records["Prophet"] = {uid: pr for uid, _, pr in results_list}
             self._log_model_summary("Prophet")
 
         # --- LSTM — parallel across units ---
@@ -280,7 +339,8 @@ class ModelRegistry:
                 )
                 for uid in units
             )
-            self.results["LSTM"] = {uid: res for uid, res in results_list}
+            self.results["LSTM"] = {uid: res for uid, res, _ in results_list}
+            self.prediction_records["LSTM"] = {uid: pr for uid, _, pr in results_list}
             self._log_model_summary("LSTM")
 
         # --- Ensemble ---
@@ -358,6 +418,106 @@ class ModelRegistry:
                 output_dir / "best_model_per_horizon.csv", index=False
             )
             logger.info("Exported results to %s", output_dir)
+
+    # ------------------------------------------------------------------
+    # Statistical diagnostics
+    # ------------------------------------------------------------------
+
+    def residual_diagnostics_table(self) -> pd.DataFrame:
+        """Per (model, unit, horizon) residual normality/autocorrelation tests."""
+        rows = []
+        for model_name, units in self.prediction_records.items():
+            for uid, horizons in units.items():
+                for h, rec in horizons.items():
+                    diag = residual_diagnostics(rec["residual"])
+                    rows.append({"model": model_name, "unit_id": uid,
+                                 "horizon": h, **diag})
+        return pd.DataFrame(rows)
+
+    def significance_tests(self) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Diebold-Mariano: per (unit, horizon) test the lowest-error model
+        against the runner-up on their common validation timestamps.
+
+        Returns (detail, summary). detail has one row per (unit, horizon);
+        summary aggregates per horizon (units tested, share significant).
+        """
+        # Regroup residual series by (unit, horizon) → {model: Series}.
+        by_unit_h: dict[tuple, dict[str, pd.Series]] = {}
+        for model_name, units in self.prediction_records.items():
+            for uid, horizons in units.items():
+                for h, rec in horizons.items():
+                    s = pd.Series(rec["residual"],
+                                  index=pd.Index(rec["timestamp"], name="timestamp"))
+                    s = s[~s.index.duplicated(keep="first")]
+                    by_unit_h.setdefault((uid, h), {})[model_name] = s
+
+        detail = []
+        for (uid, h), model_series in by_unit_h.items():
+            if len(model_series) < 2:
+                continue
+            aligned = pd.concat(model_series, axis=1, join="inner").dropna()
+            if len(aligned) < 8:
+                continue
+            mse = {m: float(np.mean(aligned[m].values ** 2)) for m in aligned.columns}
+            ordered = sorted(mse, key=mse.get)
+            best, runner = ordered[0], ordered[1]
+            dm = diebold_mariano(aligned[best].values, aligned[runner].values, horizon=h)
+            significant = (
+                not np.isnan(dm["p_value"])
+                and dm["p_value"] < 0.05
+                and dm["mean_loss_diff"] < 0
+            )
+            detail.append({
+                "unit_id": uid, "horizon": h,
+                "best_model": best, "runner_up": runner,
+                "n_pairs": dm["n"],
+                "best_mse": round(mse[best], 4),
+                "runner_up_mse": round(mse[runner], 4),
+                "dm_stat": round(dm["dm_stat"], 4) if not np.isnan(dm["dm_stat"]) else np.nan,
+                "p_value": round(dm["p_value"], 4) if not np.isnan(dm["p_value"]) else np.nan,
+                "significant": bool(significant),
+            })
+
+        detail_df = pd.DataFrame(detail)
+        if detail_df.empty:
+            return detail_df, pd.DataFrame()
+
+        summary_rows = []
+        for h, g in detail_df.groupby("horizon"):
+            modes = g["best_model"].mode()
+            summary_rows.append({
+                "horizon": h,
+                "n_units": len(g),
+                "n_significant": int(g["significant"].sum()),
+                "pct_significant": round(100 * g["significant"].mean(), 1),
+                "modal_best_model": modes.iloc[0] if not modes.empty else "",
+            })
+        return detail_df, pd.DataFrame(summary_rows)
+
+    def export_diagnostics(self, output_dir: str | Path = None) -> None:
+        """Write residual-diagnostic and Diebold-Mariano tables to CSV."""
+        if output_dir is None:
+            output_dir = Path(self.config["output"]["reports_dir"])
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        diag = self.residual_diagnostics_table()
+        if not diag.empty:
+            diag.sort_values(["model", "unit_id", "horizon"]).to_csv(
+                output_dir / "residual_diagnostics.csv", index=False)
+            logger.info("Exported residual_diagnostics.csv (%d rows)", len(diag))
+
+        detail, summary = self.significance_tests()
+        if not detail.empty:
+            detail.sort_values(["horizon", "unit_id"]).to_csv(
+                output_dir / "dm_test_results.csv", index=False)
+            summary.to_csv(output_dir / "dm_test_summary.csv", index=False)
+            n_sig = int(detail["significant"].sum())
+            logger.info("Exported dm_test_results.csv (%d comparisons, %d significant) "
+                        "+ dm_test_summary.csv", len(detail), n_sig)
+        else:
+            logger.warning("No Diebold-Mariano comparisons produced "
+                           "(need ≥2 models with ≥8 common validation points per unit/horizon)")
 
     # ------------------------------------------------------------------
     # Logging

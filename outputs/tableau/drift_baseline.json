@@ -40,7 +40,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 93.25,
+    "within_2_patients_pct": 93.53,
     "n": 9658,
     "mean_census": 15.19
   },
@@ -95,7 +95,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 63.52,
+    "within_2_patients_pct": 63.58,
     "n": 9658,
     "mean_census": 26.99
   },
@@ -138,7 +138,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 96.42,
+    "within_2_patients_pct": 96.38,
     "n": 9658,
     "mean_census": 18.71
   },
@@ -181,7 +181,7 @@
       0.10004146796599626,
       0.10004146796599626
     ],
-    "within_2_patients_pct": 96.16,
+    "within_2_patients_pct": 96.33,
     "n": 9646,
     "mean_census": 10.6
   },
@@ -222,7 +222,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 98.01,
+    "within_2_patients_pct": 98.07,
     "n": 9658,
     "mean_census": 12.08
   },
@@ -263,7 +263,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 98.6,
+    "within_2_patients_pct": 98.56,
     "n": 9658,
     "mean_census": 12.14
   },
@@ -323,7 +323,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 98.6,
+    "within_2_patients_pct": 98.58,
     "n": 9658,
     "mean_census": 10.28
   },
@@ -370,7 +370,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 92.24,
+    "within_2_patients_pct": 91.81,
     "n": 9658,
     "mean_census": 18.05
   },
@@ -415,7 +415,7 @@
       0.1000207082211638,
       0.1000207082211638
     ],
-    "within_2_patients_pct": 94.3,
+    "within_2_patients_pct": 94.29,
     "n": 9658,
     "mean_census": 12.39
   }

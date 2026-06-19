@@ -163,7 +163,7 @@ evaluation:
 # from validation residuals during the calibrate phase.
 uncertainty:
   enabled: true
-  coverage: 0.90          # nominal interval coverage (90% band)
+  coverage: 0.95          # nominal interval coverage (95% band)
 
 # Drift monitoring: PSI on the census distribution plus performance drift on
 # the live within-2 accuracy, both against a frozen training baseline.
@@ -180,7 +180,7 @@ drift:
   systemic_threshold: 0.5          # fraction of units in major to call the event systemic
 
 # Equity (fairness across units): flags a unit as underserved when its accuracy
-# is well below the cohort median or its 90% interval coverage drifts off
+# is well below the cohort median or its 95% interval coverage drifts off
 # nominal by more than the tolerance.
 equity:
   enabled: true

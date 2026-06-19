@@ -74,6 +74,10 @@ def phase_train(
     registry = ModelRegistry(config)
     registry.train_all(train, val)
     registry.export_results()
+    registry.export_diagnostics()
+    # Also publish diagnostics to the tracked tableau dir so the site/deliverable
+    # can read them (outputs/reports is gitignored working scratch).
+    registry.export_diagnostics(config["output"]["tableau_dir"])
     return registry
 
 
@@ -86,7 +90,7 @@ def phase_calibrate(
     logger.info("=" * 60)
 
     if config.get("uncertainty", {}).get("enabled", True):
-        coverage = config.get("uncertainty", {}).get("coverage", 0.90)
+        coverage = config.get("uncertainty", {}).get("coverage", 0.95)
         intervals = compute_prediction_intervals(val, config, coverage=coverage)
         save_intervals(intervals, config)
         logger.info("Calibrated intervals for %d units (coverage=%.0f%%)",

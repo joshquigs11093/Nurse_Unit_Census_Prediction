@@ -127,10 +127,12 @@ def prepare_lstm_sequences(
     Expects DataFrames already filtered to one unit with cyclical features.
     Fits scaler on train only.
 
-    Returns dict: X_train, y_train, X_val, y_val, X_test, y_test, scaler, feature_names
+    Returns dict: X_train, y_train, X_val, y_val, X_test, y_test,
+    ts_train, ts_val, ts_test (target timestamps), scaler, feature_names
     """
     seq_len = config["models"]["lstm"]["sequence_length"]
     target_col = config["target_columns"][horizon]
+    dt_col = config["data"]["datetime_col"]
     feature_cols = get_feature_columns(config, horizon)
 
     scaler = MinMaxScaler()
@@ -140,6 +142,7 @@ def prepare_lstm_sequences(
         available_cols = [c for c in feature_cols if c in split_df.columns]
         feat_data = split_df[available_cols].values
         target_data = split_df[target_col].values
+        ts_data = split_df[dt_col].values if dt_col in split_df.columns else np.arange(len(split_df))
 
         # Fit scaler on training data only
         if split_name == "train":
@@ -148,13 +151,14 @@ def prepare_lstm_sequences(
                 scaler.fit(valid_rows)
 
         # Build sequences
-        sequences, targets = [], []
+        sequences, targets, ts = [], [], []
         for i in range(seq_len, len(split_df)):
             seq = feat_data[i - seq_len:i]
             tgt = target_data[i]
             if not np.isnan(seq).any() and not np.isnan(tgt):
                 sequences.append(seq)
                 targets.append(tgt)
+                ts.append(ts_data[i])
 
         if sequences:
             X = np.array(sequences)
@@ -164,9 +168,11 @@ def prepare_lstm_sequences(
             X = scaler.transform(X.reshape(-1, shape[-1])).reshape(shape)
             results[f"X_{split_name}"] = X
             results[f"y_{split_name}"] = y
+            results[f"ts_{split_name}"] = np.array(ts)
         else:
             results[f"X_{split_name}"] = np.array([])
             results[f"y_{split_name}"] = np.array([])
+            results[f"ts_{split_name}"] = np.array([])
 
     results["scaler"] = scaler
     results["feature_names"] = [c for c in feature_cols if c in train_df.columns]

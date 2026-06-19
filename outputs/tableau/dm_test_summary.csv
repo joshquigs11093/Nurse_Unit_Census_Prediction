@@ -1,0 +1,9 @@
+horizon,n_units,n_significant,pct_significant,modal_best_model
+1,9,2,22.2,LightGBM
+2,9,7,77.8,LightGBM
+3,9,7,77.8,LightGBM
+4,9,3,33.3,LightGBM
+12,9,6,66.7,LSTM
+24,9,6,66.7,LSTM
+48,9,6,66.7,LSTM
+72,9,6,66.7,LSTM
