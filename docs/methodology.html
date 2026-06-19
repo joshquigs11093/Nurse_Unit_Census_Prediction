@@ -92,9 +92,48 @@
     <p style="font-size:13px;line-height:1.6;">
       Primary metric: <strong>percentage of forecasts within ±2 patients of the actual census</strong>
       (operationally meaningful for staffing decisions). Secondary metrics: MAE, RMSE, MAPE.
-      Residual diagnostics include Shapiro-Wilk normality test (sampled if n &gt; 5000) and
-      Ljung-Box autocorrelation. Evaluation is per (model, unit, horizon); aggregated tables
-      report cross-unit means.
+      Evaluation is per (model, unit, horizon); aggregated tables report cross-unit means.
+    </p>
+
+    <div class="section-title" style="font-size:14px;margin-top:18px;">5a. Model comparison — significance testing</div>
+    <p style="font-size:13px;line-height:1.6;">
+      Selecting the best model per horizon on point accuracy alone risks chasing sampling
+      noise, so the per-horizon winner is checked against the runner-up with a paired
+      Diebold-Mariano test on their common validation targets. Short horizons are dominated by
+      the tabular models and long horizons by the LSTM; the test reports where that advantage
+      is statistically significant rather than incidental.
+    </p>
+    <table class="perf-table" style="margin-top:12px;">
+      <thead><tr><th>Horizon</th><th>Best model (modal)</th><th class="num">Units tested</th>
+        <th class="num">Significant</th><th class="num">% significant</th></tr></thead>
+      <tbody><tr><td>1h</td><td>LightGBM</td><td class="num">9</td><td class="num">2</td><td class="num">22.2%</td></tr><tr><td>2h</td><td>LightGBM</td><td class="num">9</td><td class="num">7</td><td class="num">77.8%</td></tr><tr><td>3h</td><td>LightGBM</td><td class="num">9</td><td class="num">7</td><td class="num">77.8%</td></tr><tr><td>4h</td><td>LightGBM</td><td class="num">9</td><td class="num">3</td><td class="num">33.3%</td></tr><tr><td>12h</td><td>LSTM</td><td class="num">9</td><td class="num">6</td><td class="num">66.7%</td></tr><tr><td>24h</td><td>LSTM</td><td class="num">9</td><td class="num">6</td><td class="num">66.7%</td></tr><tr><td>48h</td><td>LSTM</td><td class="num">9</td><td class="num">6</td><td class="num">66.7%</td></tr><tr><td>72h</td><td>LSTM</td><td class="num">9</td><td class="num">6</td><td class="num">66.7%</td></tr></tbody>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+      Per unit and horizon, the lowest-error model is tested against the runner-up with the
+      Diebold-Mariano test (squared-error loss, Harvey-Leybourne-Newbold small-sample
+      correction, two-sided, &alpha;&nbsp;=&nbsp;0.05). "% significant" is the share of units
+      where the leading model's advantage over the runner-up is statistically significant.
+      Source: <code>dm_test_summary.csv</code>.
+    </p>
+
+    <div class="section-title" style="font-size:14px;margin-top:18px;">5b. Residual diagnostics</div>
+    <p style="font-size:13px;line-height:1.6;">
+      Each fit's validation residuals are tested for normality (Shapiro-Wilk, sampled if
+      n&nbsp;&gt;&nbsp;5000) and for leftover autocorrelation (Ljung-Box at a 24-hour lag),
+      summarised per model below.
+    </p>
+    <table class="perf-table" style="margin-top:12px;">
+      <thead><tr><th>Model</th><th class="num">(unit, horizon) fits</th>
+        <th class="num">Median bias</th><th class="num">Residuals normal</th>
+        <th class="num">Residual autocorrelation</th></tr></thead>
+      <tbody><tr><td>ARIMA</td><td class="num">72</td><td class="num">0.07</td><td class="num">0%</td><td class="num">100%</td></tr><tr><td>LSTM</td><td class="num">72</td><td class="num">0.13</td><td class="num">0%</td><td class="num">100%</td></tr><tr><td>LightGBM</td><td class="num">72</td><td class="num">0.19</td><td class="num">0%</td><td class="num">93%</td></tr><tr><td>Prophet</td><td class="num">72</td><td class="num">0.69</td><td class="num">0%</td><td class="num">100%</td></tr><tr><td>RandomForest</td><td class="num">72</td><td class="num">0.22</td><td class="num">0%</td><td class="num">96%</td></tr></tbody>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+      Median bias is the median mean-residual across fits (≈0 indicates an unbiased forecast).
+      "Residuals normal" is the share of fits where Shapiro-Wilk fails to reject normality
+      (p&nbsp;≥&nbsp;0.05); "Residual autocorrelation" is the share where Ljung-Box detects
+      leftover autocorrelation (p&nbsp;&lt;&nbsp;0.05) at a 24-hour lag — expected to rise at
+      longer horizons as forecasts overlap. Source: <code>residual_diagnostics.csv</code>.
     </p>
   </div>
 

@@ -50,32 +50,32 @@
           <div class="label">1h · RandomForest · MAE 0.27</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
-          <div class="num">97.8%</div>
-          <div class="label">2h · LightGBM · MAE 0.50</div>
+          <div class="num">97.7%</div>
+          <div class="label">2h · LightGBM · MAE 0.51</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
           <div class="num">95.8%</div>
           <div class="label">3h · LightGBM · MAE 0.63</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
-          <div class="num">94.5%</div>
+          <div class="num">94.4%</div>
           <div class="label">4h · LightGBM · MAE 0.72</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
-          <div class="num">90.5%</div>
-          <div class="label">12h · LSTM · MAE 0.95</div>
+          <div class="num">89.4%</div>
+          <div class="label">12h · LightGBM · MAE 1.01</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
-          <div class="num">89.0%</div>
-          <div class="label">24h · LSTM · MAE 0.97</div>
+          <div class="num">88.8%</div>
+          <div class="label">24h · LSTM · MAE 1.00</div>
+        </div>
+        <div class="stat-card" style="border-left-color:var(--tableau-green);">
+          <div class="num">87.0%</div>
+          <div class="label">48h · LightGBM · MAE 1.17</div>
         </div>
         <div class="stat-card" style="border-left-color:var(--tableau-green);">
           <div class="num">87.5%</div>
-          <div class="label">48h · LSTM · MAE 1.03</div>
-        </div>
-        <div class="stat-card" style="border-left-color:var(--tableau-green);">
-          <div class="num">87.6%</div>
-          <div class="label">72h · LSTM · MAE 1.20</div>
+          <div class="label">72h · LSTM · MAE 1.11</div>
         </div>
     </div>
   </div>
@@ -108,7 +108,7 @@
           <h4>Validation ±2 patient accuracy</h4>
           <table class="perf-table">
             <thead><tr><th>1h</th><th>2h</th><th>3h</th><th>4h</th><th>12h</th><th>24h</th><th>48h</th><th>72h</th></tr></thead>
-            <tbody><tr><td class="best">99.7%</td><td class="">97.4%</td><td class="">95.3%</td><td class="">93.8%</td><td class="">88.1%</td><td class="">85.9%</td><td class="">82.4%</td><td class="">82.1%</td></tr></tbody>
+            <tbody><tr><td class="best">99.7%</td><td class="">97.4%</td><td class="">95.3%</td><td class="">93.8%</td><td class="">88.3%</td><td class="">85.2%</td><td class="">81.5%</td><td class="">81.6%</td></tr></tbody>
           </table>
           <p style="font-size:11px;color:var(--muted);margin-top:6px;">
             Cells highlighted indicate this model is the winner at that horizon.
@@ -141,7 +141,7 @@
           <h4>Validation ±2 patient accuracy</h4>
           <table class="perf-table">
             <thead><tr><th>1h</th><th>2h</th><th>3h</th><th>4h</th><th>12h</th><th>24h</th><th>48h</th><th>72h</th></tr></thead>
-            <tbody><tr><td class="">99.7%</td><td class="best">97.8%</td><td class="best">95.8%</td><td class="best">94.5%</td><td class="">89.6%</td><td class="">88.5%</td><td class="">86.5%</td><td class="">86.4%</td></tr></tbody>
+            <tbody><tr><td class="">99.7%</td><td class="best">97.7%</td><td class="best">95.8%</td><td class="best">94.4%</td><td class="best">89.4%</td><td class="">88.1%</td><td class="best">87.0%</td><td class="">86.6%</td></tr></tbody>
           </table>
           <p style="font-size:11px;color:var(--muted);margin-top:6px;">
             Cells highlighted indicate this model is the winner at that horizon.
@@ -174,7 +174,7 @@
           <h4>Validation ±2 patient accuracy</h4>
           <table class="perf-table">
             <thead><tr><th>1h</th><th>2h</th><th>3h</th><th>4h</th><th>12h</th><th>24h</th><th>48h</th><th>72h</th></tr></thead>
-            <tbody><tr><td class="">98.1%</td><td class="">95.6%</td><td class="">88.9%</td><td class="">94.2%</td><td class="best">90.5%</td><td class="best">89.0%</td><td class="best">87.5%</td><td class="best">87.6%</td></tr></tbody>
+            <tbody><tr><td class="">91.2%</td><td class="">90.5%</td><td class="">89.8%</td><td class="">93.8%</td><td class="">88.2%</td><td class="best">88.8%</td><td class="">86.9%</td><td class="best">87.5%</td></tr></tbody>
           </table>
           <p style="font-size:11px;color:var(--muted);margin-top:6px;">
             Cells highlighted indicate this model is the winner at that horizon.
@@ -240,7 +240,7 @@
           <h4>Validation ±2 patient accuracy</h4>
           <table class="perf-table">
             <thead><tr><th>1h</th><th>2h</th><th>3h</th><th>4h</th><th>12h</th><th>24h</th><th>48h</th><th>72h</th></tr></thead>
-            <tbody><tr><td class="">86.3%</td><td class="">86.3%</td><td class="">86.3%</td><td class="">86.3%</td><td class="">86.3%</td><td class="">86.3%</td><td class="">86.2%</td><td class="">86.1%</td></tr></tbody>
+            <tbody><tr><td class="">78.0%</td><td class="">78.0%</td><td class="">78.0%</td><td class="">78.0%</td><td class="">77.9%</td><td class="">77.8%</td><td class="">77.5%</td><td class="">77.2%</td></tr></tbody>
           </table>
           <p style="font-size:11px;color:var(--muted);margin-top:6px;">
             Cells highlighted indicate this model is the winner at that horizon.
@@ -273,7 +273,7 @@
           <h4>Validation ±2 patient accuracy</h4>
           <table class="perf-table">
             <thead><tr><th>1h</th><th>2h</th><th>3h</th><th>4h</th><th>12h</th><th>24h</th><th>48h</th><th>72h</th></tr></thead>
-            <tbody><tr><td class="">97.0%</td><td class="">94.1%</td><td class="">91.6%</td><td class="">91.3%</td><td class="">87.7%</td><td class="">86.6%</td><td class="">85.3%</td><td class="">85.2%</td></tr></tbody>
+            <tbody><tr><td class="">96.5%</td><td class="">93.3%</td><td class="">91.3%</td><td class="">90.8%</td><td class="">86.2%</td><td class="">85.3%</td><td class="">83.9%</td><td class="">83.9%</td></tr></tbody>
           </table>
           <p style="font-size:11px;color:var(--muted);margin-top:6px;">
             Cells highlighted indicate this model is the winner at that horizon.
