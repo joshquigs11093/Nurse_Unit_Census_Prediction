@@ -24,6 +24,7 @@ from src.monitoring.drift import build_psi_bins, stl_residual_series
 logger = logging.getLogger(__name__)
 
 INTERVALS_FILENAME = "intervals.json"
+EXPORT_INTERVALS_FILENAME = "prediction_intervals.json"
 BASELINE_FILENAME = "drift_baseline.json"
 
 
@@ -167,6 +168,22 @@ def save_intervals(intervals: dict, config: dict) -> Path:
         with open(unit_dir / INTERVALS_FILENAME, "w") as f:
             json.dump(per_h, f, indent=2)
     return models_dir
+
+
+def save_intervals_export(intervals: dict, config: dict) -> Path:
+    """Persist a consolidated copy of the calibrated intervals to
+    outputs/tableau/prediction_intervals.json.
+
+    Lives under the tableau exports (half-widths and coverage only, no PHI) so
+    it is committed and available to the daily synthetic refresh, which has no
+    access to the trained models under models/."""
+    out_dir = Path(config["output"]["tableau_dir"])
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / EXPORT_INTERVALS_FILENAME
+    with open(path, "w") as f:
+        json.dump(intervals, f, indent=2)
+    logger.info("Saved calibrated intervals to %s", path)
+    return path
 
 
 def save_drift_baseline(baseline: dict, config: dict) -> Path:

@@ -40,6 +40,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TABLEAU_DIR = REPO_ROOT / "outputs" / "tableau"
 META_PATH = TABLEAU_DIR / "unit_metadata.csv"
 BASELINE_PATH = TABLEAU_DIR / "drift_baseline.json"
+INTERVALS_PATH = TABLEAU_DIR / "prediction_intervals.json"
 HISTORY_PATH = TABLEAU_DIR / "drift_history.csv"
 HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72]
 HOURS_OF_HISTORY = 168  # 7 days
@@ -129,16 +130,26 @@ def synth_forecast(unit: dict, current: int, t_now: datetime,
     return round(max(0, min(capacity, fc)), 1)
 
 
-def forecast_halfwidth(unit: dict, horizon: int) -> float:
-    """Interval half-width that widens with horizon, scaled by the unit's std.
-    A demonstration band for the synthetic feed; the real pipeline derives
-    these from split-conformal validation residuals."""
+def forecast_halfwidth(unit: dict, horizon: int,
+                       calibrated: dict | None = None) -> float:
+    """Interval half-width for a forecast at this horizon.
+
+    Prefers the split-conformal half-width calibrated by the real pipeline
+    (prediction_intervals.json), so the synthetic feed carries the same band
+    the trained models produce. Falls back to a std-scaled heuristic that
+    widens with horizon when no calibrated value is available for the unit."""
+    if calibrated:
+        per_h = calibrated.get(str(unit["unit_id"]))
+        entry = per_h.get(str(horizon)) if per_h else None
+        if entry and entry.get("halfwidth") is not None:
+            return round(float(entry["halfwidth"]), 1)
     std = unit["std_census"]
     return round(std * (0.35 + 0.12 * math.sqrt(horizon)), 1)
 
 
 def generate_unit_window(unit: dict, now: datetime, rng: Random,
-                         baseline_dist: dict | None = None) -> list[dict]:
+                         baseline_dist: dict | None = None,
+                         calibrated: dict | None = None) -> list[dict]:
     rows = []
     capacity = int(unit["capacity"])
     history_pts = []
@@ -152,7 +163,7 @@ def generate_unit_window(unit: dict, now: datetime, rng: Random,
 
     forecasts = {h: synth_forecast(unit, current_census, now, h, rng)
                  for h in HORIZONS}
-    bands = {h: forecast_halfwidth(unit, h) for h in HORIZONS}
+    bands = {h: forecast_halfwidth(unit, h, calibrated) for h in HORIZONS}
 
     for t, c in history_pts:
         is_latest = t == now
@@ -408,9 +419,15 @@ def main() -> None:
         with BASELINE_PATH.open(encoding="utf-8") as f:
             baseline_dist = json.load(f)
 
+    calibrated_intervals = {}
+    if INTERVALS_PATH.exists():
+        with INTERVALS_PATH.open(encoding="utf-8") as f:
+            calibrated_intervals = json.load(f)
+
     all_rows = []
     for unit in units:
-        all_rows.extend(generate_unit_window(unit, now, rng, baseline_dist))
+        all_rows.extend(
+            generate_unit_window(unit, now, rng, baseline_dist, calibrated_intervals))
 
     fp_path = TABLEAU_DIR / "forecast_predictions.csv"
     es_path = TABLEAU_DIR / "executive_summary.csv"

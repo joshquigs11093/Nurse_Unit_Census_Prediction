@@ -35,6 +35,7 @@ from src.monitoring.calibrate import (
     load_intervals,
     save_drift_baseline,
     save_intervals,
+    save_intervals_export,
 )
 from src.monitoring.drift import generate_drift_report
 from src.monitoring.equity import compute_unit_equity
@@ -93,6 +94,7 @@ def phase_calibrate(
         coverage = config.get("uncertainty", {}).get("coverage", 0.95)
         intervals = compute_prediction_intervals(val, config, coverage=coverage)
         save_intervals(intervals, config)
+        save_intervals_export(intervals, config)
         logger.info("Calibrated intervals for %d units (coverage=%.0f%%)",
                     len(intervals), coverage * 100)
 
