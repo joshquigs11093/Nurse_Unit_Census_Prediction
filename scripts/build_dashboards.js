@@ -656,7 +656,7 @@ ${navBar("home")}
         <div class="meta">
           <h3>Monitoring</h3>
           <div class="audience">Drift over time · intervals</div>
-          <p>Per-unit Population Stability Index tracked against a frozen training baseline, the latest drift snapshot, and 90% prediction-interval bands by horizon.</p>
+          <p>Per-unit Population Stability Index tracked against a frozen training baseline, the latest drift snapshot, and 95% prediction-interval bands by horizon.</p>
         </div>
       </a>
       <a class="gallery-card" href="explainability.html">
@@ -1175,7 +1175,7 @@ ${navBar("dashboards")}
       <div class="meta">
         <h3>Operational Census Forecast</h3>
         <div class="audience">House supervisors</div>
-        <p>Current census per unit, eight-horizon forecast cards (1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h) with 90% prediction intervals, seven-day actuals + forward forecast timeline with shaded band, capacity alerts.</p>
+        <p>Current census per unit, eight-horizon forecast cards (1h, 2h, 3h, 4h, 12h, 24h, 48h, 72h) with 95% prediction intervals, seven-day actuals + forward forecast timeline with shaded band, capacity alerts.</p>
       </div>
     </a>
     <a class="gallery-card" href="dashboard2.html">
@@ -1664,7 +1664,7 @@ ${navBar("monitoring")}
     <p class="tagline">
       Monitoring for the deployed census forecaster. Distribution drift is tracked
       over time with the Population Stability Index (PSI) measured against the
-      training baseline, and every forecast is reported with a 90% prediction
+      training baseline, and every forecast is reported with a 95% prediction
       interval to quantify its uncertainty.
     </p>
   </section>
@@ -1708,13 +1708,13 @@ ${emptyNote}
       Since each unit has its own model, an equity question is whether smaller
       or lower-volume units get forecasts as good as the high-volume ones, both
       in point accuracy (within-2 patients) and in interval reliability (does
-      the 90% band actually cover 90% of actuals). A unit is flagged
+      the 95% band actually cover 95% of actuals). A unit is flagged
       <em>underserved</em> when its accuracy is well below the cohort median
-      or its coverage drifts off the nominal 90% by more than a small
+      or its coverage drifts off the nominal 95% by more than a small
       tolerance. Underserved units sort to the top.
     </p>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th class="num">±2 accuracy</th><th class="num">vs cohort median</th><th class="num">90% coverage</th><th class="center">Equity</th></tr></thead>
+      <thead><tr><th>Unit</th><th class="num">±2 accuracy</th><th class="num">vs cohort median</th><th class="num">95% coverage</th><th class="center">Equity</th></tr></thead>
       <tbody>${equityRows || '<tr><td colspan="5">No equity data available.</td></tr>'}</tbody>
     </table>
   </section>
@@ -1722,7 +1722,7 @@ ${emptyNote}
   <section class="section">
     <div class="section-title">Prediction interval — <span id="band-unit-label">${defaultBandUnit || "focus unit"}</span></div>
     <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
-      Point forecast with its 90% prediction interval across horizons. The band widens
+      Point forecast with its 95% prediction interval across horizons. The band widens
       further out, which is the honest behavior: a 1-hour forecast is far more certain
       than a 72-hour one.
     </p>
@@ -1971,7 +1971,7 @@ ${emptyNote}
 // Replaces the Tableau embed. Reads executive_summary.csv + forecast_predictions.csv +
 // forecast_timeline.csv and renders a unit selector, current-state panel, eight-horizon
 // forecast cards (1/2/3/4/12/24/48/72h), and a seven-day actuals + forecast timeline with
-// the 90% conformal band shaded forward. This function declaration shadows the legacy
+// the 95% conformal band shaded forward. This function declaration shadows the legacy
 // `buildDashboard1` defined earlier in the file (last function-declaration wins in JS).
 function buildDashboard1() {
   const HORIZONS = [1, 2, 3, 4, 12, 24, 48, 72];
@@ -2050,7 +2050,7 @@ function buildDashboard1() {
 <head>
   <meta charset="UTF-8">
   <title>Operational Census Forecast — Nurse Census Prediction</title>
-  <meta name="description" content="In-repo operational forecast dashboard: current census per unit, eight-horizon forecasts with 90% prediction intervals, and a seven-day actual-vs-forecast timeline.">
+  <meta name="description" content="In-repo operational forecast dashboard: current census per unit, eight-horizon forecasts with 95% prediction intervals, and a seven-day actual-vs-forecast timeline.">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
@@ -2073,7 +2073,7 @@ ${navBar("dashboards")}
     <h1>Operational Census Forecast</h1>
     <p class="tagline">
       House-supervisor view: current census per unit, eight-horizon forecasts
-      (1, 2, 3, 4, 12, 24, 48, and 72 hours ahead) with their 90% prediction
+      (1, 2, 3, 4, 12, 24, 48, and 72 hours ahead) with their 95% prediction
       intervals, and a seven-day actuals + forward forecast timeline showing
       the band ahead of the latest reading.
     </p>
@@ -2091,7 +2091,7 @@ ${emptyNote}
     <div class="section-title" style="margin-top:18px;">Forecast (next 1h through 72h)</div>
     <div class="fc-grid" id="fc-grid"></div>
 
-    <div class="section-title" style="margin-top:18px;">Seven-day actuals + forecast with 90% band</div>
+    <div class="section-title" style="margin-top:18px;">Seven-day actuals + forecast with 95% band</div>
     <div id="ts-chart" style="height: 360px;"></div>
   </section>
 
@@ -2149,11 +2149,11 @@ ${emptyNote}
         const alertLine = c.overCapacity ? "; predicted at or over capacity" : "";
         const title = "Forecast +" + h + "h ahead\\n"
                     + "Predicted: " + fmtCensus(c.point) + " patients" + capInfo + alertLine + "\\n"
-                    + "90% interval: " + fmtBand(c.lower, c.upper);
+                    + "95% interval: " + fmtBand(c.lower, c.upper);
         return '<div class="' + cls + '" title="' + title + '">'
              + '<div class="fc-h">' + h + 'h ahead</div>'
              + '<div class="fc-pt">' + fmtCensus(c.point) + '</div>'
-             + '<div class="fc-band">90%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
+             + '<div class="fc-band">95%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
       }).join("");
     }
 
@@ -2175,7 +2175,7 @@ ${emptyNote}
                                 font: { size: 9, color: "#E15759" } }];
       }
       // Band is drawn as two invisible traces with fill between them. The forecast
-      // line carries customdata so its tooltip can show the 90% interval and the
+      // line carries customdata so its tooltip can show the 95% interval and the
       // horizon (e.g. "+12h ahead") in addition to the point value.
       const fcCustom = u.forecastY.map((_, i) =>
         [u.forecastLower[i], u.forecastUpper[i], u.forecastHorizons[i]]);
@@ -2185,14 +2185,14 @@ ${emptyNote}
           hovertemplate: "<b>%{x}</b><br>Actual census: %{y} patients<extra></extra>" },
         { x: u.forecastX, y: u.forecastUpper, type: "scatter", mode: "lines",
           line: { width: 0 }, hoverinfo: "skip", showlegend: false },
-        { x: u.forecastX, y: u.forecastLower, name: "90% band", type: "scatter", mode: "lines",
+        { x: u.forecastX, y: u.forecastLower, name: "95% band", type: "scatter", mode: "lines",
           fill: "tonexty", fillcolor: "rgba(78,121,167,0.20)", line: { width: 0 }, hoverinfo: "skip" },
         { x: u.forecastX, y: u.forecastY, name: "Forecast", type: "scatter", mode: "lines+markers",
           line: { color: "#4E79A7", width: 2, dash: "dot" }, marker: { size: 6 },
           customdata: fcCustom,
           hovertemplate: "<b>Forecast at %{x}</b><br>"
                        + "Predicted: %{y:.1f} patients<br>"
-                       + "90% interval: %{customdata[0]:.1f} – %{customdata[1]:.1f}<br>"
+                       + "95% interval: %{customdata[0]:.1f} – %{customdata[1]:.1f}<br>"
                        + "Horizon: +%{customdata[2]}h<extra></extra>" }
       ];
       Plotly.react(el, traces, layout, { displayModeBar: false })

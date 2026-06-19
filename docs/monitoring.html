@@ -28,7 +28,7 @@
     <p class="tagline">
       Monitoring for the deployed census forecaster. Distribution drift is tracked
       over time with the Population Stability Index (PSI) measured against the
-      training baseline, and every forecast is reported with a 90% prediction
+      training baseline, and every forecast is reported with a 95% prediction
       interval to quantify its uncertainty.
     </p>
   </section>
@@ -72,13 +72,13 @@
       Since each unit has its own model, an equity question is whether smaller
       or lower-volume units get forecasts as good as the high-volume ones, both
       in point accuracy (within-2 patients) and in interval reliability (does
-      the 90% band actually cover 90% of actuals). A unit is flagged
+      the 95% band actually cover 95% of actuals). A unit is flagged
       <em>underserved</em> when its accuracy is well below the cohort median
-      or its coverage drifts off the nominal 90% by more than a small
+      or its coverage drifts off the nominal 95% by more than a small
       tolerance. Underserved units sort to the top.
     </p>
     <table class="perf-table">
-      <thead><tr><th>Unit</th><th class="num">±2 accuracy</th><th class="num">vs cohort median</th><th class="num">90% coverage</th><th class="center">Equity</th></tr></thead>
+      <thead><tr><th>Unit</th><th class="num">±2 accuracy</th><th class="num">vs cohort median</th><th class="num">95% coverage</th><th class="center">Equity</th></tr></thead>
       <tbody><tr><td>Telemetry 4 East</td><td class="num">63.58%</td><td class="num">-32.8 pts</td><td class="num">95.2%</td><td class="center"><span style="color:#E15759;font-weight:600;">underserved</span></td></tr><tr><td>Medical-Surgical 4 South</td><td class="num">94.29%</td><td class="num">-2.0 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Oncology 5 South</td><td class="num">96.33%</td><td class="num">+0.0 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Neuro Stepdown</td><td class="num">91.81%</td><td class="num">-4.5 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Medical-Surgical 3 North</td><td class="num">93.53%</td><td class="num">-2.8 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Cardiac Stepdown</td><td class="num">96.38%</td><td class="num">+0.1 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Orthopedic 6 North</td><td class="num">98.56%</td><td class="num">+2.2 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Progressive Care</td><td class="num">98.58%</td><td class="num">+2.3 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Surgical 2 West</td><td class="num">98.07%</td><td class="num">+1.7 pts</td><td class="num">95.1%</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr><tr><td>Observation Unit</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="center"><span style="color:#666666;font-weight:600;">served</span></td></tr></tbody>
     </table>
   </section>
@@ -86,7 +86,7 @@
   <section class="section">
     <div class="section-title">Prediction interval — <span id="band-unit-label">Telemetry 4 East</span></div>
     <p style="font-size:13px;color:var(--muted);margin:0 0 10px;">
-      Point forecast with its 90% prediction interval across horizons. The band widens
+      Point forecast with its 95% prediction interval across horizons. The band widens
       further out, which is the honest behavior: a 1-hour forecast is far more certain
       than a 72-hour one.
     </p>

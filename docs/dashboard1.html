@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Operational Census Forecast — Nurse Census Prediction</title>
-  <meta name="description" content="In-repo operational forecast dashboard: current census per unit, eight-horizon forecasts with 90% prediction intervals, and a seven-day actual-vs-forecast timeline.">
+  <meta name="description" content="In-repo operational forecast dashboard: current census per unit, eight-horizon forecasts with 95% prediction intervals, and a seven-day actual-vs-forecast timeline.">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
@@ -39,7 +39,7 @@
     <h1>Operational Census Forecast</h1>
     <p class="tagline">
       House-supervisor view: current census per unit, eight-horizon forecasts
-      (1, 2, 3, 4, 12, 24, 48, and 72 hours ahead) with their 90% prediction
+      (1, 2, 3, 4, 12, 24, 48, and 72 hours ahead) with their 95% prediction
       intervals, and a seven-day actuals + forward forecast timeline showing
       the band ahead of the latest reading.
     </p>
@@ -57,7 +57,7 @@
     <div class="section-title" style="margin-top:18px;">Forecast (next 1h through 72h)</div>
     <div class="fc-grid" id="fc-grid"></div>
 
-    <div class="section-title" style="margin-top:18px;">Seven-day actuals + forecast with 90% band</div>
+    <div class="section-title" style="margin-top:18px;">Seven-day actuals + forecast with 95% band</div>
     <div id="ts-chart" style="height: 360px;"></div>
   </section>
 
@@ -115,11 +115,11 @@
         const alertLine = c.overCapacity ? "; predicted at or over capacity" : "";
         const title = "Forecast +" + h + "h ahead\n"
                     + "Predicted: " + fmtCensus(c.point) + " patients" + capInfo + alertLine + "\n"
-                    + "90% interval: " + fmtBand(c.lower, c.upper);
+                    + "95% interval: " + fmtBand(c.lower, c.upper);
         return '<div class="' + cls + '" title="' + title + '">'
              + '<div class="fc-h">' + h + 'h ahead</div>'
              + '<div class="fc-pt">' + fmtCensus(c.point) + '</div>'
-             + '<div class="fc-band">90%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
+             + '<div class="fc-band">95%: ' + fmtBand(c.lower, c.upper) + '</div></div>';
       }).join("");
     }
 
@@ -141,7 +141,7 @@
                                 font: { size: 9, color: "#E15759" } }];
       }
       // Band is drawn as two invisible traces with fill between them. The forecast
-      // line carries customdata so its tooltip can show the 90% interval and the
+      // line carries customdata so its tooltip can show the 95% interval and the
       // horizon (e.g. "+12h ahead") in addition to the point value.
       const fcCustom = u.forecastY.map((_, i) =>
         [u.forecastLower[i], u.forecastUpper[i], u.forecastHorizons[i]]);
@@ -151,14 +151,14 @@
           hovertemplate: "<b>%{x}</b><br>Actual census: %{y} patients<extra></extra>" },
         { x: u.forecastX, y: u.forecastUpper, type: "scatter", mode: "lines",
           line: { width: 0 }, hoverinfo: "skip", showlegend: false },
-        { x: u.forecastX, y: u.forecastLower, name: "90% band", type: "scatter", mode: "lines",
+        { x: u.forecastX, y: u.forecastLower, name: "95% band", type: "scatter", mode: "lines",
           fill: "tonexty", fillcolor: "rgba(78,121,167,0.20)", line: { width: 0 }, hoverinfo: "skip" },
         { x: u.forecastX, y: u.forecastY, name: "Forecast", type: "scatter", mode: "lines+markers",
           line: { color: "#4E79A7", width: 2, dash: "dot" }, marker: { size: 6 },
           customdata: fcCustom,
           hovertemplate: "<b>Forecast at %{x}</b><br>"
                        + "Predicted: %{y:.1f} patients<br>"
-                       + "90% interval: %{customdata[0]:.1f} – %{customdata[1]:.1f}<br>"
+                       + "95% interval: %{customdata[0]:.1f} – %{customdata[1]:.1f}<br>"
                        + "Horizon: +%{customdata[2]}h<extra></extra>" }
       ];
       Plotly.react(el, traces, layout, { displayModeBar: false })
