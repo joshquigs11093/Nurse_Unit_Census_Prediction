@@ -63,7 +63,7 @@ In a production deployment, the synthetic forward step is replaced by an ETL job
 | Pipeline orchestration | joblib (parallel per-unit training), PyYAML config |
 | Evaluation | custom MAE / RMSE / MAPE / ±2-accuracy metrics, Ljung-Box residual diagnostics |
 | Dashboards | Plotly.js + custom CSS, deployed via GitHub Pages |
-| Uncertainty | split-conformal prediction intervals (90% coverage) from validation residuals |
+| Uncertainty | split-conformal prediction intervals (95% coverage) from validation residuals |
 | Monitoring | drift detection — PSI (covariate drift) + within-2 performance drift vs. a frozen training baseline |
 | Testing | pytest (47 cases covering data leakage, splits, metrics, models, intervals, drift); data-free subset (36 cases) runs in GitHub Actions on every push |
 
@@ -150,7 +150,7 @@ Phases can be run individually: `--phase clean`, `--phase train`, `--phase calib
 |---|---|
 | `outputs/reports/model_comparison.csv` | (model, unit, horizon) × (MAE, RMSE, MAPE, ±2 acc) |
 | `outputs/reports/best_model_per_horizon.csv` | Winning model + accuracy per horizon |
-| `outputs/tableau/forecast_predictions.csv` | Wide-format predictions: actual_census + pred_{1..72}hr (with _lower/_upper 90% bounds) per (timestamp, unit) |
+| `outputs/tableau/forecast_predictions.csv` | Wide-format predictions: actual_census + pred_{1..72}hr (with _lower/_upper 95% bounds) per (timestamp, unit) |
 | `outputs/tableau/executive_summary.csv` | Per-unit current census, capacity, utilization %, 72h forecast, alert flag |
 | `outputs/tableau/drift_report.csv` | Per-unit PSI, drift status, and within-2 performance drift vs. training baseline |
 | `models/{unit_id}/...` | Trained per-unit artifacts (joblib, .pt, .json) |
@@ -166,6 +166,16 @@ The deployed site has four top-level pages plus the three full-screen dashboards
    - **Operational Census Forecast** — house-supervisor view: current census, multi-horizon forecast cards, 7-day actual vs. predicted trend, capacity alerts.
    - **Model Performance Analytics** — process-improvement view: model × horizon accuracy heatmap, per-unit accuracy breakdown.
    - **Executive Census Summary** — leadership view: house-wide KPIs, utilization-by-unit ranking, best-model recommendations, per-unit detail with capacity gauges.
+
+## Documentation
+
+| Document | Purpose |
+|---|---|
+| [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) | Every raw field, the 61 engineered features (with leakage-gating), prediction targets, and exported result columns. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history of major refinements, mapped to capstone milestones. |
+| [`config/config.yaml`](config/config.yaml) | Canonical hyperparameters, split dates, feature lists, and drift/equity thresholds. |
+| [`docs/Benchmark_Final_Project/`](docs/Benchmark_Final_Project) | Final deliverables — technical audit, scientific report, and presentation (APA, verified open-access references). |
+| [Methodology page](https://joshquigs11093.github.io/Nurse_Unit_Census_Prediction/methodology.html) | Pipeline, splits, leakage filtering, significance testing, residual diagnostics, deployment. |
 
 ## Privacy
 
