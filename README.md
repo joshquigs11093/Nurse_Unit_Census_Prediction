@@ -21,7 +21,7 @@ All three operational dashboards render in-repo with Plotly from the CSV exports
 
 Predicts patient headcount on medical-surgical nurse units at eight forecast horizons (1, 2, 3, 4, 12, 24, 48, 72 hours) using historical admissions, discharges, transfers, ED census, scheduled surgeries, and seasonal patterns. The pipeline trains five model types per unit (ARIMA, Prophet, LSTM, Random Forest, LightGBM) plus a weighted ensemble and exports aggregate CSVs that the in-repo Plotly dashboards read directly.
 
-**Primary metric:** percentage of forecasts within ±2 patients of actual census. Validation accuracy: 99.7% at 1h (Random Forest), 87.6% at 72h (LSTM).
+**Primary metric:** percentage of forecasts within ±2 patients of actual census. Validation accuracy: 99.7% at 1h (Random Forest), 87.6% at 72h (LSTM). The served forecast selects each horizon's model from the validation leaderboard, so the LSTM is deployed at the horizons where it wins (24h and 72h) rather than being a benchmark-only result.
 
 ## Operational architecture
 
@@ -149,7 +149,8 @@ Phases can be run individually: `--phase clean`, `--phase train`, `--phase calib
 | File | Contents |
 |---|---|
 | `outputs/reports/model_comparison.csv` | (model, unit, horizon) × (MAE, RMSE, MAPE, ±2 acc) |
-| `outputs/reports/best_model_per_horizon.csv` | Winning model + accuracy per horizon |
+| `outputs/reports/best_model_per_horizon.csv` | Winning model + accuracy per horizon (drives serving) |
+| `outputs/tableau/served_models.csv` | Model actually run per horizon in the served forecast (RF/LightGBM/LSTM) |
 | `outputs/tableau/forecast_predictions.csv` | Wide-format predictions: actual_census + pred_{1..72}hr (with _lower/_upper 95% bounds) per (timestamp, unit) |
 | `outputs/tableau/executive_summary.csv` | Per-unit current census, capacity, utilization %, 72h forecast, alert flag |
 | `outputs/tableau/drift_report.csv` | Per-unit PSI, drift status, and within-2 performance drift vs. training baseline |

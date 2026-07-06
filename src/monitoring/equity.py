@@ -44,18 +44,20 @@ def classify_equity(accuracy_delta_pct: float,
     return "served"
 
 
-def _per_unit_accuracy(reports_dir: Path) -> dict:
-    """Mean within-2 accuracy across horizons for the deployed model per unit.
-    Returns {unit_id(str): pct}. Reads outputs/reports/model_comparison.csv."""
+def _per_unit_accuracy(reports_dir: Path, config: dict) -> dict:
+    """Mean within-2 accuracy across horizons for the served model per unit
+    (RF/LightGBM/LSTM per the leaderboard). Returns {unit_id(str): pct}.
+    Reads outputs/reports/model_comparison.csv."""
+    from src.models.deployment import deployed_display_by_horizon
+
     comp = reports_dir / "model_comparison.csv"
     if not comp.exists():
         return {}
     df = pd.read_csv(comp)
     if df.empty:
         return {}
-    deployed_name = pd.Series(["RandomForest"] * len(df), index=df.index)
-    deployed_name = deployed_name.where(df["horizon"] == 1, "LightGBM")
-    deployed = df[df["model"] == deployed_name]
+    disp_by_h = deployed_display_by_horizon(config)
+    deployed = df[df["model"] == df["horizon"].map(disp_by_h)]
     out = (deployed.groupby("unit_id")["within_2_patients_pct"].mean()
                    .round(2).to_dict())
     return {str(k): float(v) for k, v in out.items()}
@@ -95,7 +97,7 @@ def compute_unit_equity(config: dict,
     reports_dir = Path(config["output"]["reports_dir"])
     models_dir = Path(config["output"]["models_dir"])
 
-    accuracy = _per_unit_accuracy(reports_dir)
+    accuracy = _per_unit_accuracy(reports_dir, config)
     coverage = _per_unit_coverage(models_dir, unit_ids)
 
     accs = [v for v in accuracy.values() if not pd.isna(v)]

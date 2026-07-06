@@ -1,0 +1,9 @@
+horizon,served_model
+1,randomforest
+2,lightgbm
+3,lightgbm
+4,lightgbm
+12,lightgbm
+24,lstm
+48,lightgbm
+72,lstm

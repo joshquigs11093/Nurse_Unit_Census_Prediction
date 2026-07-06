@@ -19,14 +19,14 @@ import sys
 import time
 from pathlib import Path
 
-import joblib
 import numpy as np
 import pandas as pd
 
 from src.utils import load_config, setup_logging, set_random_seeds
 from src.data import load_raw_data, validate_data, clean_data, split_data, save_processed_data
-from src.features import add_cyclical_features, filter_unit, get_feature_columns
+from src.features import add_cyclical_features, filter_unit
 from src.models import ModelRegistry
+from src.models.deployment import select_deployed_models, predict_series, predict_eval
 from src.evaluation.explainability import compute_feature_importance_table
 from src.monitoring.calibrate import (
     compute_drift_baseline,
@@ -114,29 +114,6 @@ def phase_calibrate(
                     len(fi), fi["unit_id"].nunique(), fi["horizon"].nunique())
 
 
-def _model_path_for_horizon(models_dir: Path, uid, h: int) -> tuple[str, Path]:
-    """Pick best tabular model for horizon h: RF at 1h, LightGBM otherwise."""
-    name = "randomforest" if h == 1 else "lightgbm"
-    return name, models_dir / str(uid) / f"{name}_{h}h.joblib"
-
-
-def _predict_unit_horizon(u_test_feat: pd.DataFrame, config: dict, horizon: int,
-                           model_path: Path) -> pd.Series:
-    """Run a saved tabular model on test rows for one unit. Returns a Series
-    aligned to u_test_feat.index with NaN where features are missing."""
-    feature_cols = [c for c in get_feature_columns(config, horizon)
-                    if c in u_test_feat.columns]
-    feat_df = u_test_feat[feature_cols]
-    valid_mask = feat_df.notna().all(axis=1)
-    out = pd.Series(np.nan, index=u_test_feat.index, dtype=float)
-    if valid_mask.sum() == 0:
-        return out
-    model = joblib.load(model_path)
-    preds = model.predict(feat_df.loc[valid_mask])
-    out.loc[valid_mask] = np.round(preds, 1)
-    return out
-
-
 def _build_forecast_predictions(test: pd.DataFrame, config: dict,
                                  capacity_by_unit: dict) -> pd.DataFrame:
     """Wide-format per-(timestamp, unit) predictions for Dashboard 1."""
@@ -150,6 +127,11 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
     test_feat = add_cyclical_features(test)
     units = sorted(test[unit_col].unique())
     intervals_on = config.get("uncertainty", {}).get("enabled", True)
+    # Leaderboard-driven model selection: each horizon serves whichever model
+    # won validation (RF/LightGBM/LSTM), instead of a fixed RF/LightGBM rule.
+    deployed = select_deployed_models(config)
+    logger.info("Served models per horizon: %s",
+                {h: deployed[h] for h in horizons})
     rows = []
 
     for uid in units:
@@ -169,14 +151,14 @@ def _build_forecast_predictions(test: pd.DataFrame, config: dict,
 
         models_used = {}
         for h in horizons:
-            name, mp = _model_path_for_horizon(models_dir, uid, h)
-            if not mp.exists():
+            name = deployed[h]
+            preds = predict_series(u, config, h, name, models_dir, uid)
+            if preds.isna().all():
                 base[f"pred_{h}hr"] = np.nan
                 base[f"pred_{h}hr_lower"] = np.nan
                 base[f"pred_{h}hr_upper"] = np.nan
                 models_used[h] = None
                 continue
-            preds = _predict_unit_horizon(u, config, h, mp)
             base[f"pred_{h}hr"] = preds.values
 
             hw = unit_intervals.get(str(h), {}).get("halfwidth")
@@ -259,9 +241,9 @@ def _build_forecast_timeline(fp: pd.DataFrame, horizons: list[int]) -> pd.DataFr
 
 def _recent_window_drift_inputs(test: pd.DataFrame, config: dict) -> tuple[dict, dict]:
     """Census array + observed within-2 accuracy per unit over the recent live
-    window, for the drift report. Mirrors validation eval on recent test rows."""
+    window, for the drift report. Mirrors validation eval on recent test rows
+    using the actually-served model per horizon (RF/LightGBM/LSTM)."""
     from src.evaluation import compute_within_n
-    from src.features import prepare_ml_features
 
     dt_col = config["data"]["datetime_col"]
     unit_col = config["data"]["unit_col"]
@@ -269,26 +251,28 @@ def _recent_window_drift_inputs(test: pd.DataFrame, config: dict) -> tuple[dict,
     horizons = config["forecast_horizons"]
     models_dir = Path(config["output"]["models_dir"])
     window = config.get("drift", {}).get("recent_window_hours", 168)
+    deployed = select_deployed_models(config)
+    # LSTM needs seq_len history before each target row, so the accuracy slice is
+    # widened by the lookback; the census distribution stays the true window.
+    seq_len = config.get("models", {}).get("lstm", {}).get("sequence_length", 0)
 
     test_feat = add_cyclical_features(test)
     recent_census, recent_within2 = {}, {}
 
     for uid in sorted(test[unit_col].unique()):
-        u = filter_unit(test_feat, uid, config).sort_values(dt_col).tail(window)
+        u_full = filter_unit(test_feat, uid, config).sort_values(dt_col)
+        u = u_full.tail(window)
         if u.empty:
             continue
         recent_census[str(uid)] = u[census_col].dropna().to_numpy(dtype=float)
 
+        u_acc = u_full.tail(window + seq_len)
         accs = []
         for h in horizons:
-            _, mp = _model_path_for_horizon(models_dir, uid, h)
-            if not mp.exists():
+            y, preds = predict_eval(u_acc, config, h, deployed[h], models_dir, uid)
+            if len(y) < 10:
                 continue
-            X, y, _ = prepare_ml_features(u, config, h)
-            if len(X) < 10:
-                continue
-            preds = joblib.load(mp).predict(X)
-            accs.append(compute_within_n(np.asarray(y, dtype=float), preds, n=2))
+            accs.append(compute_within_n(y, preds, n=2))
         if accs:
             recent_within2[str(uid)] = float(np.mean(accs))
 
@@ -457,6 +441,17 @@ def phase_export(
     if best_path.exists():
         shutil.copy(best_path, tableau_dir / "best_model_per_horizon.csv")
         logger.info("Exported best_model_per_horizon.csv")
+
+    # 2b. served_models.csv — the model actually run per horizon in the served
+    # forecast. Usually equals the leaderboard winner; differs only when a
+    # winner is not servable and falls back to the tabular default. Makes the
+    # deployed model choice (incl. LSTM at 24h/72h) explicit and auditable.
+    deployed = select_deployed_models(config)
+    pd.DataFrame(
+        [{"horizon": h, "served_model": deployed[h]} for h in horizons]
+    ).to_csv(tableau_dir / "served_models.csv", index=False)
+    logger.info("Exported served_models.csv (%s)",
+                {h: deployed[h] for h in horizons})
 
     # 3. unit_metadata.csv (with derived capacity = max observed census)
     all_data = pd.concat([train, val, test])

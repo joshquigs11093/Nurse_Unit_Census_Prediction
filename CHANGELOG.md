@@ -8,6 +8,25 @@ project's major refinements. Dates reflect the commit history on the `main` bran
 Capstone milestone mapping: **Planning** → v0.1, **Design/Implementation** → v0.1–v0.2,
 **Analysis & refinement** → v0.3–v0.5, **Completion (Benchmark Final)** → v1.0.
 
+## [1.1.0] — 2026-07-06 — Leaderboard-driven serving (LSTM deployed)
+### Added
+- `src/models/deployment.py`: single source of truth for which model each horizon
+  serves, read from `best_model_per_horizon.csv`, plus unified inference that
+  dispatches the tabular `.joblib` contract and the LSTM sequence+scaler+Torch
+  contract behind one interface.
+- `outputs/tableau/served_models.csv`: explicit, auditable record of the model run
+  per horizon in the served forecast.
+- Tests (`tests/test_deployment.py`): leaderboard selection (incl. unservable-winner
+  fallback) and real LSTM/tabular inference dispatch.
+### Changed
+- Wired the LSTM into the served inference path. Model selection was hard-coded to
+  Random Forest at 1h and LightGBM elsewhere in five places (forecast export, drift
+  recent-window accuracy, interval calibration, drift baseline accuracy, equity
+  accuracy); all now honor the validation leaderboard, so the LSTM is deployed at
+  24h and 72h where it leads. Prediction intervals at those horizons are now
+  calibrated on LSTM residuals, and the synthetic refresh inherits the LSTM-derived
+  bands via `prediction_intervals.json`.
+
 ## [1.0.0] — 2026-07-01 — Completion phase (Benchmark Final Project)
 ### Added
 - Technical Audit, 1,000–1,250-word Scientific Report, and 9-slide Presentation
@@ -60,6 +79,7 @@ Capstone milestone mapping: **Planning** → v0.1, **Design/Implementation** →
 - Multi-page GitHub Pages site: landing, model cards, methodology, dashboards gallery.
 - CSV/JSON exports for dashboard consumption; long-format `forecast_timeline.csv`.
 
+[1.1.0]: https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction
 [1.0.0]: https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction
 [0.5.0]: https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction
 [0.4.0]: https://github.com/joshquigs11093/Nurse_Unit_Census_Prediction

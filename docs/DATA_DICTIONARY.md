@@ -154,7 +154,8 @@ Key fields produced by the pipeline and consumed by the dashboards.
 | `forecast_predictions.csv` | (timestamp, unit) | `actual_census`, `pred_{H}hr`, `pred_{H}hr_lower`, `pred_{H}hr_upper`, `capacity`, over-capacity flags |
 | `executive_summary.csv` | unit | `latest_census`, `capacity`, `utilization_pct`, `forecast_72hr`, `alert_over_90pct` |
 | `model_performance_aggregated.csv` | (model, horizon) | `mae`, `rmse`, `mape`, `within_2_patients_pct` |
-| `best_model_per_horizon.csv` | horizon | `model`, `within_2_patients_pct`, `mae` |
+| `best_model_per_horizon.csv` | horizon | `model`, `within_2_patients_pct`, `mae` (the validation winner that drives serving) |
+| `served_models.csv` | horizon | `served_model` — the model actually run per horizon in the served forecast (RF/LightGBM/LSTM) |
 | `prediction_intervals.json` | (unit, horizon) | `halfwidth`, `q_lower`, `q_upper`, `coverage`, `n`, `val_coverage` |
 | `drift_report.csv` / `drift_history.csv` | unit (× time) | `psi`, `psi_residual`, `drift_status`, `alert_kind`, `perf_delta_pct`, `coverage_pct`, `equity_status` |
 | `feature_importance.csv` | (unit, horizon, model) | `feature`, `importance`, `rank` |

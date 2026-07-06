@@ -12,13 +12,17 @@ import json
 import logging
 from pathlib import Path
 
-import joblib
 import numpy as np
 import pandas as pd
 
 from src.evaluation import asymmetric_quantiles, conformal_halfwidth
 from src.evaluation.intervals import build_interval, empirical_coverage
-from src.features import add_cyclical_features, filter_unit, prepare_ml_features
+from src.features import add_cyclical_features, filter_unit
+from src.models.deployment import (
+    deployed_display_by_horizon,
+    predict_eval,
+    select_deployed_models,
+)
 from src.monitoring.drift import build_psi_bins, stl_residual_series
 
 logger = logging.getLogger(__name__)
@@ -28,18 +32,14 @@ EXPORT_INTERVALS_FILENAME = "prediction_intervals.json"
 BASELINE_FILENAME = "drift_baseline.json"
 
 
-def _deployed_model_path(models_dir: Path, uid, h: int) -> tuple[str, Path]:
-    """Match run_pipeline._model_path_for_horizon: RF at 1h, LightGBM otherwise."""
-    name = "randomforest" if h == 1 else "lightgbm"
-    return name, models_dir / str(uid) / f"{name}_{h}h.joblib"
-
-
 def compute_prediction_intervals(
     val_df: pd.DataFrame, config: dict, coverage: float = 0.90,
 ) -> dict:
     """
-    For each (unit, horizon), run the deployed model on the validation set,
-    collect residuals, and derive split-conformal interval parameters.
+    For each (unit, horizon), run the *served* model (RF/LightGBM/LSTM per the
+    leaderboard) on the validation set, collect residuals, and derive
+    split-conformal interval parameters. Serving the LSTM at a horizon therefore
+    calibrates that horizon's band on LSTM residuals, not LightGBM's.
 
     Returns {unit_id(str): {horizon(str): {halfwidth, q_lower, q_upper,
              coverage, n, val_coverage}}}.
@@ -47,6 +47,7 @@ def compute_prediction_intervals(
     unit_col = config["data"]["unit_col"]
     horizons = config["forecast_horizons"]
     models_dir = Path(config["output"]["models_dir"])
+    deployed = select_deployed_models(config)
 
     val_feat = add_cyclical_features(val_df)
     units = sorted(val_df[unit_col].unique())
@@ -56,14 +57,9 @@ def compute_prediction_intervals(
         u_val = filter_unit(val_feat, uid, config)
         per_h: dict[str, dict] = {}
         for h in horizons:
-            _, mp = _deployed_model_path(models_dir, uid, h)
-            if not mp.exists():
+            y_va, preds = predict_eval(u_val, config, h, deployed[h], models_dir, uid)
+            if len(y_va) < 20:
                 continue
-            X_va, y_va, _ = prepare_ml_features(u_val, config, h)
-            if len(X_va) < 20:
-                continue
-            model = joblib.load(mp)
-            preds = model.predict(X_va)
             residuals = np.asarray(y_va, dtype=float) - np.asarray(preds, dtype=float)
 
             hw = conformal_halfwidth(residuals, coverage=coverage)
@@ -99,7 +95,8 @@ def _baseline_within2_by_unit(config: dict) -> dict:
         return {}
 
     df = pd.read_csv(comp_path)
-    df["_deployed"] = np.where(df["horizon"] == 1, "RandomForest", "LightGBM")
+    disp_by_h = deployed_display_by_horizon(config)
+    df["_deployed"] = df["horizon"].map(disp_by_h)
     deployed = df[df["model"] == df["_deployed"]]
     out = (
         deployed.groupby("unit_id")["within_2_patients_pct"].mean().round(2).to_dict()
