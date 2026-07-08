@@ -518,7 +518,7 @@ function buildIndex() {
   const best72h = data.best.find(r => r.horizon === 72);
   const refreshTime = new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
   const _tr = loadTestResults();
-  const totalTests = (_tr && _tr.tests) ? _tr.tests.length : 47;
+  const totalTests = (_tr && _tr.tests) ? _tr.tests.length : TOTAL_TESTS;
   const passedTests = (_tr && _tr.tests)
     ? _tr.tests.filter(t => t.outcome === "passed").length : totalTests;
 
@@ -1138,10 +1138,10 @@ ${navBar("methodology")}
     <p style="font-size:13px;line-height:1.6;">
       Random seeds set centrally (numpy, random, PyTorch). Dependencies pinned in
       <code>requirements.txt</code>. All hyperparameters in <code>config/config.yaml</code> —
-      no magic constants in code. <strong><a href="tests.html">47 pytest cases</a></strong>
+      no magic constants in code. <strong><a href="tests.html">${TOTAL_TESTS} pytest cases</a></strong>
       cover data integrity, leakage prevention, chronological splits, metric correctness,
-      model train/predict, ensemble weights, and feature validation; the data-free subset
-      (23 cases) runs in GitHub Actions on every push.
+      model train/predict, ensemble weights, drift, equity, and serving; the data-free subset
+      (${DATAFREE_TESTS} cases) runs in GitHub Actions on every push.
     </p>
   </div>
 </div>
@@ -1362,7 +1362,61 @@ const TEST_CATALOG = [
       { name: "test_custom_thresholds",                          blurb: "Tighter custom thresholds escalate borderline gaps to <em>underserved</em>." },
     ],
   },
+  {
+    name: "TestDieboldMariano",
+    requiresData: false,
+    blurb: "Covers the paired Diebold-Mariano significance test (Harvey-Leybourne-Newbold correction) used to confirm each horizon's best model is genuinely better than the runner-up, not lucky.",
+    tests: [
+      { name: "test_better_model_is_significant",        blurb: "A model with clearly tighter errors registers a significant, negative loss differential." },
+      { name: "test_symmetry_of_sign",                   blurb: "Swapping the two forecasts flips the sign of the mean loss differential and nothing else." },
+      { name: "test_identical_forecasts_not_significant", blurb: "Two identical forecasts give a NaN statistic and are never flagged significant." },
+      { name: "test_too_few_points_returns_nan",         blurb: "Fewer than eight paired points returns NaN rather than a spurious result." },
+      { name: "test_length_mismatch_raises",             blurb: "Mismatched error-series lengths raise a ValueError." },
+      { name: "test_invalid_loss_raises",                blurb: "An unsupported loss function raises rather than silently defaulting." },
+      { name: "test_horizon_correction_changes_statistic", blurb: "The HLN small-sample correction shifts the statistic between h=1 and h=24." },
+    ],
+  },
+  {
+    name: "TestResidualDiagnostics",
+    requiresData: false,
+    blurb: "Checks the residual diagnostics (Shapiro-Wilk normality and Ljung-Box autocorrelation) whose results justify the distribution-free conformal intervals.",
+    tests: [
+      { name: "test_keys_present",                blurb: "The diagnostics dict returns the expected keys (n, means, Shapiro and Ljung-Box p-values)." },
+      { name: "test_normal_residuals_pass_shapiro", blurb: "Cleanly normal residuals do not get flagged as non-normal." },
+      { name: "test_short_series_returns_nan",    blurb: "A series too short to test returns NaN p-values rather than raising." },
+      { name: "test_nans_are_dropped",            blurb: "NaN residuals are dropped before the tests run, and n reflects the valid count." },
+    ],
+  },
+  {
+    name: "TestModelSelection",
+    requiresData: false,
+    blurb: "Covers the deployment selector that reads the validation leaderboard and picks the served model per horizon, including the fallback when a winning model is not servable.",
+    tests: [
+      { name: "test_default_rule",                          blurb: "The default rule serves Random Forest at 1h and LightGBM elsewhere when no leaderboard is present." },
+      { name: "test_missing_leaderboard_falls_back_to_defaults", blurb: "A missing best_model_per_horizon.csv falls back to the default rule for every horizon." },
+      { name: "test_lstm_winner_is_served",                 blurb: "When the leaderboard names the LSTM at 24h and 72h, the selector serves it there." },
+      { name: "test_unservable_winner_falls_back",          blurb: "A non-servable winner (ARIMA, Prophet, Ensemble) falls back to the tabular default." },
+      { name: "test_display_names_round_trip",              blurb: "Leaderboard display names map correctly to the internal served-model names." },
+      { name: "test_selection_covers_every_horizon",        blurb: "The selector returns a servable model for every one of the eight horizons." },
+    ],
+  },
+  {
+    name: "TestInferenceDispatch",
+    requiresData: true,
+    blurb: "End-to-end checks that the serving path runs both the tabular models and the LSTM (sequence window plus scaler plus Torch weights) and returns predictions aligned to the input rows.",
+    tests: [
+      { name: "test_lstm_series_aligned_and_valid",   blurb: "The LSTM predict path returns a non-empty, index-aligned, non-negative series from real saved artifacts." },
+      { name: "test_tabular_series_aligned",          blurb: "The tabular predict path returns predictions aligned to the unit's rows." },
+      { name: "test_lstm_eval_returns_matched_arrays", blurb: "The evaluation path returns matched actual/predicted arrays with a sane error on validation." },
+      { name: "test_missing_artifacts_return_empty",  blurb: "A unit with no saved model yields an empty result rather than crashing." },
+    ],
+  },
 ];
+
+// Derived once from the catalog so every page shows the same counts.
+const TOTAL_TESTS = TEST_CATALOG.reduce((s, c) => s + c.tests.length, 0);
+const DATAFREE_TESTS = TEST_CATALOG.reduce(
+  (s, c) => s + c.tests.filter(t => !(t.requiresData ?? c.requiresData)).length, 0);
 
 function loadTestResults() {
   const p = path.join(REPO_ROOT, "outputs", "test_results.json");
